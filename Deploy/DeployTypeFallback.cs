@@ -1,12 +1,7 @@
-﻿using BepInEx;
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RandomQuestExpantion.Patch
 {
@@ -15,7 +10,17 @@ namespace RandomQuestExpantion.Patch
         internal static void DeployTypeFallbackSetting()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            var targetNamespaceList = new List<string> { "RandomQuestExpantion.ModQuestEvent", "RandomQuestExpantion.ModQuests.Common", "RandomQuestExpantion.ModQuestTask", "RandomQuestExpantion.ModQuestZoneInstance" };
+            var targetNamespaceList = new List<string> 
+            { 
+                "RandomQuestExpantion.ModQuestEvent", 
+                "RandomQuestExpantion.ModQuests.Common",
+                "RandomQuestExpantion.ModQuests.FighterGuild",
+                "RandomQuestExpantion.ModQuests.MageGuild",
+                "RandomQuestExpantion.ModQuests.MerchantGuild",
+                "RandomQuestExpantion.ModQuests.ThiefGuild",
+                "RandomQuestExpantion.ModQuestTask", 
+                "RandomQuestExpantion.ModQuestZoneInstance" 
+            };
             var typeFallbackSetting = ReadTypeFallbackSetting();
             bool shouldFileUpdate = false;
 
@@ -26,17 +31,31 @@ namespace RandomQuestExpantion.Patch
                 foreach (var type in classes)
                 {
                     string className = type.Name;
-                    string baseClass = type.BaseType.FullName;
+                    string baseClass = "";
 
-                    if (className.Contains("+") || baseClass == "System.Object")
+
+                    // フォールバックが必要なのはこの4種
+                    if (typeof(Quest).IsAssignableFrom(type))
                     {
-                        continue;
+                        // クエストはタイプフォールバックを効かせても結局保存されたidから依頼文章などを復元しようとするのでもきゅもきゅクエストにしないといけない
+                        baseClass = "QuestDummy";
+                    }
+                    else if (typeof(QuestTask).IsAssignableFrom(type))
+                    {
+                        baseClass = "QuestTask";
+                    }
+                    else if (typeof(ZoneEvent).IsAssignableFrom(type))
+                    {
+                        baseClass = "ZoneEvent";
+                    }
+                    else if (typeof(ZoneInstance).IsAssignableFrom(type))
+                    {
+                        baseClass = "ZoneInstance";
                     }
 
-                    // クエストはタイプフォールバックを効かせても結局保存されたidから依頼文章などを復元しようとするのでもきゅもきゅクエストにしないといけない
-                    if (className.StartsWith("Quest"))
+                    if (baseClass == "")
                     {
-                        baseClass = "QuestDummy";
+                        continue;
                     }
 
                     // "「アセンブリ名」,「名前空間 + クラス名」, 「フォールバック先Elinクラス名」"
@@ -53,8 +72,8 @@ namespace RandomQuestExpantion.Patch
 
             if (shouldFileUpdate)
             {
-                string aaa = Path.Combine(CorePath.RootData, "type_resolver.txt");
-                IO.SaveTextArray(aaa, typeFallbackSetting.ToArray());
+                string path = Path.Combine(CorePath.RootData, "type_resolver.txt");
+                IO.SaveTextArray(path, typeFallbackSetting.ToArray());
             }
         }
 

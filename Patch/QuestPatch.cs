@@ -1,15 +1,10 @@
 ﻿using HarmonyLib;
 using RandomQuestExpantion.ModQuests;
-using RandomQuestExpantion.ModQuests.Common;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RandomQuestExpantion.Patch
 {
+    // クエストインスタンス生成を独自で実装する
+    // (バニラの生成方法だとネタかぶりが怖い)
     [HarmonyPatch]
     class QuestPatch
     {
@@ -21,19 +16,7 @@ namespace RandomQuestExpantion.Patch
                 return true;
             }
 
-            Quest quest = QuestFactory.CreateQuestInstance(_id);
-            quest.id = _id;
-            quest.person = new Person(_idPerson);
-            if (quest is QuestDestZone { IsDeliver: not false } questDestZone)
-            {
-                Zone zone = Quest.ListDeliver().RandomItem();
-                questDestZone.SetDest(zone, zone.dictCitizen.Keys.RandomItem());
-            }
-            if (c != null)
-            {
-                quest.SetClient(c);
-            }
-            quest.Init();
+            Quest quest = QuestFactory.CreateQuestInstance(_id, _idPerson, c);
             __result = quest;
             return false;
         }

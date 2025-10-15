@@ -5,28 +5,36 @@ namespace RandomQuestExpantion.Patch
 {
     class ImportExcelPatch
     {
-        internal static void execImportQuests(PluginInfo info)
+        internal static void execImportQuests(in PluginInfo info)
         {
             var dir = Path.GetDirectoryName(info.Location);
-            var excel = Path.Combine(dir, "Quests.xlsx");
+            var excel = Path.Combine(dir, "import/Quests.xlsx");
             var sources = Core.Instance.sources;
             ModUtil.ImportExcel(excel, "Quests", sources.quests);
         }
 
-        internal static void execImportLanguages(PluginInfo info)
+        internal static void execImportLanguages(in PluginInfo info)
         {
             var dir = Path.GetDirectoryName(info.Location);
-            var excel = Path.Combine(dir, "LangGeneral.xlsx");
+            var excel = Path.Combine(dir, "import/LangGeneral.xlsx");
             var sources = Core.Instance.sources;
             ModUtil.ImportExcel(excel, "LangGeneral", sources.langGeneral);
         }
 
-        internal static void execImportZones(PluginInfo info)
+        internal static void execImportZones(in PluginInfo info)
         {
             var dir = Path.GetDirectoryName(info.Location);
-            var excel = Path.Combine(dir, "Zones.xlsx");
+            var excel = Path.Combine(dir, "import/Zones.xlsx");
             var sources = Core.Instance.sources;
             ModUtil.ImportExcel(excel, "Zones", sources.zones);
+        }
+
+        internal static void execImportThings(in PluginInfo info)
+        {
+            var dir = Path.GetDirectoryName(info.Location);
+            var excel = Path.Combine(dir, "import/Things.xlsx");
+            var sources = Core.Instance.sources;
+            ModUtil.ImportExcel(excel, "Things", sources.things);
         }
     }
 }
