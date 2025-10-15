@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuests.Common
@@ -37,7 +32,7 @@ namespace RandomQuestExpantion.ModQuests.Common
         {
             string @ref = ((GetDestThing() != null) ? "supplyInInv".lang().TagColor(FontColor.Good) : "supplyNotInInv".lang());
 
-            return "byakko_mod_progress_HQ_craft".lang(Cat.GetName() + Lang.space + TextExtra2.IsEmpty(""), RefDrama2 + RefDrama3, @ref);
+            return "byakko_mod_progress_HQ_craft".lang(RefDrama1 + Lang.space + TextExtra2.IsEmpty(""), RefDrama2 + RefDrama3, @ref);
         }
 
         public override bool IsDestThing(Thing t)
@@ -82,7 +77,7 @@ namespace RandomQuestExpantion.ModQuests.Common
         {
         }
 
-        internal string GetElementText(SourceElement.Row row, int Lv)
+        internal string GetElementText(in SourceElement.Row row, int Lv)
         {
             string[] textArray = row.GetTextArray("textAlt");
             int textIndex = Mathf.Clamp(Lv / 10 + 1, (Lv < 0 || textArray.Length <= 2) ? 1 : 2, textArray.Length - 1);

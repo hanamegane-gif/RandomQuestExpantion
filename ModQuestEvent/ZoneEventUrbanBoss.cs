@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -40,9 +38,9 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             if (!EClass.game.isLoading)
             {
-                RemoveAllInhabitants();
-                RemoveAllMedals();
-                RemoveAllStairs();
+                RemoveAllInhabitants(EClass._map);
+                RemoveAllMedals(EClass._map);
+                RemoveAllStairs(EClass._map);
 
                 EClass._zone._dangerLv = Mathf.Max(base.quest.DangerLv - 2, 1);
 
@@ -109,18 +107,25 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         private void SpawnBoss()
         {
-            int mapWidth = EClass._map.Width;
-            int mapHeight = EClass._map.Height;
-
             // 初期位置近辺には沸かせない
             // 端に近すぎると進入困難な外壁に埋まる(主にパルミアとダルフィのせい)
             // 8箇所から沸かせたいが凄く遠くなって面倒くさい(主にパルミアとダルフィのせい)
+            int north = (EClass._map.bounds.z + EClass._map.bounds.maxZ) * 3 / 4;
+            int south = (EClass._map.bounds.z + EClass._map.bounds.maxZ) * 1 / 4;
+            int west = (EClass._map.bounds.x + EClass._map.bounds.maxX) * 1 / 4;
+            int east = (EClass._map.bounds.x + EClass._map.bounds.maxX) * 3 / 4;
+            int centerX = EClass._map.bounds.CenterX;
+            int centerZ = EClass._map.bounds.CenterZ;
+
+            var spawnDirection = new List<Point>
+            {
+                new Point(centerX, north),
+                new Point(east, centerZ),
+                new Point(centerX, south),
+                new Point(west, centerZ),
+            };
+
             Point spawnPoint = null;
-            var northPoint = new Point(mapWidth * 2 / 4, mapHeight * 3 / 4);
-            var southPoint = new Point(mapWidth * 2 / 4, mapHeight * 1 / 4);
-            var westPoint = new Point(mapWidth * 1 / 4, mapHeight * 2 / 4);
-            var eastPoint = new Point(mapWidth * 3 / 4, mapHeight * 2 / 4);
-            var spawnDirection = new List<Point> { northPoint, southPoint, westPoint, eastPoint };
 
             // 今の所斜めから進入するマップはないので無限ループでも大丈夫だと思われる
             while (spawnPoint == null)
@@ -152,58 +157,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             {
                 n1 = "special_force"
             });
-        }
-
-        // ポカやらかしやすいからプログラム側でも消す
-        private void RemoveAllInhabitants()
-        {
-            List<int> shouldDieUID = new List<int>();
-            foreach (var chara in EClass._map.charas)
-            {
-                if(chara != null && !chara.IsPCFaction)
-                {
-                    shouldDieUID.Add(chara.uid);
-                }
-            }
-
-            foreach (var UID in shouldDieUID)
-            {
-                EClass._map.charas.Where(c => c.uid == UID).First().Destroy();
-            }
-        }
-
-        private void RemoveAllMedals()
-        {
-            List<int> shouldDieUID = new List<int>();
-            foreach (var thing in EClass._map.things)
-            {
-                if (thing != null && thing.id == "medal")
-                {
-                    shouldDieUID.Add(thing.uid);
-                }
-            }
-
-            foreach (var UID in shouldDieUID)
-            {
-                EClass._map.things.Where(c => c.uid == UID).First().Destroy();
-            }
-        }
-
-        private void RemoveAllStairs()
-        {
-            List<int> shouldDieUID = new List<int>();
-            foreach (var thing in EClass._map.things)
-            {
-                if (thing != null && (thing.source.trait.Contains("StairsDown") || thing.source.trait.Contains("StairsUp")))
-                {
-                    shouldDieUID.Add(thing.uid);
-                }
-            }
-
-            foreach (var UID in shouldDieUID)
-            {
-                EClass._map.things.Where(c => c.uid == UID).First().Destroy();
-            }
         }
     }
 }

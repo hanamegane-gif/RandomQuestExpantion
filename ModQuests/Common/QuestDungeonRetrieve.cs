@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RandomQuestExpantion.ModQuestTask;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static ContentPopulation;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
@@ -16,7 +11,11 @@ namespace RandomQuestExpantion.ModQuests.Common
         public override bool ForbidTeleport => false;
 
         public override string RewardSuffix => "Hunt";
+
         public override string TextExtra2 => "noDeadLine".lang();
+
+        // きっと気付かれるだろうなと思いつつころうばを仕込んでおく
+        public int KOROSHITEDEMOUBAITORUChance => 10;
 
         [JsonProperty]
         public Thing Distribution = null;
@@ -26,7 +25,8 @@ namespace RandomQuestExpantion.ModQuests.Common
         public override void OnInit()
         {
             SetTask(new TaskDungeonRetrieve());
-            base.OnInit();
+            num = GetDestNum();
+            SetIdThing();
         }
 
         public override void OnStart()
@@ -34,6 +34,15 @@ namespace RandomQuestExpantion.ModQuests.Common
             deadline = 0;
             num = 1;
             base.OnStart();
+        }
+
+        public override void OnComplete()
+        {
+            base.OnComplete();
+            if (EClass.rnd(100) >= KOROSHITEDEMOUBAITORUChance)
+            {
+                Distribution.Destroy();
+            }
         }
 
         // 配達対象アイテムのIdだけを決める、エンチャントを撃破ボスLvに依存させたいので実体はボス討伐時に作る

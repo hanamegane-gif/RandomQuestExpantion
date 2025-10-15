@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using static Lang;
-using static UnityEngine.UI.GridLayoutGroup;
+﻿using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -17,18 +10,21 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             if (!EClass.game.isLoading)
             {
-                int dangerLv = Mathf.Max(base.quest.DangerLv - 2, 1);
-                int numAdventurer = 1 + base.quest.difficulty / 2;
+                int dangerLv = CalcZoneDangerLv();
+                int numEnemies = CalcNumberOfEnemies();
 
                 EClass._zone._dangerLv = dangerLv;
 
-                for (int i = 0; i < numAdventurer; i++)
+                for (int i = 0; i < numEnemies; i++)
                 {
-                    SpawnBoss(dangerLv);
+                    SpawnEnemy(dangerLv);
                 }
                 AggroEnemy(50);
                 EClass._zone.SetBGM(102);
                 max = enemies.Count;
+
+                RandomQuestExpantion.Log(EClass._zone?.Name ?? "ない");
+                RandomQuestExpantion.Log(EClass._zone.ParentZone?.Name ?? "ない");
             }
         }
 
@@ -43,20 +39,30 @@ namespace RandomQuestExpantion.ModQuestEvent
             CheckClear();
         }
 
-        private void SpawnBoss(int dangerLv)
+        internal virtual int CalcZoneDangerLv()
+        {
+            return Mathf.Max(base.quest.DangerLv - 2, 1);
+        }
+
+
+        internal virtual int CalcNumberOfEnemies()
+        { 
+            return 1 + base.quest.difficulty / 2;
+        }
+
+        internal virtual void SpawnEnemy(int dangerLv)
         {
             Point spawnPoint = EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false, minRadius : 3);
 
-            Chara chara = SpawnAdventurer(dangerLv);
-            Hostility hostility2 = (chara.c_originalHostility = Hostility.Enemy);
-            chara.hostility = hostility2;
-            enemies.Add(chara.uid);
+            Chara enemy = CreateEnemy(dangerLv);
+
+            EClass._zone.AddCard(enemy, spawnPoint);
+
+            enemies.Add(enemy.uid);
         }
 
-        private Chara SpawnAdventurer(int dangerLv)
+        internal virtual Chara CreateEnemy(int dangerLv)
         {
-            Point spawnPosition = EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
-
             int generateLv = Mathf.Max(dangerLv * 3 / 2, 5);
             int BPLv = Mathf.Max(dangerLv * 3 / 2, 5);
 
@@ -68,14 +74,10 @@ namespace RandomQuestExpantion.ModQuestEvent
             CardBlueprint.Set(cardBlueprint);
 
             Chara createdChara = CharaGen.Create((EClass.rnd(10) == 0 ? "adv_fairy" : "adv"), generateLv);
-            createdChara.SetLv(Mathf.Max(generateLv, 5));
-            createdChara.TryRestock(true);
-
-            EClass._zone.AddCard(createdChara, spawnPosition);
 
             createdChara.c_bossType = BossType.Boss;
-            Hostility c_originalHostility = Hostility.Enemy;
-            createdChara.c_originalHostility = c_originalHostility;
+            createdChara.c_originalHostility = Hostility.Enemy;
+            createdChara.hostility = Hostility.Enemy;
 
             return createdChara;
         }

@@ -1,11 +1,4 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuests.Common
@@ -45,7 +38,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         internal override void SetAttributeRequirement()
         {
-            // 癒し(750),珍しさ(751),見た目(752)珍品から出題する
+            // 癒し(750),珍しさ(751),見た目(752)から出題する
             // 特性は十分な値を確保しやすいためスケーリングしない
             ElementIdRequirement = new int[] { 750, 751, 752 }.RandomItem();
             ElementLvRequirement = 50;

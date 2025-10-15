@@ -1,10 +1,6 @@
 ﻿using RandomQuestExpantion.ModQuests.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -113,13 +109,9 @@ namespace RandomQuestExpantion.ModQuestEvent
             for (int i = 0; i < num; i++)
             {
                 Point boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
-                Chara chara = EClass._zone.SpawnMob(boundaryEdgePoint, SpawnSetting.HomeWild(EClass._zone.DangerLv));
-                Hostility hostility2 = (chara.c_originalHostility = Hostility.Enemy);
-                chara.hostility = hostility2;
-                if (CountEnemy)
-                {
-                    enemies.Add(chara.uid);
-                }
+                Chara spawnedChara = EClass._zone.SpawnMob(boundaryEdgePoint, SpawnSetting.HomeWild(EClass._zone.DangerLv));
+                spawnedChara.c_originalHostility = Hostility.Enemy;
+                spawnedChara.hostility = Hostility.Enemy;
             }
         }
 
@@ -131,16 +123,9 @@ namespace RandomQuestExpantion.ModQuestEvent
             Chara chara = EClass._zone.SpawnMob(boundaryEdgePoint, bossSpawnSetting);
             Hostility hostility2 = (chara.c_originalHostility = Hostility.Enemy);
             chara.hostility = hostility2;
-            if (CountEnemy)
-            {
-                enemies.Add(chara.uid);
-            }
 
-            if (WarnBoss)
-            {
-                Msg.Say("defense_boss", chara.Name);
-                EClass.game.Pause();
-            }
+            Msg.Say("defense_boss", chara.Name);
+            EClass.game.Pause();
         }
 
         public override void OnCharaDie(Chara c)

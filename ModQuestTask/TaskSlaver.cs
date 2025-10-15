@@ -1,0 +1,37 @@
+﻿using Newtonsoft.Json;
+
+namespace RandomQuestExpantion.ModQuestTask
+{
+    class TaskSlaver : QuestTask
+    {
+        [JsonProperty]
+        public int SoldAmount = 0;
+
+        [JsonProperty]
+        public int SoldAmountRequirements = 0;
+
+        public override string RefDrama1 => SoldAmount.ToString() ?? "";
+
+        public override string RefDrama2 => SoldAmountRequirements.ToString() ?? "";
+
+        public override bool IsComplete()
+        {
+            return (SoldAmount >= SoldAmountRequirements);
+        }
+
+        public override void OnInit()
+        {
+            SoldAmountRequirements = 1500 + (owner.difficulty - 1) * 300;
+        }
+
+        public override string GetTextProgress()
+        {
+            return "byakko_mod_progress_slaver".lang(RefDrama1, RefDrama2);
+        }
+
+        public virtual void OnSoldSlave(in Chara slave)
+        {
+            SoldAmount += slave.GetPrice(CurrencyType.Money, sell: true, PriceType.PlayerShop);
+        }
+    }
+}

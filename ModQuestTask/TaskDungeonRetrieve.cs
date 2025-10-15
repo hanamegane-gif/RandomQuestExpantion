@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RandomQuestExpantion.ModQuests.Common;
+using static RandomQuestExpantion.General.General;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace RandomQuestExpantion.ModQuestTask
         }
 
         // 追加で出る宝箱に入れておけば多分気付くはず！ということで配達対象を神秘箱に入れて生成
-        internal void SpawnQuestChest(Point spawnPosition, string IdThing, int generateLv)
+        internal virtual void SpawnQuestChest(Point spawnPosition, string IdThing, int generateLv)
         {
             var questChest = GenerateQuestChest();
             var distribution = GenerateDistribution(IdThing, generateLv);
@@ -53,7 +54,7 @@ namespace RandomQuestExpantion.ModQuestTask
             EClass._zone.AddCard(questChest, spawnPosition).Install();
         }
 
-        internal Thing GenerateQuestChest()
+        internal virtual Thing GenerateQuestChest()
         {
             var generated = ThingGen.Create("chest_treasure");
             // めんどくさくなるだけなので鍵はかけない
@@ -64,12 +65,13 @@ namespace RandomQuestExpantion.ModQuestTask
             return generated;
         }
 
-        internal Thing GenerateDistribution(string IdThing, int generateLv)
+        internal virtual Thing GenerateDistribution(string IdThing, int generateLv)
         {
             // 奇跡以上確定の場合のバニラの神器率は5%
             // 20%は高すぎるか？
             var gearRarity = (EClass.rnd(5) == 0) ? Rarity.Mythical : Rarity.Legendary;
-            CardBlueprint.SetRarity(gearRarity);
+            var bp = new CardBlueprint { rarity = gearRarity, blesstedState = BlessedState.Normal };
+            CardBlueprint.Set(bp);
 
             var generatedGear = ThingGen.Create(IdThing, lv: generateLv);
 
@@ -106,102 +108,31 @@ namespace RandomQuestExpantion.ModQuestTask
             return generatedGear;
         }
 
-        internal SourceElement.Row PickBonusEnchant(in Thing generatedGear, int generateLv)
+        internal virtual SourceElement.Row PickBonusEnchant(in Thing generatedGear, int generateLv)
         {
-            var gearCategory = (generatedGear.category.IsChildOf("melee") ? "melee" : "armor");
-
-            SourceElement.Row bonusEnchant = null;
-            if (gearCategory == "melee")
+            if (EClass.rnd(100) == 0)
             {
-                bonusEnchant = PickMeleeBonusEnchant(generatedGear, generateLv);
-            }
-            else
-            {
-                bonusEnchant = PickArmorBonusEnchant(generatedGear, generateLv);
-            }
-
-            return bonusEnchant;
-        }
-
-        internal SourceElement.Row PickArmorBonusEnchant(in Thing generatedGear, int generateLv)
-        {
-            var candidateList = new List<SourceElement.Row>();
-            int sumChance = 0;
-            var gearCategory = generatedGear.category;
-
-            // chanceによる抽選は残しつつレアエンチャは出やすくする
-            Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
-            int filterRoll = EClass.rnd(100);
-
-            if (filterRoll < 12)
-            {
-                // 肉体系主能力
-                rareEnchantFilter = row => row.category == "attribute" && 
-                (
-                    row.id == SKILL.STR ||
-                    row.id == SKILL.END ||
-                    row.id == SKILL.DEX ||
-                    row.id == SKILL.CHA
-                );
-            }
-            else if (filterRoll < 24)
-            {
-                // 精神系主能力
-                rareEnchantFilter = row => row.category == "attribute" && 
-                (
-                    row.id == SKILL.PER ||
-                    row.id == SKILL.LER ||
-                    row.id == SKILL.WIL ||
-                    row.id == SKILL.MAG
-                );
-            }
-            else if (filterRoll < 36)
-            {
-                // 戦闘系
-                rareEnchantFilter = row => row.categorySub == "combat";
-            }
-            else if (filterRoll < 48)
-            {
-                // 耐性
-                rareEnchantFilter = row => row.type == "Resistance";
-            }
-            else if (filterRoll < 60)
-            {
-                // 生産系
-                rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
-            }
-            else if (filterRoll < 68)
-            {
-                // 慧眼反魔突撃者パリィ不屈
-                rareEnchantFilter = row => row.category == "attribute" && 
-                (
-                    row.id == ENC.encHit ||
-                    row.id == SKILL.antiMagic ||
-                    row.id == ENC.rusher ||
-                    row.id == ENC.parry || 
-                    row.id == ENC.guts
-                );
-            }
-            else if (filterRoll < 76)
-            {
-                // 魔法強化信仰見切り盾の暴君射撃防御
-                rareEnchantFilter = row => row.category == "attribute" &&
-                (
-                    row.id == ENC.encSpell ||
-                    row.id == SKILL.faith ||
-                    row.id == SKILL.evasionPlus ||
-                    row.id == ENC.basher ||
-                    row.id == ENC.defense_range
-                );
-            }
-            else if (filterRoll == 99)
-            {
-                // ルーンの器
                 return EClass.sources.elements.rows.Where(r => r.alias == "slot_rune").FirstOrDefault();
             }
 
+            var candidateList = new List<SourceElement.Row>();
+            var gearType = (generatedGear.category.IsChildOf("melee") ? "melee" : "armor");
+            var gearCategory = generatedGear.category;
+
+            // chanceによる抽選は残しつつレアエンチャは出やすくする
+            Func<SourceElement.Row, bool> rareEnchantFilter;
+            if (gearType == "melee")
+            {
+                rareEnchantFilter = GetWeaponEnchantFilter();
+            }
+            else
+            {
+                rareEnchantFilter = GetArmorEnchantFilter();
+            }
+
             // フラグ系エンチャがボーナスで付くのはかわいそうなので弾いておく
-            foreach (var enchant in EClass.sources.elements.rows.Where(r => r.IsEncAppliable(gearCategory) && !r.tag.Contains("flag") && rareEnchantFilter(r)))
+            int sumChance = 0;
+            foreach (var enchant in EClass.sources.elements.rows.Where(r => r.IsEncAppliable(gearCategory) && !r.tag.Contains("flag") && rareEnchantFilter(r) && !r.tag.Contains("unused")))
             {
                 if (enchant.LV < generateLv + 15)
                 {
@@ -229,13 +160,78 @@ namespace RandomQuestExpantion.ModQuestTask
             return null;
         }
 
-        internal SourceElement.Row PickMeleeBonusEnchant(in Thing generatedGear, int generateLv)
+        internal virtual Func<SourceElement.Row, bool> GetArmorEnchantFilter()
         {
-            var candidateList = new List<SourceElement.Row>();
-            int sumChance = 0;
-            var gearCategory = generatedGear.category;
+            Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
+            int filterRoll = EClass.rnd(100);
 
-            // chanceによる抽選は残しつつレアエンチャは出やすくする
+            if (filterRoll < 12)
+            {
+                // 肉体系主能力
+                rareEnchantFilter = row => row.category == "attribute" &&
+                (
+                    row.id == SKILL.STR ||
+                    row.id == SKILL.END ||
+                    row.id == SKILL.DEX ||
+                    row.id == SKILL.CHA
+                );
+            }
+            else if (filterRoll < 24)
+            {
+                // 精神系主能力
+                rareEnchantFilter = row => row.category == "attribute" &&
+                (
+                    row.id == SKILL.PER ||
+                    row.id == SKILL.LER ||
+                    row.id == SKILL.WIL ||
+                    row.id == SKILL.MAG
+                );
+            }
+            else if (filterRoll < 36)
+            {
+                // 戦闘系
+                rareEnchantFilter = row => row.categorySub == "combat";
+            }
+            else if (filterRoll < 48)
+            {
+                // 耐性
+                rareEnchantFilter = row => row.type == "Resistance";
+            }
+            else if (filterRoll < 60)
+            {
+                // 生産系
+                rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
+            }
+            else if (filterRoll < 68)
+            {
+                // 慧眼反魔突撃者パリィ不屈
+                rareEnchantFilter = row =>
+                (
+                    row.id == ENC.encHit ||
+                    row.id == SKILL.antiMagic ||
+                    row.id == ENC.rusher ||
+                    row.id == ENC.parry ||
+                    row.id == ENC.guts
+                );
+            }
+            else if (filterRoll < 76)
+            {
+                // 魔法強化信仰見切り盾の暴君射撃防御
+                rareEnchantFilter = row =>
+                (
+                    row.id == ENC.encSpell ||
+                    row.id == SKILL.faith ||
+                    row.id == SKILL.evasionPlus ||
+                    row.id == ENC.basher ||
+                    row.id == ENC.defense_range
+                );
+            }
+
+            return rareEnchantFilter;
+        }
+
+        internal virtual Func<SourceElement.Row, bool> GetWeaponEnchantFilter()
+        {
             Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
             int filterRoll = EClass.rnd(100);
 
@@ -244,7 +240,7 @@ namespace RandomQuestExpantion.ModQuestTask
                 // 武器エンチャ系
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
             }
-            else if(filterRoll < 24)
+            else if (filterRoll < 24)
             {
                 // 属性追加
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
@@ -267,7 +263,7 @@ namespace RandomQuestExpantion.ModQuestTask
             else if (filterRoll < 68)
             {
                 // 連撃慧眼ヴォーパル突撃者パリィ不屈
-                rareEnchantFilter = row => row.category == "attribute" &&
+                rareEnchantFilter = row =>
                 (
                     row.id == ENC.mod_flurry ||
                     row.id == ENC.encHit ||
@@ -279,7 +275,7 @@ namespace RandomQuestExpantion.ModQuestTask
             else if (filterRoll < 76)
             {
                 // 逆襲魔法強化全特攻盾の暴君射撃防御
-                rareEnchantFilter = row => row.category == "attribute" &&
+                rareEnchantFilter = row =>
                 (
                     row.id == ENC.mod_frustration ||
                     row.id == ENC.encSpell ||
@@ -288,40 +284,18 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.defense_range
                 );
             }
-            else if (filterRoll == 99)
-            {
-                // ルーンの器
-                return EClass.sources.elements.rows.Where(r => r.alias == "slot_rune").FirstOrDefault();
-            }
 
-            // フラグ系エンチャがボーナスで付くのはかわいそうなので弾いておく
-            foreach (var enchant in EClass.sources.elements.rows.Where(r => r.IsEncAppliable(gearCategory) && !r.tag.Contains("flag") && rareEnchantFilter(r)))
-            {
-                if (enchant.LV < generateLv + 15)
-                {
-                    candidateList.Add(enchant);
-                    sumChance += enchant.chance;
-                }
-            }
-
-            if (sumChance == 0)
-            {
-                return null;
-            }
-
-            int roll = EClass.rnd(sumChance);
-            int temp = 0;
-            foreach (var enchant in candidateList)
-            {
-                temp += enchant.chance;
-                if (roll < temp)
-                {
-                    return enchant;
-                }
-            }
-
-            return null;
+            return rareEnchantFilter;
         }
+
+        internal virtual int CalcBonusMoney(in Chara boss)
+        {
+            int baseMoney = Mathf.Clamp((3 + boss.LV) * 10, 40, 20000000);
+
+            // curveは使うがバニラ依頼の強敵ボーナスはあまりにもしょっぱすぎるのでrate高め
+            return EClass.curve(baseMoney, 500, 2000, 90);
+        }
+
         internal int CalcEnchantStrength(in SourceElement.Row enchant, int generateLv)
         {
             if (enchant.alias == "slot_rune")
@@ -329,7 +303,10 @@ namespace RandomQuestExpantion.ModQuestTask
                 return (EClass.rnd(4) == 0) ? 2 : 1;
             }
 
-            int maxStrength = (int)((3 + Mathf.Min(generateLv / 10, 15)) + Mathf.Sqrt(generateLv * enchant.encFactor / 100));
+            int linear = 3 + Mathf.Min(generateLv / 10, 15);
+            int curvy = (int)Math.Min((long)generateLv * enchant.encFactor, Int32.MaxValue);
+
+            int maxStrength = linear + (int)Mathf.Sqrt(curvy / 100);
 
             int strength = (maxStrength * 7 / 10) + EClass.rnd(1 + maxStrength * 3 / 10);
             strength = (enchant.mtp + strength) / enchant.mtp;
@@ -342,42 +319,15 @@ namespace RandomQuestExpantion.ModQuestTask
             return strength;
         }
 
-        internal int CalcBonusMoney(in Chara boss)
+        internal static void RemoveEnchantRandomOne(Thing generatedGear)
         {
-            int baseMoney = Mathf.Clamp((3 + boss.LV) * 10, 40, 100000000);
-
-            // curveは使うがバニラ依頼の強敵ボーナスはあまりにもしょっぱすぎるのでrate高め
-            return EClass.curve(baseMoney, 500, 2000, 90);
-        }
-
-        internal void RemoveEnchantRandomOne(Thing generatedGear)
-        {
-            var relpaceTargetEnchant = generatedGear.elements.dict.Values.Where(e => e._source.category == "attribute" || e._source.category == "skill" || e._source.category == "enchant").RandomItem();
+            var baseEnchants = generatedGear.source.elementMap;
+            var relpaceTargetEnchant = generatedGear.elements.dict.Values.Where(e => (e._source.category == "attribute" || e._source.category == "skill" || e._source.category == "enchant") && baseEnchants.ContainsKey(e.id)).RandomItem();
 
             if (relpaceTargetEnchant != null)
             {
                 generatedGear.elements.SetBase(relpaceTargetEnchant.id, 0);
             }
-        }
-
-        internal bool IsNefiaBoss(in Chara killedChara)
-        {
-            // ボス討伐時はzone.Bossをnullにした後にOnKillCharaが呼ばれるため、EClass._zone.Boss == killedCharaで楽に判定できない
-            // まともにネフィアの主を判定する方法がないので力業
-
-            // 「ネフィアの主＝最下層にいるボス」として、最下層かどうかはShouldMakeExitで判定する
-            if (!EClass._zone.IsNefia || EClass._zone.ShouldMakeExit)
-            {
-                return false;
-            }
-
-            // 争いの祠で出てくるのもボス扱いなので引っかからないようにする
-            if (EClass._zone.Boss != null)
-            {
-                return false;
-            }
-
-            return killedChara.c_bossType == BossType.Boss;
         }
     }
 }
