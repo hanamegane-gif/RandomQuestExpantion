@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using RandomQuestExpantion.ModQuestTask;
+using RandomQuestExpantion.Patch;
 using System.Collections.Generic;
 
 namespace RandomQuestExpantion.ModQuests.Common
@@ -45,6 +46,14 @@ namespace RandomQuestExpantion.ModQuests.Common
             }
         }
 
+        public virtual void OnNefiaBeaten(in Chara boss)
+        {
+            if (task != null)
+            {
+                task.OnNefiaBeatenMod(boss);
+            }
+        }
+
         // 配達対象アイテムのIdだけを決める、エンチャントを撃破ボスLvに依存させたいので実体はボス討伐時に作る
         public override void SetIdThing()
         {
@@ -60,7 +69,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetRewardPlat(int money)
         {
-            return 1 + EClass.rnd(2) + curve(bonusMoney, 20, 20, 50);
+            return 1 + EClass.rnd(2) + curve(bonusMoney / 100, 20, 20, 60);
         }
 
         // 実際の配達対象を決めるのはこっち

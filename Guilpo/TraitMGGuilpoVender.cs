@@ -22,8 +22,8 @@ class TraitMGGuilpoVender : TraitGuilpoVender
         }
 
         // 8280: 軽量化(羽巻)
-        AddStockById(merchantChest, "scroll_random", stockNum: 10, fixedRefVal: 8288);
-        AddStockById(merchantChest, "rp_food", stockNum: 20);
+        AddStockById(merchantChest, "scroll_random", stockNum: 10, fixedRefVal: SPELL.SpReconstruction);
+        AddStockById(merchantChest, "rp_food", stockNum: 20, lv: 50);
         AddStockById(merchantChest, "medal", stockNum: 10);
         AddStockById(merchantChest, "plat", stockNum: 500);
         AddStockById(merchantChest, "bill_tax", stockNum: 3);

@@ -17,7 +17,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetRewardPlat(int money)
         {
-            return 1 + EClass.rnd(2) + EClass.curve(DangerLv / 5, 20, 20, 85);
+            return 1 + EClass.rnd(2) + EClass.curve(DangerLv / 50, 20, 20, 85);
         }
     }
 }

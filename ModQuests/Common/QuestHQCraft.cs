@@ -57,12 +57,12 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetBonus(Thing t)
         {
-            return t.GetPrice(CurrencyType.Money, sell: true, PriceType.Shipping, EClass.pc) * 3 * (QualityLvRequirement / 10) * (ElementLvRequirement / 10);
+            return t.GetPrice(CurrencyType.Money, sell: true, PriceType.Shipping, EClass.pc) * 3 * (QualityLvRequirement / 10) * (t.Evalue(ELEMENT.quality) / 10);
         }
 
         public override int GetRewardPlat(int money)
         {
-            return 1 + EClass.rnd(2) + curve(bonusMoney / 100, 20, 20, 50);
+            return 1 + EClass.rnd(2) + curve(bonusMoney / 100, 10, 10, 60);
         }
 
         internal virtual void SetTargetCategory()

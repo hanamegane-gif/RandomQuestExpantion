@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static RandomQuestExpantion.General.General;
+
 class TraitGuilpoVender : TraitVendingMachine
 {
     public virtual string CurrencyID => "ecopo";
@@ -74,6 +76,19 @@ class TraitGuilpoVender : TraitVendingMachine
 
         return generatedGear;
     }
+    internal virtual Thing GenerateRangedWeapon(string idThing, int generateLv)
+    {
+        // 奇跡以上確定の場合のバニラの神器率は5%
+        var gearRarity = (EClass.rnd(5) == 0) ? Rarity.Mythical : Rarity.Legendary;
+        var bp = new CardBlueprint { rarity = gearRarity, blesstedState = BlessedState.Normal };
+        CardBlueprint.Set(bp);
+
+        // スロット数やmodなどはバニラのルールに従う
+        var generatedGear = ThingGen.Create(idThing, lv: generateLv);
+        generatedGear.Identify(show: false, idtSource: IDTSource.SuperiorIdentify);
+
+        return generatedGear;
+    }
 
     internal virtual Thing GenerateRune(int generateLv, string forceId = "", bool reverse = false)
     {
@@ -100,7 +115,7 @@ class TraitGuilpoVender : TraitVendingMachine
         return rune;
     }
 
-    internal void AddStockById(Thing merchantChest, string id, int stockNum = -1, BlessedState bless = BlessedState.Normal, int charges = -1, int generateLv = 20, int fixedRefVal = -1, int idMat = -1, int idSkin = 0)
+    internal void AddStockById(Thing merchantChest, string id, int stockNum = -1, BlessedState bless = BlessedState.Normal, int charges = -1, int generateLv = 20, int fixedRefVal = -1, int idMat = -1, int idSkin = 0, int lv = -1)
     {
         var bp = new CardBlueprint { rarity = Rarity.Normal, blesstedState = bless };
         CardBlueprint.Set(bp);
@@ -116,6 +131,11 @@ class TraitGuilpoVender : TraitVendingMachine
         if (fixedRefVal != -1)
         {
             createdThing.refVal = fixedRefVal;
+        }
+
+        if (lv != -1)
+        {
+            createdThing.SetLv(lv);
         }
 
         createdThing.idSkin = ((idSkin == -1) ? EClass.rnd(createdThing.source.skins.Length + 1) : idSkin);
@@ -427,17 +447,6 @@ class TraitGuilpoVender : TraitVendingMachine
             return 10;
         }
         return 1;
-    }
-
-    internal static void RemoveEnchantRandomOne(Thing generatedGear)
-    {
-        var baseEnchants = generatedGear.source.elementMap;
-        var relpaceTargetEnchant = generatedGear.elements.dict.Values.Where(e => (e._source.category == "attribute" || e._source.category == "skill" || e._source.category == "enchant") && baseEnchants.ContainsKey(e.id)).RandomItem();
-
-        if (relpaceTargetEnchant != null)
-        {
-            generatedGear.elements.SetBase(relpaceTargetEnchant.id, 0);
-        }
     }
 
     internal static int CalcGenerateLv()

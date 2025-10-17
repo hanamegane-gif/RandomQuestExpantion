@@ -29,7 +29,7 @@ class TraitWGGuilpoVender : TraitGuilpoVender
         if (EClass.rnd(1000) == 0)
         {
             // 願い
-            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: 8390);
+            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpWish);
         }
         else
         {
@@ -39,7 +39,7 @@ class TraitWGGuilpoVender : TraitGuilpoVender
         if (EClass.rnd(200) == 0)
         {
             // ジュアッグ
-            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: 8406);
+            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpHealJure);
         }
         else
         {
@@ -49,7 +49,7 @@ class TraitWGGuilpoVender : TraitGuilpoVender
         if (EClass.rnd(200) == 0)
         {
             // 不死鳥
-            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: 8550);
+            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpRebirth);
         }
         else
         {
@@ -63,7 +63,7 @@ class TraitWGGuilpoVender : TraitGuilpoVender
         }
 
         // 8280: 軽量化(羽巻)
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, fixedRefVal: 8280);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, fixedRefVal: SPELL.SpLighten);
 
     }
 

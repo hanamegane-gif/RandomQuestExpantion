@@ -72,10 +72,9 @@ class TraitTGGuilpoVender : TraitGuilpoVender
             AddStockById(merchantChest, "1165", stockNum: 1);
         }
 
-        // 8250: 武器強化 8251: 防具強化
         AddStockById(merchantChest, "338", stockNum: 100, bless: BlessedState.Cursed);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: 8250);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: 8251);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantWeapon);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantArmor);
         AddStockById(merchantChest, "bucket", stockNum: 30, bless: BlessedState.Blessed);
         AddStockById(merchantChest, "bucket", stockNum: 30, bless: BlessedState.Cursed);
     }
