@@ -37,8 +37,8 @@ class TraitFGGuilpoVender : TraitGuilpoVender
         }
 
         // 8280: 軽量化(羽巻)
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Blessed, fixedRefVal: 8280);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: 8280);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Blessed, fixedRefVal: SPELL.SpLighten);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpLighten);
     }
 
     private string PickRandomWeaponID(string weaponSkill)

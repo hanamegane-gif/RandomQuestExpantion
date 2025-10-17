@@ -30,6 +30,12 @@ namespace RandomQuestExpantion.Patch
             InvokeMethod(task, targetmethod, new object[] { merchandise });
         }
 
+        public static void OnNefiaBeatenMod(this QuestTask task, Chara boss)
+        {
+            string targetmethod = "OnNefiaBeaten";
+            InvokeMethod(task, targetmethod, new object[] { boss });
+        }
+
         public static void InvokeMethod(in QuestTask task, string targetMethod, object[] args = null)
         {
             Type type = task.GetType();
