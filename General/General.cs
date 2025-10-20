@@ -115,5 +115,15 @@ namespace RandomQuestExpantion.General
                 map.things.Where(c => c.uid == UID).First().Destroy();
             }
         }
+        internal static void RemoveEnchantRandomOne(Thing gear)
+        {
+            var baseEnchants = gear.source.elementMap;
+            var relpaceTargetEnchant = gear.elements.dict.Values.Where(e => (e._source.category == "attribute" || e._source.category == "skill" || e._source.category == "enchant") && !baseEnchants.ContainsKey(e.id)).RandomItem();
+
+            if (relpaceTargetEnchant != null)
+            {
+                gear.elements.SetBase(relpaceTargetEnchant.id, 0);
+            }
+        }
     }
 }
