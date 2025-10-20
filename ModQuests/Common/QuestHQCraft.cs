@@ -62,7 +62,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetRewardPlat(int money)
         {
-            return 1 + EClass.rnd(2) + curve(bonusMoney / 100, 10, 10, 60);
+            return 1 + EClass.rnd(2) + (QualityLvRequirement * 4 / 30);
         }
 
         internal virtual void SetTargetCategory()

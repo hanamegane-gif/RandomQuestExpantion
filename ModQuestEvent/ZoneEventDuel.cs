@@ -22,9 +22,6 @@ namespace RandomQuestExpantion.ModQuestEvent
                 AggroEnemy(50);
                 EClass._zone.SetBGM(102);
                 max = enemies.Count;
-
-                RandomQuestExpantion.Log(EClass._zone?.Name ?? "ない");
-                RandomQuestExpantion.Log(EClass._zone.ParentZone?.Name ?? "ない");
             }
         }
 
@@ -74,6 +71,11 @@ namespace RandomQuestExpantion.ModQuestEvent
             CardBlueprint.Set(cardBlueprint);
 
             Chara createdChara = CharaGen.Create((EClass.rnd(10) == 0 ? "adv_fairy" : "adv"), generateLv);
+
+            int charaLv = (dangerLv < 100) ? dangerLv * 4 / 5 :
+                          (dangerLv < 300) ? dangerLv :
+                          (dangerLv < 500) ? dangerLv * 5 / 4 : generateLv;
+            createdChara.SetLv(charaLv);
 
             createdChara.c_bossType = BossType.Boss;
             createdChara.c_originalHostility = Hostility.Enemy;

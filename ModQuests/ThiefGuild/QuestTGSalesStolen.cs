@@ -13,6 +13,11 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             SetTask(new TaskTGSalesStolen());
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();

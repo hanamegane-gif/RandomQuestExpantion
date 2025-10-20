@@ -28,6 +28,11 @@ namespace RandomQuestExpantion.ModQuests.Common
             bonusMoney += bonus;
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 2 + EClass.rnd(2);
+        }
+
         public override string GetTextProgress()
         {
             ZoneEventFarmFieldWar @event = EClass._zone.events.GetEvent<ZoneEventFarmFieldWar>();

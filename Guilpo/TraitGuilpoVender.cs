@@ -25,7 +25,7 @@ class TraitGuilpoVender : TraitVendingMachine
 
     public override PriceType PriceType => PriceType.Default;
 
-    public override int CostRerollShop => 1;
+    public override int CostRerollShop => 3;
 
     public override bool AllowSell => false;
 
@@ -79,7 +79,8 @@ class TraitGuilpoVender : TraitVendingMachine
     internal virtual Thing GenerateRangedWeapon(string idThing, int generateLv)
     {
         // 奇跡以上確定の場合のバニラの神器率は5%
-        var gearRarity = (EClass.rnd(5) == 0) ? Rarity.Mythical : Rarity.Legendary;
+        // 遠隔武器の厳選は6s神器が出たらおしまいになるので確率を絞る
+        var gearRarity = (EClass.rnd(20) == 0) ? Rarity.Mythical : Rarity.Legendary;
         var bp = new CardBlueprint { rarity = gearRarity, blesstedState = BlessedState.Normal };
         CardBlueprint.Set(bp);
 

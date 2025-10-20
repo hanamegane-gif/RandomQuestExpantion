@@ -19,6 +19,11 @@ namespace RandomQuestExpantion.ModQuests.Common
             return new ZoneEventUrbanDefence();
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2) + EClass.curve(DangerLv / 25, 10, 20, 80);
+        }
+
         public override string GetTextProgress()
         {
             if (isComplete)

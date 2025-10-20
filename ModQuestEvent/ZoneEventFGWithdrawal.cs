@@ -36,7 +36,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         internal virtual int CalcDangerLv()
         { 
-            return EClass.pc.FameLv / 100 * 75 + 5;
+            return EClass.pc.FameLv * 75 / 100 + 5;
         }
 
         public new void NextWave(int add = 0)

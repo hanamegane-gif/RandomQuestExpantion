@@ -10,6 +10,11 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
         // 楽をするために必要なものを投資しているわけだし
         public override bool ForbidTeleport => false;
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();

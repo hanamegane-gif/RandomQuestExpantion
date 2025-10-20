@@ -12,7 +12,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetRewardPlat(int money)
         {
-            return 1 + EClass.rnd(2) + curve(bonusMoney / 100, 20, 20, 60);
+            return 1 + EClass.rnd(2) + curve(bonusMoney / 400, 6, 10, 75);
         }
 
         public virtual void OnNefiaBeaten(in Chara boss)
