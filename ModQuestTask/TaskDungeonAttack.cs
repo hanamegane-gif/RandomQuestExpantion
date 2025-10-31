@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using UnityEngine;
-using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestTask
 {
@@ -14,18 +13,10 @@ namespace RandomQuestExpantion.ModQuestTask
             return hasNefiaBossKilled;
         }
 
-        public override void OnKillChara(Chara c)
+        public virtual void OnNefiaBeaten(Chara boss)
         {
-            if (c.IsPCFaction)
-            {
-                return;
-            }
-
-            if (IsNefiaBoss(c))
-            {
-                hasNefiaBossKilled = true;
-                owner.bonusMoney += CalcBonusMoney(c);
-            }
+            hasNefiaBossKilled = true;
+            owner.bonusMoney += CalcBonusMoney(boss);
         }
 
         internal virtual int CalcBonusMoney(in Chara boss)

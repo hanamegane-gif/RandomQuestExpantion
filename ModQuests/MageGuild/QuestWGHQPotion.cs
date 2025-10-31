@@ -26,7 +26,7 @@ namespace RandomQuestExpantion.ModQuests.MageGuild
 
         internal override void SetQualityRequirement()
         {
-            QualityLvRequirement = Mathf.Clamp((EClass.pc.FameLv / 10) * 10, 20, 50);
+            QualityLvRequirement = Mathf.Clamp((EClass.pc.FameLv / 15) * 10, 20, 50);
         }
 
         internal override void SetAttributeRequirement()

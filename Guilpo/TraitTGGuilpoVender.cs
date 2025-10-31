@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 class TraitTGGuilpoVender : TraitGuilpoVender
 {
     public override string CurrencyID => "MOD_byakko_RQX_guilpo_thief";
@@ -38,9 +39,28 @@ class TraitTGGuilpoVender : TraitGuilpoVender
         "cooking",
     };
 
+    internal List<string> WeaponTypeList { get; } = new List<string>
+    {
+        "bow",
+        "crossbow",
+        "gun",
+        "cane",
+        "throw",
+    };
+
     internal override void GenerateMerchantStock(Thing merchantChest)
     {
         int generateLv = CalcGenerateLv();
+
+        foreach (var skill in WeaponTypeList)
+        {
+            string weaponId = (EClass.rnd(4) == 0) ? null : PickRandomWeaponID(skill);
+            if (weaponId != null)
+            {
+                AddStockByThing(merchantChest, GenerateRangedWeapon(weaponId, generateLv));
+            }
+        }
+
         int runeStock = 2 + EClass.rnd(3);
         for (int i = 0; i < runeStock; i++)
         {
@@ -72,11 +92,21 @@ class TraitTGGuilpoVender : TraitGuilpoVender
             AddStockById(merchantChest, "1165", stockNum: 1);
         }
 
-        // 8250: 武器強化 8251: 防具強化
         AddStockById(merchantChest, "338", stockNum: 100, bless: BlessedState.Cursed);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: 8250);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: 8251);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantWeapon);
+        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantArmor);
         AddStockById(merchantChest, "bucket", stockNum: 30, bless: BlessedState.Blessed);
         AddStockById(merchantChest, "bucket", stockNum: 30, bless: BlessedState.Cursed);
+    }
+
+    private string PickRandomWeaponID(string weaponSkill)
+    {
+        var candidateList = EClass.sources.things.rows.Where(r => r.category == weaponSkill && r.chance != 0 && r.trait.Any(t => t.Contains("ToolRange"))).ToList();
+        if (!candidateList.Any())
+        {
+            return null;
+        }
+
+        return candidateList.RandomItemWeighted(row => row.chance).id;
     }
 }

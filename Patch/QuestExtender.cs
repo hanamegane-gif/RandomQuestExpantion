@@ -5,7 +5,7 @@ namespace RandomQuestExpantion.Patch
 {
     static class QuestExtender
     {
-        // Questに独自イベントハンドラを実装する
+        // Questの独自イベントハンドラを呼び出す
         public static void OnInvestMod(this Quest quest)
         {
             string targetmethod = "OnInvest";
@@ -28,6 +28,12 @@ namespace RandomQuestExpantion.Patch
         {
             string targetmethod = "OnSoldMerchandise";
             InvokeMethod(quest, targetmethod, new object[] { merchandise });
+        }
+
+        public static void OnNefiaBeatenMod(this Quest quest, Chara boss)
+        {
+            string targetmethod = "OnNefiaBeaten";
+            InvokeMethod(quest, targetmethod, new object[] { boss });
         }
 
         public static void InvokeMethod(in Quest quest, string targetMethod, object[] args = null)

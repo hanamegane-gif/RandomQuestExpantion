@@ -32,6 +32,11 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             idThing = candidateList.RandomItem();
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2);
+        }
+
         public override void OnStart()
         {
             Thing thing = ThingGen.Create(idThing);

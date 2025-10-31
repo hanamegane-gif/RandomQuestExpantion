@@ -22,6 +22,11 @@ namespace RandomQuestExpantion.ModQuests.MageGuild
             return new ZoneInstanceSubdueGhost();
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();

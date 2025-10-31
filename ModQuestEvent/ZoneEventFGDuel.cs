@@ -34,6 +34,11 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             Chara createdChara = CharaGen.Create((EClass.rnd(2) == 0 ? "guild_warrior" : "merc_warrior"), generateLv);
 
+            int charaLv = (dangerLv < 100) ? dangerLv * 4 / 5 :
+                          (dangerLv < 300) ? dangerLv :
+                          (dangerLv < 500) ? dangerLv * 5 / 4 : generateLv;
+            createdChara.SetLv(charaLv);
+
             createdChara.c_bossType = BossType.Boss;
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;

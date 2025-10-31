@@ -16,7 +16,6 @@ namespace RandomQuestExpantion.ModQuestTask
 
         public override bool IsComplete()
         {
-            RandomQuestExpantion.Log("こんぷり");
             return InvestedTimes >= InvestRequirements;
         }
 

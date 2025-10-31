@@ -14,6 +14,11 @@ namespace RandomQuestExpantion.ModQuests.FighterGuild
             return new ZoneEventFGSubdue();
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();

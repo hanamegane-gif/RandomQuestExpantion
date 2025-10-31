@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
+using static RandomQuestExpantion.General.General;
+
 class TraitGuilpoVender : TraitVendingMachine
 {
     public virtual string CurrencyID => "ecopo";
@@ -23,7 +26,7 @@ class TraitGuilpoVender : TraitVendingMachine
 
     public override PriceType PriceType => PriceType.Default;
 
-    public override int CostRerollShop => 1;
+    public override int CostRerollShop => 3;
 
     public override bool AllowSell => false;
 
@@ -74,6 +77,20 @@ class TraitGuilpoVender : TraitVendingMachine
 
         return generatedGear;
     }
+    internal virtual Thing GenerateRangedWeapon(string idThing, int generateLv)
+    {
+        // 奇跡以上確定の場合のバニラの神器率は5%
+        // 遠隔武器の厳選は6s神器が出たらおしまいになるので確率を絞る
+        var gearRarity = (EClass.rnd(20) == 0) ? Rarity.Mythical : Rarity.Legendary;
+        var bp = new CardBlueprint { rarity = gearRarity, blesstedState = BlessedState.Normal };
+        CardBlueprint.Set(bp);
+
+        // スロット数やmodなどはバニラのルールに従う
+        var generatedGear = ThingGen.Create(idThing, lv: generateLv);
+        generatedGear.Identify(show: false, idtSource: IDTSource.SuperiorIdentify);
+
+        return generatedGear;
+    }
 
     internal virtual Thing GenerateRune(int generateLv, string forceId = "", bool reverse = false)
     {
@@ -100,7 +117,7 @@ class TraitGuilpoVender : TraitVendingMachine
         return rune;
     }
 
-    internal void AddStockById(Thing merchantChest, string id, int stockNum = -1, BlessedState bless = BlessedState.Normal, int charges = -1, int generateLv = 20, int fixedRefVal = -1, int idMat = -1, int idSkin = 0)
+    internal void AddStockById(Thing merchantChest, string id, int stockNum = -1, BlessedState bless = BlessedState.Normal, int charges = -1, int generateLv = 20, int fixedRefVal = -1, int idMat = -1, int idSkin = 0, int lv = -1)
     {
         var bp = new CardBlueprint { rarity = Rarity.Normal, blesstedState = bless };
         CardBlueprint.Set(bp);
@@ -116,6 +133,22 @@ class TraitGuilpoVender : TraitVendingMachine
         if (fixedRefVal != -1)
         {
             createdThing.refVal = fixedRefVal;
+        }
+        else if(createdThing.refVal != 0)
+        {
+            if (EClass.sources.elements.rows.Where(r => r.id == createdThing.refVal).First().tag.Contains("noShop"))
+            {
+                //noShopはレア枠にする
+                if (EClass.rnd(5) != 0)
+                {
+                    return;
+                }
+            }
+        }
+
+        if (lv != -1)
+        {
+            createdThing.SetLv(lv);
         }
 
         createdThing.idSkin = ((idSkin == -1) ? EClass.rnd(createdThing.source.skins.Length + 1) : idSkin);
@@ -429,17 +462,6 @@ class TraitGuilpoVender : TraitVendingMachine
         return 1;
     }
 
-    internal static void RemoveEnchantRandomOne(Thing generatedGear)
-    {
-        var baseEnchants = generatedGear.source.elementMap;
-        var relpaceTargetEnchant = generatedGear.elements.dict.Values.Where(e => (e._source.category == "attribute" || e._source.category == "skill" || e._source.category == "enchant") && baseEnchants.ContainsKey(e.id)).RandomItem();
-
-        if (relpaceTargetEnchant != null)
-        {
-            generatedGear.elements.SetBase(relpaceTargetEnchant.id, 0);
-        }
-    }
-
     internal static int CalcGenerateLv()
     {
         // 現状の進行度(ボスのLv)より少し弱い程度
@@ -466,9 +488,9 @@ class TraitGuilpoVender : TraitVendingMachine
         }
 
         int linear = 3 + Mathf.Min(generateLv / 10, 15);
-        int curvy = (int)Math.Min((long)generateLv * enchant.encFactor, Int32.MaxValue);
+        int curvy = (int)Math.Min((long)generateLv * enchant.encFactor / 100, Int32.MaxValue);
 
-        int maxStrength = linear + (int)Mathf.Sqrt(curvy / 100);
+        int maxStrength = linear + (int)Mathf.Sqrt(curvy);
 
         int strength = (maxStrength * 7 / 10) + EClass.rnd(1 + maxStrength * 3 / 10);
         strength = (enchant.mtp + strength) / enchant.mtp;

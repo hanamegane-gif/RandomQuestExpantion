@@ -74,7 +74,6 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             // クソクエになるのでリッチは出禁！！！！
             var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => r.race_row.IsUndead && r.id != "lich").Select(lv: dangerLv);
-            RandomQuestExpantion.Log(spawnCharaSource);
             int charaLv = (spawnCharaSource.LV + ((dangerLv >= 51) ? 50 : 0)) * Mathf.Max(1, (dangerLv - 1) / 50);
 
             CardBlueprint cardBlueprint = new CardBlueprint
@@ -86,7 +85,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             Chara createdChara = CharaGen.Create(spawnCharaSource.id);
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;
-            RandomQuestExpantion.Log(createdChara.Name);
 
             return createdChara;
         }
@@ -99,6 +97,11 @@ namespace RandomQuestExpantion.ModQuestEvent
             for (int i = 0; i < 25; i++)
             {
                 genBounds.TryAddMapPiece(MapPiece.Type.Concert, 0f, "");
+            }
+
+            foreach (Thing thing in EClass._map.things)
+            {
+                thing.isNPCProperty = true;
             }
         }
 

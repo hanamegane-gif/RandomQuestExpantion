@@ -19,30 +19,22 @@ namespace RandomQuestExpantion.ModQuestTask
             return false;
         }
 
-        public override void OnKillChara(Chara c)
+        public virtual void OnNefiaBeaten(Chara boss)
         {
-            if (c.IsPCFaction)
-            {
-                return;
-            }
-
             if (hasNefiaBossKilled)
             {
                 return;
             }
 
-            if (IsNefiaBoss(c))
-            {
-                owner.bonusMoney += CalcBonusMoney(c);
+            owner.bonusMoney += CalcBonusMoney(boss);
 
-                var questInstance = (QuestDungeonRetrieve)this.owner;
-                var targetIdThing = questInstance.idThing;
-                var spawnPosition = c.pos.GetNearestPoint(allowInstalled: false, minRadius: 1);
-                var generateLv = c.LV;
+            var questInstance = (QuestDungeonRetrieve)this.owner;
+            var targetIdThing = questInstance.idThing;
+            var spawnPosition = boss.pos.GetNearestPoint(allowInstalled: false, minRadius: 1);
+            var generateLv = boss.LV;
 
-                SpawnQuestChest(spawnPosition, targetIdThing, generateLv);
-                hasNefiaBossKilled = true;
-            }
+            SpawnQuestChest(spawnPosition, targetIdThing, generateLv);
+            hasNefiaBossKilled = true;
         }
 
         // 追加で出る宝箱に入れておけば多分気付くはず！ということで配達対象を神秘箱に入れて生成
@@ -304,9 +296,9 @@ namespace RandomQuestExpantion.ModQuestTask
             }
 
             int linear = 3 + Mathf.Min(generateLv / 10, 15);
-            int curvy = (int)Math.Min((long)generateLv * enchant.encFactor, Int32.MaxValue);
+            int curvy = (int)Math.Min((long)generateLv * enchant.encFactor / 100, Int32.MaxValue);
 
-            int maxStrength = linear + (int)Mathf.Sqrt(curvy / 100);
+            int maxStrength = linear + (int)Mathf.Sqrt(curvy);
 
             int strength = (maxStrength * 7 / 10) + EClass.rnd(1 + maxStrength * 3 / 10);
             strength = (enchant.mtp + strength) / enchant.mtp;
@@ -317,17 +309,6 @@ namespace RandomQuestExpantion.ModQuestTask
             }
 
             return strength;
-        }
-
-        internal static void RemoveEnchantRandomOne(Thing generatedGear)
-        {
-            var baseEnchants = generatedGear.source.elementMap;
-            var relpaceTargetEnchant = generatedGear.elements.dict.Values.Where(e => (e._source.category == "attribute" || e._source.category == "skill" || e._source.category == "enchant") && baseEnchants.ContainsKey(e.id)).RandomItem();
-
-            if (relpaceTargetEnchant != null)
-            {
-                generatedGear.elements.SetBase(relpaceTargetEnchant.id, 0);
-            }
         }
     }
 }

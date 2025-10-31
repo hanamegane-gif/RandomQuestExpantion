@@ -15,6 +15,11 @@ namespace RandomQuestExpantion.ModQuests.FighterGuild
             SetTask(new TaskFGStrongerHunt());
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 2 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();

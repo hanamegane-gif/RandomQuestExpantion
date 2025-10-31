@@ -12,6 +12,11 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
             SetTask(new TaskMGHunt());
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 1 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();

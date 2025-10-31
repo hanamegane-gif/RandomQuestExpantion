@@ -15,6 +15,9 @@ namespace RandomQuestExpantion.ModQuests
 
             switch (questType)
             {
+                case "QuestCrimFactory":
+                    questInstance = new QuestCrimFactory();
+                    break;
                 case "QuestDuel":
                     questInstance = new QuestDuel();
                     break;
@@ -24,8 +27,14 @@ namespace RandomQuestExpantion.ModQuests
                 case "QuestDungeonRetrieve":
                     questInstance = new QuestDungeonRetrieve();
                     break;
+                case "QuestFish":
+                    questInstance = new QuestFish();
+                    break;
                 case "QuestFarmFieldWar":
                     questInstance = new QuestFarmFieldWar();
+                    break;
+                case "QuestHerbHarvest":
+                    questInstance = new QuestHerbHarvest();
                     break;
                 case "QuestHQFurniture":
                     questInstance = new QuestHQFurniture();
@@ -87,6 +96,9 @@ namespace RandomQuestExpantion.ModQuests
                 case "QuestMGShipping":
                     questInstance = new QuestMGShipping();
                     break;
+                case "QuestTGCrimFactory":
+                    questInstance = new QuestTGCrimFactory();
+                    break;
                 case "QuestTGDeliver":
                     questInstance = new QuestTGDeliver();
                     break;
@@ -110,6 +122,9 @@ namespace RandomQuestExpantion.ModQuests
                     break;
                 case "QuestWGDungeonRetrieve":
                     questInstance = new QuestWGDungeonRetrieve();
+                    break;
+                case "QuestWGHerbHarvest":
+                    questInstance = new QuestWGHerbHarvest();
                     break;
                 case "QuestWGHQPotion":
                     questInstance = new QuestWGHQPotion();

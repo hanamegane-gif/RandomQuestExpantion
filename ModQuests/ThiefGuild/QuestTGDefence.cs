@@ -16,6 +16,11 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             return new ZoneEventTGDefence();
         }
 
+        public override int GetRewardPlat(int money)
+        {
+            return 4 + EClass.rnd(2);
+        }
+
         public override void OnDropReward()
         {
             base.OnDropReward();
