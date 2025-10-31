@@ -151,6 +151,11 @@ class TraitGuilpoVender : TraitVendingMachine
             createdThing.SetLv(lv);
         }
 
+        if (lv != -1)
+        {
+            createdThing.SetLv(lv);
+        }
+
         createdThing.idSkin = ((idSkin == -1) ? EClass.rnd(createdThing.source.skins.Length + 1) : idSkin);
 
         AddStockByThing(merchantChest, createdThing);

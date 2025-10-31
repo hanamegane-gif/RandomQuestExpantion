@@ -84,5 +84,23 @@ namespace RandomQuestExpantion.ModQuests.Common
                 }
             }
         }
+
+        public new Thing DropReward(string id)
+        {
+            return DropReward(ThingGen.Create(id));
+        }
+
+        // 広域マップ上で完了する可能性があるためpc.pickを使う必要がある
+        public new Thing DropReward(Thing t)
+        {
+            if (EClass._zone != null && !EClass._zone.IsRegion)
+            {
+                return EClass.player.DropReward(t);
+            }
+            else
+            {
+                return EClass.pc.Pick(t);
+            }
+        }
     }
 }
