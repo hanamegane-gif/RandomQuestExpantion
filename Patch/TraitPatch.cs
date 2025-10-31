@@ -1,4 +1,6 @@
 ﻿using HarmonyLib;
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace RandomQuestExpantion.Patch
@@ -8,7 +10,7 @@ namespace RandomQuestExpantion.Patch
     class TraitPatch
     {
         [HarmonyPatch(typeof(Trait), nameof(Trait.OnBarter)), HarmonyPrefix]
-        internal static bool GuilpoStockPatch(Trait __instance)
+        internal static bool GuilpoStockPatch(Trait __instance, bool reroll)
         {
             if (__instance is TraitGuilpoVender)
             {

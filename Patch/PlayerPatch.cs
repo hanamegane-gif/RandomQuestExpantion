@@ -6,6 +6,7 @@ using static RandomQuestExpantion.General.General;
 namespace RandomQuestExpantion.Patch
 {
     // ギルド員はほぼ中立なので話しかけやすいように友好にしておく
+    // 交換所と掲示板をギルドに設置する
     [HarmonyPatch]
     class PlayerPatch
     {

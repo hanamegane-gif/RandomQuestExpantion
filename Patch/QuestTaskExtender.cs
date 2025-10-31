@@ -5,7 +5,7 @@ namespace RandomQuestExpantion.Patch
 {
     static class QuestTaskExtender
     {
-        // QuestTaskに独自イベントハンドラを実装する
+        // QuestTaskの独自イベントハンドラを呼び出す
         public static void OnInvestMod(this QuestTask task)
         {
             string targetmethod = "OnInvest";

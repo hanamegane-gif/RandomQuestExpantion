@@ -7,7 +7,6 @@ namespace RandomQuestExpantion.ModQuestEvent
     {
         internal override HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
         {
-            "gnome",
             "dog_hound",
             "rock_thrower",
             "rogue",

@@ -10,7 +10,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override string RefDrama2 => GetElementText(EClass.sources.elements.GetRow(2.ToString()), QualityLvRequirement);
 
-        public override string RefDrama3 => GetElementText(EClass.sources.elements.GetRow(ElementIdRequirement.ToString()), QualityLvRequirement);
+        public override string RefDrama3 => GetElementText(EClass.sources.elements.GetRow(ElementIdRequirement.ToString()), ElementLvRequirement);
 
         [JsonProperty]
         public int QualityLvRequirement = 0;

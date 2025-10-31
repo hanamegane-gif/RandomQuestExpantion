@@ -1,4 +1,6 @@
-﻿namespace RandomQuestExpantion.Guilpo
+﻿using System.Linq;
+
+namespace RandomQuestExpantion.Guilpo
 {
     class PriceSetting
     {
@@ -94,19 +96,35 @@
 
         internal static int GetSpellBookPrice(in Thing spellBook)
         {
-            if (spellBook.refVal == SPELL.SpHealJure || spellBook.refVal == SPELL.SpRebirth || spellBook.refVal == SPELL.SpWish)
+            int refSpell = spellBook.refVal;
+
+            if (refSpell == SPELL.SpHealJure || refSpell == SPELL.SpRebirth || refSpell == SPELL.SpWish)
             {
                 return 10;
             }
+
+            if (EClass.sources.elements.rows.Where(r => r.id == refSpell).First().tag.Contains("noShop"))
+            {
+                return 6;
+            }
+
             return 3;
         }
 
         internal static int GetRodPrice(in Thing rod)
         {
+            int refSpell = rod.refVal;
+
             if (rod.id == "rod_wish")
             {
                 return (rod.c_charges == 0) ? 7 : 77;
             }
+
+            if (EClass.sources.elements.rows.Where(r => r.id == refSpell).First().tag.Contains("noShop"))
+            {
+                return 6;
+            }
+
             return 3;
         }
 

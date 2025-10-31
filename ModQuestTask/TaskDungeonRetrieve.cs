@@ -21,6 +21,11 @@ namespace RandomQuestExpantion.ModQuestTask
 
         public virtual void OnNefiaBeaten(Chara boss)
         {
+            if (hasNefiaBossKilled)
+            {
+                return;
+            }
+
             owner.bonusMoney += CalcBonusMoney(boss);
 
             var questInstance = (QuestDungeonRetrieve)this.owner;
@@ -291,9 +296,9 @@ namespace RandomQuestExpantion.ModQuestTask
             }
 
             int linear = 3 + Mathf.Min(generateLv / 10, 15);
-            int curvy = (int)Math.Min((long)generateLv * enchant.encFactor, Int32.MaxValue);
+            int curvy = (int)Math.Min((long)generateLv * enchant.encFactor / 100, Int32.MaxValue);
 
-            int maxStrength = linear + (int)Mathf.Sqrt(curvy / 100);
+            int maxStrength = linear + (int)Mathf.Sqrt(curvy);
 
             int strength = (maxStrength * 7 / 10) + EClass.rnd(1 + maxStrength * 3 / 10);
             strength = (enchant.mtp + strength) / enchant.mtp;

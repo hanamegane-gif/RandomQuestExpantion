@@ -15,7 +15,7 @@ namespace RandomQuestExpantion.ModQuests.Common
         internal override void SetQualityRequirement()
         {
             // 名声だけを使って算出する、依頼難易度はあくまで期限の短さからくるものとする
-            QualityLvRequirement = Mathf.Clamp((EClass.pc.FameLv / 10) * 10, 20, 50);
+            QualityLvRequirement = Mathf.Clamp((EClass.pc.FameLv / 15) * 10, 20, 50);
         }
 
         internal override void SetAttributeRequirement()

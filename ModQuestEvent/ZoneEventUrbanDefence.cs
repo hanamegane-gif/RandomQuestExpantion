@@ -16,7 +16,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         [JsonProperty]
         public int CurrentWave = 0;
 
-        public int RoundUntilNextWave => 12; // 次Waveまで7 * 3.5Tの間隔
+        public int RoundUntilNextWave => 10; // 次Waveまで10 * 3.5Tの間隔
 
         public bool IsCompletable => !IsRemainsNextWave && !IsEngaging;
 
@@ -28,7 +28,13 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         public int RemainWaves => MaxWaves - CurrentWave;
 
-        public bool ShouldTriggerNextWave => IsRemainsNextWave && (NextWaveRoundRemains <= 0 || !IsEngaging);
+        public bool ShouldTriggerNextWave => IsRemainsNextWave && (CondiTooLate || CondiLowEnemy || CondiWaveSkip);
+
+        public bool CondiWaveSkip => !IsEngaging;
+
+        public bool CondiLowEnemy => NextWaveRoundRemains <= 0 && enemies.Count <= 3;
+
+        public bool CondiTooLate => NextWaveRoundRemains <= -20;
 
         // クエストに登場させる敵を選ぶ仕組み
         // 街で出されるクエストではないので適当なの置いておく
@@ -62,26 +68,20 @@ namespace RandomQuestExpantion.ModQuestEvent
         public override void _OnTickRound()
         {
             NextWaveRoundRemains--;
+            CheckClear();
             if (ShouldTriggerNextWave)
             {
                 NextWave();
-            }
-            else if (!IsRemainsNextWave)
-            {
-                CheckClear();
             }
             AggroEnemy();
         }
 
         public override void OnCharaDie(Chara c)
         {
+            CheckClear();
             if (ShouldTriggerNextWave)
             {
                 NextWave();
-            }
-            else if (!IsRemainsNextWave)
-            {
-                CheckClear();
             }
         }
 
@@ -100,19 +100,12 @@ namespace RandomQuestExpantion.ModQuestEvent
                     enemies.Remove(id);
                 }
             });
-            if (enemies.Count == 0)
+            if (IsCompletable)
             {
                 EClass._zone.instance.status = ZoneInstance.Status.Success;
                 Msg.Say("subdue_complete");
                 EClass._zone.SetBGM();
                 SE.Play("Jingle/fanfare");
-                /*
-                EClass.player.returnInfo = new Player.ReturnInfo
-                {
-                    turns = 1,
-                    isEvac = true
-                };
-                */
             }
         }
 
@@ -123,14 +116,14 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             SE.Play("warhorn");
             Msg.Say("warhorn");
-            Msg.Say("defense_wave", CurrentWave.ToString() ?? "", EClass._zone.DangerLv.ToString() ?? "");
+            Msg.Say("defense_wave", CurrentWave.ToString() ?? "", CalcZoneDangerLv().ToString() ?? "");
             SpawnEnemies(EClass._zone._dangerLv, CalcNumberOfEnemies());
             AggroEnemy(15);
         }
 
         internal virtual int CalcNumberOfEnemies()
         {
-            return 10 + EClass.rndHalf(base.quest.difficulty * 3);
+            return 8 + EClass.rnd(3 + base.quest.difficulty);
         }
 
         internal virtual void SpawnEnemies(int dangerLv, int numEnemies = 1)

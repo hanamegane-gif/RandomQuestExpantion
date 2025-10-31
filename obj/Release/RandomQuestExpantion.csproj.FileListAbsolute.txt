@@ -1,0 +1,6 @@
+C:\Program Files (x86)\Steam\steamapps\common\Elin\Package\Mod_QEX\RandomQuestExpantion.dll
+C:\Program Files (x86)\Steam\steamapps\common\Elin\Package\Mod_QEX\RandomQuestExpantion.pdb
+C:\Users\ozaki\source\repos\QuestExpansion\ClassLibrary2\obj\Release\RandomQuestExpantion.csproj.AssemblyReference.cache
+C:\Users\ozaki\source\repos\QuestExpansion\ClassLibrary2\obj\Release\RandomQuestExpantion.csproj.CoreCompileInputs.cache
+C:\Users\ozaki\source\repos\QuestExpansion\ClassLibrary2\obj\Release\RandomQuestExpantion.dll
+C:\Users\ozaki\source\repos\QuestExpansion\ClassLibrary2\obj\Release\RandomQuestExpantion.pdb

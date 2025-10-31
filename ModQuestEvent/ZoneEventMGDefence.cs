@@ -9,7 +9,6 @@ namespace RandomQuestExpantion.ModQuestEvent
         // ギルド構成員、傭兵、盗賊っぽい人型モンスター、飼いならしやすそうなモンスターや動物
         internal override HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
         {
-            "gnome",
             "dog_hound",
             "rock_thrower",
             "rogue",

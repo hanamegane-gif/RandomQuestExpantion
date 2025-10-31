@@ -10,7 +10,7 @@ namespace RandomQuestExpantion.Patch
         [HarmonyPatch(typeof(TraitChara), "get_CanGiveRandomQuest"), HarmonyPrefix]
         internal static bool FriendlyGuildPatch(ref bool __result, TraitChara __instance)
         {
-            if (IsGuild(__instance.owner.currentZone))
+            if (IsGuild(__instance.owner.currentZone) && __instance.owner.IsHuman)
             {
                 __result = true;
                 return false;

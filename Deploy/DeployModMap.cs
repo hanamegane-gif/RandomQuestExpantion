@@ -7,9 +7,11 @@ namespace RandomQuestExpantion.Patch
 {
     class DeployModMap
     {
+        const string __MOD_MAP_DIR__ = "maps";
+
         internal static bool DeployModMaps(in PluginInfo info)
         {
-            string sourceDir = Path.Combine(Path.GetDirectoryName(info.Location), "maps") ;
+            string sourceDir = Path.Combine(Path.GetDirectoryName(info.Location), __MOD_MAP_DIR__) ;
             string targetDir = CorePath.ZoneSave;
 
             if (!Directory.Exists(sourceDir))

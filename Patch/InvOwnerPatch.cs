@@ -109,7 +109,7 @@ namespace RandomQuestExpantion.Patch
 
         // 独自通貨のアイコンはないのでエコポアイコンで代用する
         [HarmonyPatch(typeof(InvOwner), nameof(InvOwner.IDCostIcon)), HarmonyPrefix]
-        internal static bool QuestCreatePatch(ref string __result, InvOwner __instance, ref Thing t)
+        internal static bool CurrencyIconPatch(ref string __result, InvOwner __instance, ref Thing t)
         {
             var ownerTrait = __instance.owner.trait;
             var traderTrait = InvOwner.Trader.owner.trait;

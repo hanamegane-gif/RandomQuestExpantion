@@ -1,13 +1,10 @@
-﻿using HarmonyLib;
-using System;
+using HarmonyLib;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RandomQuestExpantion.Patch
 {
+    // QuestTaskに独自のイベントハンドラを実装する
     [HarmonyPatch]
     class CharaPatch
     {
