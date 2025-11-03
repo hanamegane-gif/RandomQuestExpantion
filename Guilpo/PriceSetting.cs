@@ -71,7 +71,7 @@ namespace RandomQuestExpantion.Guilpo
 
         internal static int GetHammerPrice(in Thing hammer)
         {
-            return 8;
+            return 10;
         }
 
         internal static int GetBillPrice(in Thing bill)
