@@ -151,11 +151,6 @@ class TraitGuilpoVender : TraitVendingMachine
             createdThing.SetLv(lv);
         }
 
-        if (lv != -1)
-        {
-            createdThing.SetLv(lv);
-        }
-
         createdThing.idSkin = ((idSkin == -1) ? EClass.rnd(createdThing.source.skins.Length + 1) : idSkin);
 
         AddStockByThing(merchantChest, createdThing);
@@ -169,7 +164,7 @@ class TraitGuilpoVender : TraitVendingMachine
 
     internal virtual SourceElement.Row PickBonusEnchant(in Thing generatedThing, int generateLv)
     {
-        if (EClass.rnd(100) == 0)
+        if (!(generatedThing.trait is TraitRune) && EClass.rnd(100) == 0)
         {
             return EClass.sources.elements.rows.Where(r => r.alias == "slot_rune").FirstOrDefault();
         }

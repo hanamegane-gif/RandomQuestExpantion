@@ -14,11 +14,14 @@ class TraitMGGuilpoVender : TraitGuilpoVender
             AddStockByThing(merchantChest, GenerateRune(generateLv));
         }
 
-        int hammerStock = 1 + EClass.rnd(3);
-        for (int i = 0; i < runeStock; i++)
+        for (int i = 0; i < 4; i++)
         {
-            SourceMaterial.Row randomMaterial = MATERIAL.GetRandomMaterial(80 + 10, tryLevelMatTier: true);
-            AddStockById(merchantChest, "mathammer", stockNum: 1, idMat: randomMaterial.id);
+            int hammerStock = 1 + EClass.rnd(2);
+            for (int j = 0; j < hammerStock; j++)
+            {
+                SourceMaterial.Row randomMaterial = MATERIAL.GetRandomMaterial((25 * j) + 5, tryLevelMatTier: true);
+                AddStockById(merchantChest, "mathammer", stockNum: 1, idMat: randomMaterial.id);
+            }
         }
 
         // 8280: 軽量化(羽巻)
