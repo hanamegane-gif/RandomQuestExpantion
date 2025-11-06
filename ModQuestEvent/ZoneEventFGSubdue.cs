@@ -15,7 +15,6 @@ namespace RandomQuestExpantion.ModQuestEvent
                 AggroEnemy(15);
                 EClass._zone.SetBGM(102);
                 max = enemies.Count;
-                EClass._zone.parent = FighterGuildZone;
             }
         }
 

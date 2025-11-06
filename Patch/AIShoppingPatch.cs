@@ -17,14 +17,14 @@ namespace RandomQuestExpantion.Patch
                 .MatchEndForward
                 (
                     new CodeMatch(OpCodes.Ldloc_2),
-                    new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(List<Card>), nameof(List<Card>.Remove))),
-                    new CodeMatch(OpCodes.Pop)
+                    new CodeMatch(OpCodes.Ldc_I4_0),
+                    new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(Card), "set_isSale"))
 
-                    //IL_008c: ldloc.2
-                    //IL_008d: callvirt instance bool class [mscorlib] System.Collections.Generic.List`1<class Card>::Remove(!0)
-                    //IL_0092: pop
+
+                    //IL_0072: ldloc.2
+                    //IL_0073: ldc.i4.0
+                    //IL_0074: callvirt instance void Card::set_isSale(bool)           
                 )
-                .Advance(1)
                 .InsertAndAdvance
                 (
                     new CodeInstruction(OpCodes.Ldloc_2),

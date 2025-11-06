@@ -23,7 +23,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             // 1269: カレー
             var candidateList = new HashSet<string> { 
                 "drug_crim", "334", "gallows", "diary_lady", 
-                "statue_weird", "painting1", "torture_cross", "syringe_gene", 
+                "statue_weird", "267", "torture_cross", "syringe_gene", 
                 "syringe_heaven", "stethoscope", "butcherknife" ,"837",
                 "271", "272", "273", "958",
                 "mask_jason", "mask_anon", "rod_wish", "goodness",

@@ -21,14 +21,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             "lion", // ダルフィにいたから呼んできましたシリーズその1
             "giant", // ダルフィにいたから呼んできましたシリーズその2
         };
-        public override void OnVisit()
-        {
-            base.OnVisit();
-            if (!EClass.game.isLoading)
-            {
-                EClass._zone.parent = MerchantGuildZone;
-            }
-        }
 
         internal override void SpawnEnemies(int dangerLv, int numEnemies = 1)
         {

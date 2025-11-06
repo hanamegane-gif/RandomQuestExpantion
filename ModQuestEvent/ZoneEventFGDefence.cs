@@ -24,15 +24,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             "merc_warrior",
             "scholar", // 特に戦闘能力はないけど呼ばれたシリーズその1
         };
-        public override void OnVisit()
-        {
-            base.OnVisit();
-            if (!EClass.game.isLoading)
-            {
-                // ギルドマップから受注するとParentZoneが無くなるので戻ってこれなくなる
-                EClass._zone.parent = FighterGuildZone;
-            }
-        }
 
         internal override void SpawnEnemies(int dangerLv, int numEnemies = 1)
         {

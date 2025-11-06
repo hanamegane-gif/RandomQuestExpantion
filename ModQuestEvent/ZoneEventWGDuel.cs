@@ -5,14 +5,6 @@ namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventWGDuel : ZoneEventDuel
     {
-        public override void OnVisit()
-        {
-            base.OnVisit();
-            if (!EClass.game.isLoading)
-            {
-                EClass._zone.parent = MageGuildZone;
-            }
-        }
 
         internal override int CalcNumberOfEnemies()
         {

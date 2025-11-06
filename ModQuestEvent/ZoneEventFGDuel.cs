@@ -5,16 +5,6 @@ namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventFGDuel : ZoneEventDuel
     {
-        public override void OnVisit()
-        {
-            base.OnVisit();
-            if (!EClass.game.isLoading)
-            {
-                // ギルドマップから受注すると設定してやらないとParentZoneが存在しないので戻ってこれなくなる
-                EClass._zone.parent = FighterGuildZone;
-            }
-        }
-
         internal override int CalcNumberOfEnemies()
         {
             return 2 + base.quest.difficulty;

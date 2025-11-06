@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using HarmonyLib;
 using RandomQuestExpantion.Patch;
+using RandomQuestExpantion.General;
 using System.Collections.Generic;
 using System;
 using System.Reflection.Emit;
@@ -12,7 +13,7 @@ namespace RandomQuestExpantion
     {
         internal const string GUID = "byakko.mods.RQX";
         internal const string Name = "RandomQuestExpantion";
-        internal const string Version = "0.23.209";
+        internal const string Version = "0.23.222";
     }
 
     [BepInPlugin(ModInfo.GUID, ModInfo.Name, ModInfo.Version)]
@@ -39,6 +40,7 @@ namespace RandomQuestExpantion
                 ImportExcelPatch.execImportLanguages(Info);
                 ImportExcelPatch.execImportZones(Info);
                 ImportExcelPatch.execImportThings(Info);
+                ModMapPieceManager.Init(Info);
             }
         }
 
