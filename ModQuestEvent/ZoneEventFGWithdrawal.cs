@@ -28,10 +28,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             EClass._zone.SetBGM(107);
             Msg.Say("defense_start");
             NextWave();
-
-            // これをやると現在のマップの危険度が壊れることがわかった
-            // だからといってこの処理を無くすと戦争マップから離脱できない
-            EClass._zone.parent = FighterGuildZone;
         }
 
         internal virtual int CalcDangerLv()

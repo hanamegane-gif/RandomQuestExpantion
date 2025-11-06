@@ -24,14 +24,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             "merc_warrior",
             "silvereye",
         };
-        public override void OnVisit()
-        {
-            base.OnVisit();
-            if (!EClass.game.isLoading)
-            {
-                EClass._zone.parent = ThiefGuildZone;
-            }
-        }
 
         internal override void SpawnEnemies(int dangerLv, int numEnemies = 1)
         {

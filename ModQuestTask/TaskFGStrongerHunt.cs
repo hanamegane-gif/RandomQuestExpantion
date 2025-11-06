@@ -3,7 +3,7 @@
     class TaskFGStrongerHunt : TaskFGHunt
     {
         public override string RefDrama3 => NefiaDangerLvRequirement.ToString();
-        public int NefiaDangerLvRequirement => this.owner.DangerLv;
+        public int NefiaDangerLvRequirement => (this.owner.DangerLv * 3) / 4;
 
         public override void OnKillChara(Chara c)
         {
