@@ -27,11 +27,6 @@ namespace RandomQuestExpantion.ModQuests.Common
             deadline = 0;
         }
 
-        public override int GetRewardPlat(int money)
-        {
-            return 1 + EClass.rnd(2);
-        }
-
         public virtual void OnSoldSlave(Chara slave)
         {
 

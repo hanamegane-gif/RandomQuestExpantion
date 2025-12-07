@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
+using RandomQuestExpantion.Config;
 using RandomQuestExpantion.ModQuestTask;
 using RandomQuestExpantion.Patch;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
@@ -69,7 +71,8 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetRewardPlat(int money)
         {
-            return 1 + EClass.rnd(2) + curve(bonusMoney / 400, 6, 10, 75);
+            int bonusPlat = (ModConfig.RewardPlatRate > 0) ? EClass.curve(bonusMoney / 400, 6, 10, 75) * ModConfig.RewardPlatRate / 100 : EClass.rndHalf((int)Mathf.Sqrt(money / 200));
+            return 1 + EClass.rnd(2) + bonusPlat;
         }
 
         // 実際の配達対象を決めるのはこっち

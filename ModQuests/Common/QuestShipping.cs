@@ -68,11 +68,6 @@ namespace RandomQuestExpantion.ModQuests.Common
             }
         }
 
-        public override int GetRewardPlat(int money)
-        {
-            return 1 + EClass.rnd(2);
-        }
-
         public virtual void OnShipped(int priceAmount)
         {
             if (task != null)
@@ -82,24 +77,6 @@ namespace RandomQuestExpantion.ModQuests.Common
                 {
                     CompleteTask();
                 }
-            }
-        }
-
-        public new Thing DropReward(string id)
-        {
-            return DropReward(ThingGen.Create(id));
-        }
-
-        // 広域マップ上で完了する可能性があるためpc.pickを使う必要がある
-        public new Thing DropReward(Thing t)
-        {
-            if (EClass._zone != null && !EClass._zone.IsRegion)
-            {
-                return EClass.player.DropReward(t);
-            }
-            else
-            {
-                return EClass.pc.Pick(t);
             }
         }
     }
