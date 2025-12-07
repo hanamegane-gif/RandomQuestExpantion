@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System;
 using System.Reflection.Emit;
 using System.Reflection;
+using System.Linq;
+using RandomQuestExpantion.Config;
 
 namespace RandomQuestExpantion
 {
@@ -36,10 +38,15 @@ namespace RandomQuestExpantion
             if (DeployModMap.DeployModMaps(DLLInfo))
             {
                 DeployTypeFallback.DeployTypeFallbackSetting();
-                ImportExcelPatch.execImportQuests(Info);
-                ImportExcelPatch.execImportLanguages(Info);
-                ImportExcelPatch.execImportZones(Info);
-                ImportExcelPatch.execImportThings(Info);
+
+                if (!AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "CustomWhateverLoader"))
+                {
+                    ImportExcelPatch.ExecImportQuests(Info);
+                    ImportExcelPatch.ExecImportLanguages(Info);
+                    ImportExcelPatch.ExecImportZones(Info);
+                    ImportExcelPatch.ExecImportThings(Info);
+                }
+                ModConfig.LoadConfig();
                 ModMapPieceManager.Init(Info);
             }
         }

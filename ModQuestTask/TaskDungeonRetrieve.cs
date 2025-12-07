@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using RandomQuestExpantion.Config;
 
 namespace RandomQuestExpantion.ModQuestTask
 {
@@ -102,7 +103,7 @@ namespace RandomQuestExpantion.ModQuestTask
 
         internal virtual SourceElement.Row PickBonusEnchant(in Thing generatedGear, int generateLv)
         {
-            if (EClass.rnd(100) == 0)
+            if (EClass.rnd(100) == 0 && ModConfig.EnableRuneVesselFeature)
             {
                 return EClass.sources.elements.rows.Where(r => r.alias == "slot_rune").FirstOrDefault();
             }

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{539A01E1-461D-4A08-A845-9D061527A60B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RandomQuestExpantion</RootNamespace>
+    <AssemblyName>RandomQuestExpantion</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <LangVersion>9.0</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Elin\Package\Mod_testmod\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Elin\Package\Mod_QEX\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>5</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\BepInEx\core\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx.Core">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\BepInEx\core\BepInEx.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="BepInEx.Unity">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\BepInEx\core\BepInEx.Unity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Elin">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Elin.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Newtonsoft.Json.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Plugins.BaseCore">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Plugins.BaseCore.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Plugins.Sound">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Plugins.Sound.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Plugins.UI">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Plugins.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\UnityEngine.UI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\ModConfig.cs" />
+    <Compile Include="General\General.cs" />
+    <Compile Include="General\ModMapPiece.cs" />
+    <Compile Include="Guilpo\PriceSetting.cs" />
+    <Compile Include="Guilpo\TraitFGGuilpoVender.cs" />
+    <Compile Include="Guilpo\TraitGuilpoVender.cs" />
+    <Compile Include="Guilpo\TraitMGGuilpoVender.cs" />
+    <Compile Include="Guilpo\TraitTGGuilpoVender.cs" />
+    <Compile Include="Guilpo\TraitWGGuilpoVender.cs" />
+    <Compile Include="ModCore.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventTGCrimFactory.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventCrimFactory.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFGDefence.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFGSubdue.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFish.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventTGDefence.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFGDuel.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFGWithdrawal.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventMGDefence.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventSubdueGhost.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventUrbanDefence.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventWGDefence.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventWGDuel.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventHerbHarvest.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventWGHerbHarvest.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventWGSubdueGhost.cs" />
+    <Compile Include="ModQuests\Common\QuestFish.cs" />
+    <Compile Include="ModQuests\Common\QuestFlyer.cs" />
+    <Compile Include="ModQuests\Common\QuestCrimFactory.cs" />
+    <Compile Include="ModQuests\Common\QuestHerbHarvest.cs" />
+    <Compile Include="ModQuests\Common\QuestInvest.cs" />
+    <Compile Include="ModQuests\Common\QuestSales.cs" />
+    <Compile Include="ModQuests\Common\QuestSalesStolen.cs" />
+    <Compile Include="ModQuests\Common\QuestShipping.cs" />
+    <Compile Include="ModQuests\Common\QuestSlaver.cs" />
+    <Compile Include="ModQuests\Common\QuestUrbanDefence.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGDefence.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGDuel.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGDungeonAttack.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGHunt.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGStrongerHunt.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGSubdue.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGWithdrawal.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGYeekHunt.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGDefence.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGDuel.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGDungeonRetrieve.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGHerbHarvest.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGHQPotion.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGSubdueGhost.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGDefence.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGEscort.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGHunt.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGInvest.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGSales.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGShipping.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGCrimFactory.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGDefence.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGDeliver.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGDungeonRetrieve.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGSalesStolen.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGSlaver.cs" />
+    <Compile Include="ModQuestTask\TaskFGDungeonAttack.cs" />
+    <Compile Include="ModQuestTask\TaskFGHunt.cs" />
+    <Compile Include="ModQuestTask\TaskFGStrongerHunt.cs" />
+    <Compile Include="ModQuestTask\TaskFGYeekHunt.cs" />
+    <Compile Include="ModQuestTask\TaskHunt.cs" />
+    <Compile Include="ModQuestTask\TaskInvest.cs" />
+    <Compile Include="ModQuestTask\TaskMGFlyer.cs" />
+    <Compile Include="ModQuestTask\TaskMGHunt.cs" />
+    <Compile Include="ModQuestTask\TaskMGInvest.cs" />
+    <Compile Include="ModQuestTask\TaskMGSales.cs" />
+    <Compile Include="ModQuestTask\TaskMGShipping.cs" />
+    <Compile Include="ModQuestTask\TaskRaceHunt.cs" />
+    <Compile Include="ModQuestTask\TaskSales.cs" />
+    <Compile Include="ModQuestTask\TaskSalesStolen.cs" />
+    <Compile Include="ModQuestTask\TaskShipping.cs" />
+    <Compile Include="ModQuestTask\TaskSlaver.cs" />
+    <Compile Include="ModQuestTask\TaskTGDungeonRetrieve.cs" />
+    <Compile Include="ModQuestTask\TaskTGSalesStolen.cs" />
+    <Compile Include="ModQuestTask\TaskTGSlaver.cs" />
+    <Compile Include="ModQuestTask\TaskWGDungeonRetrieve.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceSubdueGhost.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanDefence.cs" />
+    <Compile Include="Patch\AIShoppingPatch.cs" />
+    <Compile Include="Patch\CharaPatch.cs" />
+    <Compile Include="Patch\DramaPatch.cs" />
+    <Compile Include="Patch\InvOwnerDeliverPatch.cs" />
+    <Compile Include="Patch\InvOwnerPatch.cs" />
+    <Compile Include="Patch\PlayerPatch.cs" />
+    <Compile Include="Patch\QuestExtender.cs" />
+    <Compile Include="Patch\QuestPatch.cs" />
+    <Compile Include="Deploy\DeployModMap.cs" />
+    <Compile Include="Patch\ImportExcelPatch.cs" />
+    <Compile Include="Deploy\DeployTypeFallback.cs" />
+    <Compile Include="Patch\QuestTaskExtender.cs" />
+    <Compile Include="Patch\GameDatePatch.cs" />
+    <Compile Include="Patch\SpatialGenPatch.cs" />
+    <Compile Include="Patch\TraitCharaPatch.cs" />
+    <Compile Include="Patch\TraitPatch.cs" />
+    <Compile Include="Patch\ZonePatch.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventUrbanBoss.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventUrbanIntrusion.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFarmFieldWar.cs" />
+    <Compile Include="ModQuests\Common\QuestHQCraft.cs" />
+    <Compile Include="ModQuests\Common\QuestHQFurniture.cs" />
+    <Compile Include="ModQuests\Common\QuestHQMeal.cs" />
+    <Compile Include="ModQuests\Common\QuestUrbanBoss.cs" />
+    <Compile Include="ModQuests\Common\QuestUrbanIntrusion.cs" />
+    <Compile Include="ModQuests\Common\QuestDuel.cs" />
+    <Compile Include="ModQuests\Common\QuestDungeonRetrieve.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGDeliver.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGFlyer.cs" />
+    <Compile Include="ModQuestTask\TaskDungeonRetrieve.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanBoss.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanIntrusion.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceDuel.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventDuel.cs" />
+    <Compile Include="ModQuests\Common\QuestDungeonAttack.cs" />
+    <Compile Include="ModQuests\Common\QuestFarmFieldWar.cs" />
+    <Compile Include="ModQuests\QuestFactory.cs" />
+    <Compile Include="ModQuestTask\TaskDungeonAttack.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceFarmFieldWar.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -71,15 +71,16 @@ namespace RandomQuestExpantion.ModQuestEvent
             CardBlueprint.Set(cardBlueprint);
 
             Chara createdChara = CharaGen.Create((EClass.rnd(10) == 0 ? "adv_fairy" : "adv"), generateLv);
+            createdChara.RestockEquip(true);
+
+            createdChara.c_bossType = BossType.Boss;
+            createdChara.c_originalHostility = Hostility.Enemy;
+            createdChara.hostility = Hostility.Enemy;
 
             int charaLv = (dangerLv < 100) ? dangerLv * 4 / 5 :
                           (dangerLv < 300) ? dangerLv :
                           (dangerLv < 500) ? dangerLv * 5 / 4 : generateLv;
             createdChara.SetLv(charaLv);
-
-            createdChara.c_bossType = BossType.Boss;
-            createdChara.c_originalHostility = Hostility.Enemy;
-            createdChara.hostility = Hostility.Enemy;
 
             return createdChara;
         }

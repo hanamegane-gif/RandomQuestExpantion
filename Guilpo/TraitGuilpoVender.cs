@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RandomQuestExpantion.Config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -164,7 +165,7 @@ class TraitGuilpoVender : TraitVendingMachine
 
     internal virtual SourceElement.Row PickBonusEnchant(in Thing generatedThing, int generateLv)
     {
-        if (!(generatedThing.trait is TraitRune) && EClass.rnd(100) == 0)
+        if (!(generatedThing.trait is TraitRune) && EClass.rnd(100) == 0 && ModConfig.EnableRuneVesselFeature)
         {
             return EClass.sources.elements.rows.Where(r => r.alias == "slot_rune").FirstOrDefault();
         }
