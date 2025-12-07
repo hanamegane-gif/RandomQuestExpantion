@@ -10,7 +10,7 @@ namespace RandomQuestExpantion.Patch
     {
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(Chara), nameof(Chara.TryDropBossLoot))]
-        internal static IEnumerable<CodeInstruction> HandleOnShippedEventPatch(IEnumerable<CodeInstruction> instructions)
+        internal static IEnumerable<CodeInstruction> HandleNefiaBeatenPatch(IEnumerable<CodeInstruction> instructions)
         {
             var ci = new CodeMatcher(instructions)
                 .MatchStartForward
