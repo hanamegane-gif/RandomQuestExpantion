@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 class TraitTGGuilpoVender : TraitGuilpoVender
 {
     public override string CurrencyID => "MOD_byakko_RQX_guilpo_thief";
@@ -54,10 +55,13 @@ class TraitTGGuilpoVender : TraitGuilpoVender
 
         foreach (var skill in WeaponTypeList)
         {
-            string weaponId = (EClass.rnd(4) == 0) ? null : PickRandomWeaponID(skill);
-            if (weaponId != null)
+            for (int i = 0; i < 2; i++)
             {
-                AddStockByThing(merchantChest, GenerateRangedWeapon(weaponId, generateLv));
+                string weaponId = (EClass.rnd(4) == 0) ? null : PickRandomWeaponID(skill);
+                if (weaponId != null)
+                {
+                    AddStockByThing(merchantChest, GenerateRangedWeapon(weaponId, generateLv));
+                }
             }
         }
 
@@ -107,6 +111,6 @@ class TraitTGGuilpoVender : TraitGuilpoVender
             return null;
         }
 
-        return candidateList.RandomItemWeighted(row => row.chance).id;
+        return candidateList.RandomItemWeighted(row => Mathf.Sqrt(row.chance)).id;
     }
 }

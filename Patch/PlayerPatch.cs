@@ -23,6 +23,8 @@ namespace RandomQuestExpantion.Patch
             }
 
             TryMakeFriendlyGuild(EClass._zone);
+            TrySweepDebris(EClass._zone);
+            TryDestroyFlyingQuestEquipment(EClass._zone);
             TryInstallQuestEquipment(EClass._zone);
         }
 
@@ -76,7 +78,7 @@ namespace RandomQuestExpantion.Patch
                     var board = ThingGen.Create("4");
                     board.dir = direction;
                     board.isNPCProperty = true;
-                    guildZone.AddCard(board, coordinate).Install();
+                    guildZone.AddCard(board, coordinate).Install().ignoreStackHeight = true;
                 }
             }
 
@@ -102,8 +104,28 @@ namespace RandomQuestExpantion.Patch
                     var vender = ThingGen.Create(thingId);
                     vender.dir = direction;
                     vender.isNPCProperty = true;
-                    guildZone.AddCard(vender, coordinate).Install();
+                    guildZone.AddCard(vender, coordinate).Install().ignoreStackHeight = true;
                 }
+            }
+        }
+
+        // 家具設置挙動の変更で空を飛んだギルポ交換所を破壊し、地面に再設置
+        internal static void TryDestroyFlyingQuestEquipment(Zone guildZone)
+        {
+            var venders = guildZone.map.things.Where(t => t.trait is TraitGuilpoVender && !t.ignoreStackHeight).ToList();
+            for (int i = venders.Count() - 1; i >= 0; i--)
+            {
+                venders[i].Destroy();
+            }
+        }
+
+        // Modを抜いた際に発生するギルポ交換所の錬金灰を除去する
+        internal static void TrySweepDebris(Zone guildZone)
+        {
+            var deblis = guildZone.map.things.Where(t => t.id == "ash3" && t.Quality == 4).ToList();
+            for (int i = deblis.Count() - 1; i >= 0; i--)
+            {
+                deblis[i].Destroy();
             }
         }
 
