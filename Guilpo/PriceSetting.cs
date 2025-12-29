@@ -66,6 +66,12 @@ namespace RandomQuestExpantion.Guilpo
             {
                 return 10;
             }
+
+            if(rune.encLV < 0)
+            {
+                return 8;
+            }
+
             return 50;
         }
 
