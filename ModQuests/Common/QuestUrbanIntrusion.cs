@@ -2,14 +2,15 @@
 using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.Config;
 using UnityEngine;
+using System;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
     class QuestUrbanIntrusion : QuestSubdue
     {
-        public override string IdZone => "instance_" + this.chara.currentZone.id;
+        public override string IdZone => "instance_" + (this.chara.currentZone.IsPCFactionOrTent ? "tinkerCamp" : this.chara.currentZone.id);
 
-        public override int BaseMoney => source.money + EClass.curve(DangerLv, 500, 2000, 90) * 2;
+        public override int BaseMoney => (int)Math.Min((long)source.money + (long)EClass.curve(DangerLv, 500, 2000, 90) * 2L, Int32.MaxValue / 200);
 
         public override ZoneInstanceRandomQuest CreateInstance()
         {
