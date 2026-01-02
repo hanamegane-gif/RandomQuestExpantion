@@ -70,7 +70,7 @@ namespace RandomQuestExpantion.General
             List<int> shouldDieUID = new List<int>();
             foreach (var chara in map.charas)
             {
-                if (chara != null && !chara.IsPCFaction)
+                if (chara != null && !chara.IsPCFactionOrMinion)
                 {
                     shouldDieUID.Add(chara.uid);
                 }

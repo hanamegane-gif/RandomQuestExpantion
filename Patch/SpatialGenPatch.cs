@@ -11,12 +11,10 @@ namespace RandomQuestExpantion.Patch
         [HarmonyPatch(typeof(SpatialGen), nameof(SpatialGen.CreateInstance)), HarmonyPostfix]
         internal static void SetParentZonePatch(string id, ZoneInstance instance, ref Zone __result)
         {
-            if (!IsGuild(EClass._zone))
+            if (IsGuild(EClass._zone) || (EClass._zone is Zone_Town && EClass._zone.lv != 0))
             {
-                return;
+                EClass._zone.AddChild(__result);
             }
-
-            EClass._zone.AddChild(__result);
         }
     }
 }
