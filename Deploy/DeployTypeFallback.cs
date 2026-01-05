@@ -1,30 +1,45 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace RandomQuestExpantion.Patch
 {
     class DeployTypeFallback
     {
+        private static List<string> TargetNamespaceList { get; } = new List<string>
+        {
+            null, // ModQuestZone
+            "RandomQuestExpantion.ModQuestEvent",
+            "RandomQuestExpantion.ModQuests.Common",
+            "RandomQuestExpantion.ModQuests.FighterGuild",
+            "RandomQuestExpantion.ModQuests.MageGuild",
+            "RandomQuestExpantion.ModQuests.MerchantGuild",
+            "RandomQuestExpantion.ModQuests.ThiefGuild",
+            "RandomQuestExpantion.ModQuestTask",
+            "RandomQuestExpantion.ModQuestZoneInstance"
+        };
+
+        private static Dictionary<Type, string> BaseClassResolver { get; } = new Dictionary<Type, string>
+        {
+            { typeof(Quest), "QuestDummy" }, // Questはタイプフォールバックを効かせても結局保存されたidから依頼文章などを復元しようとするのでもきゅもきゅクエストにしないといけない
+            { typeof(QuestTask), "QuestTask" },
+            { typeof(ZoneEvent), "ZoneEvent" },
+            { typeof(ZoneInstance), "ZoneInstance" },
+            { typeof(Zone_Arena), "Zone_Arena" },
+            { typeof(Zone_Harvest), "Zone_Harvest" },
+        };
+
+
         internal static void DeployTypeFallbackSetting()
         {
             Assembly assembly = Assembly.GetExecutingAssembly();
-            var targetNamespaceList = new List<string> 
-            { 
-                "RandomQuestExpantion.ModQuestEvent", 
-                "RandomQuestExpantion.ModQuests.Common",
-                "RandomQuestExpantion.ModQuests.FighterGuild",
-                "RandomQuestExpantion.ModQuests.MageGuild",
-                "RandomQuestExpantion.ModQuests.MerchantGuild",
-                "RandomQuestExpantion.ModQuests.ThiefGuild",
-                "RandomQuestExpantion.ModQuestTask", 
-                "RandomQuestExpantion.ModQuestZoneInstance" 
-            };
             var typeFallbackSetting = ReadTypeFallbackSetting();
             bool shouldFileUpdate = false;
 
-            foreach (var targetNamespace in targetNamespaceList)
+            foreach (var targetNamespace in TargetNamespaceList)
             {
                 var classes = assembly.GetTypes().Where(t => t.IsClass && t.Namespace == targetNamespace);
 
@@ -33,24 +48,13 @@ namespace RandomQuestExpantion.Patch
                     string className = type.Name;
                     string baseClass = "";
 
-
-                    // フォールバックが必要なのはこの4種
-                    if (typeof(Quest).IsAssignableFrom(type))
+                    foreach (var kvp in BaseClassResolver)
                     {
-                        // クエストはタイプフォールバックを効かせても結局保存されたidから依頼文章などを復元しようとするのでもきゅもきゅクエストにしないといけない
-                        baseClass = "QuestDummy";
-                    }
-                    else if (typeof(QuestTask).IsAssignableFrom(type))
-                    {
-                        baseClass = "QuestTask";
-                    }
-                    else if (typeof(ZoneEvent).IsAssignableFrom(type))
-                    {
-                        baseClass = "ZoneEvent";
-                    }
-                    else if (typeof(ZoneInstance).IsAssignableFrom(type))
-                    {
-                        baseClass = "ZoneInstance";
+                        if (kvp.Key.IsAssignableFrom(type))
+                        {
+                            baseClass = kvp.Value;
+                            break;
+                        }
                     }
 
                     if (baseClass == "")
@@ -58,12 +62,16 @@ namespace RandomQuestExpantion.Patch
                         continue;
                     }
 
-                    // "「アセンブリ名」,「名前空間 + クラス名」, 「フォールバック先Elinクラス名」"
-                    string fallbackRowString = assembly.GetName().Name + "," + (targetNamespace + "." + className) + "," + baseClass;
+                    // "「アセンブリ名」,「名前空間.クラス名」, 「フォールバック先Elinクラス名」"
+                    StringBuilder fallbackSB = new StringBuilder(110);
+                    fallbackSB.Append(assembly.GetName().Name).Append(",");
+                    fallbackSB.Append(targetNamespace).Append(String.IsNullOrEmpty(targetNamespace) ? "" : ".");
+                    fallbackSB.Append(className).Append(",");
+                    fallbackSB.Append(baseClass);
 
-                    if (!typeFallbackSetting.Contains(fallbackRowString))
+                    if (!typeFallbackSetting.Contains(fallbackSB.ToString()))
                     {
-                        typeFallbackSetting.Add(fallbackRowString);
+                        typeFallbackSetting.Add(fallbackSB.ToString());
                         shouldFileUpdate = true;
                     }
                 }

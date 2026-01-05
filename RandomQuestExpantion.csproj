@@ -171,6 +171,8 @@
     <Compile Include="ModQuestTask\TaskWGDungeonRetrieve.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceSubdueGhost.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanDefence.cs" />
+    <Compile Include="ModQuestZone\Zone_Harvest_RQX.cs" />
+    <Compile Include="ModQuestZone\Zone_Arena_RQX.cs" />
     <Compile Include="Patch\AIShoppingPatch.cs" />
     <Compile Include="Patch\CharaPatch.cs" />
     <Compile Include="Patch\DramaPatch.cs" />
@@ -179,7 +181,6 @@
     <Compile Include="Patch\PlayerPatch.cs" />
     <Compile Include="Patch\QuestExtender.cs" />
     <Compile Include="Patch\QuestPatch.cs" />
-    <Compile Include="Deploy\DeployModMap.cs" />
     <Compile Include="Patch\ImportExcelPatch.cs" />
     <Compile Include="Deploy\DeployTypeFallback.cs" />
     <Compile Include="Patch\QuestTaskExtender.cs" />

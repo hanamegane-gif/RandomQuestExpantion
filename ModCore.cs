@@ -19,10 +19,10 @@ namespace RandomQuestExpantion
     }
 
     [BepInPlugin(ModInfo.GUID, ModInfo.Name, ModInfo.Version)]
-    internal class RandomQuestExpantion : BaseUnityPlugin
+    public class RandomQuestExpantion : BaseUnityPlugin
     {
-        internal static RandomQuestExpantion Instance { get; private set; }
-        internal static PluginInfo DLLInfo { get; private set; }
+        public static RandomQuestExpantion Instance { get; private set; }
+        public static PluginInfo DLLInfo { get; private set; }
 
         private void Awake()
         {
@@ -35,20 +35,17 @@ namespace RandomQuestExpantion
 
         public void OnStartCore()
         {
-            if (DeployModMap.DeployModMaps(DLLInfo))
-            {
-                DeployTypeFallback.DeployTypeFallbackSetting();
+            DeployTypeFallback.DeployTypeFallbackSetting();
 
-                if (!AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "CustomWhateverLoader"))
-                {
-                    ImportExcelPatch.ExecImportQuests(Info);
-                    ImportExcelPatch.ExecImportLanguages(Info);
-                    ImportExcelPatch.ExecImportZones(Info);
-                    ImportExcelPatch.ExecImportThings(Info);
-                }
-                ModConfig.LoadConfig();
-                ModMapPieceManager.Init(Info);
+            if (!AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "CustomWhateverLoader"))
+            {
+                ImportExcelPatch.ExecImportQuests(Info);
+                ImportExcelPatch.ExecImportLanguages(Info);
+                ImportExcelPatch.ExecImportZones(Info);
+                ImportExcelPatch.ExecImportThings(Info);
             }
+            ModConfig.LoadConfig();
+            ModMapPieceManager.Init(Info);
         }
 
         internal static void Log(object payload)
