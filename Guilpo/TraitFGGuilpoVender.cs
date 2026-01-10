@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 class TraitFGGuilpoVender : TraitGuilpoVender
 {
@@ -37,8 +38,10 @@ class TraitFGGuilpoVender : TraitGuilpoVender
         }
 
         // 8280: 軽量化(羽巻)
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Blessed, fixedRefVal: SPELL.SpLighten);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpLighten);
+        int progress = Mathf.Max(EClass.pc.FameLv, EClass.player.stats.deepest, 15);
+        int hanemakiStock = (progress <= 500) ? 2 : 1 + progress / 100;
+        AddStockById(merchantChest, "scroll_random", stockNum: hanemakiStock, bless: BlessedState.Blessed, fixedRefVal: SPELL.SpLighten);
+        AddStockById(merchantChest, "scroll_random", stockNum: hanemakiStock, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpLighten);
     }
 
     private string PickRandomWeaponID(string weaponSkill)

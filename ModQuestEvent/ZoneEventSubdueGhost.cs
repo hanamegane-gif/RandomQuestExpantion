@@ -73,7 +73,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         internal virtual Chara CreateEnemy(int dangerLv)
         {
             // クソクエになるのでリッチは出禁！！！！
-            var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => r.race_row.IsUndead && r.id != "lich").Select(lv: dangerLv);
+            var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => r.race_row.IsUndead && r.race != "lich").Select(lv: dangerLv);
             int charaLv = (spawnCharaSource.LV + ((dangerLv >= 51) ? 50 : 0)) * Mathf.Max(1, (dangerLv - 1) / 50);
 
             CardBlueprint cardBlueprint = new CardBlueprint

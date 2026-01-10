@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using UnityEngine;
 class TraitWGGuilpoVender : TraitGuilpoVender
 {
     public override string CurrencyID => "MOD_byakko_RQX_guilpo_mage";
@@ -62,9 +63,11 @@ class TraitWGGuilpoVender : TraitGuilpoVender
             AddStockById(merchantChest, "372", charges: 7, generateLv: 200);
         }
 
-        // 8280: 軽量化(羽巻)
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, fixedRefVal: SPELL.SpLighten);
+        int progress = Mathf.Max(EClass.pc.FameLv, EClass.player.stats.deepest, 15);
+        int hanemakiStock = (progress <= 500) ? 2 : 1 + progress / 100;
 
+        // 8280: 軽量化(羽巻)
+        AddStockById(merchantChest, "scroll_random", stockNum: hanemakiStock, fixedRefVal: SPELL.SpLighten);
     }
 
     private string PickRandomWeaponID(string weaponSkill)
