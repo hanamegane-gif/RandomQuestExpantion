@@ -1,6 +1,7 @@
 ﻿using RandomQuestExpantion.Config;
 using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.ModQuestZoneInstance;
+using static RandomQuestExpantion.General.General;
 using System;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 {
     class QuestUrbanDefence : QuestSubdue
     {
-        public override string IdZone => "instance_" + (this.chara.currentZone.IsPCFactionOrTent ? "tinkerCamp" : this.chara.currentZone.id);
+        public override string IdZone => "instance_" + ((this.chara.currentZone.IsTown || IsGuild(this.chara.currentZone)) ? this.chara.currentZone.id : "tinkerCamp");
 
         public override int BaseMoney => (int)Math.Min((long)source.money + (long)EClass.curve(DangerLv, 500, 2000, 90) * 3L, Int32.MaxValue / 200);
 

@@ -51,7 +51,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         internal virtual int CalcZoneDangerLv()
         {
-            return Mathf.Max(base.quest.DangerLv - 2, 1);
+            return Mathf.Max(base.quest.DangerLv - 2, 9);
         }
 
         internal virtual int CalcNumberOfEnemies()
