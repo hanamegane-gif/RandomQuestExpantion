@@ -8,7 +8,7 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
 
         public override void OnStart()
         {
-            Chara chara = CharaGen.Create("merchant_app");
+            var chara = CharaGen.Create("merchant_app");
             EClass._zone.AddCard(chara, EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false));
             chara.MakeMinion(EClass.pc);
             uidChara = chara.uid;
@@ -27,7 +27,7 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
             base.OnDropReward();
 
             int guilpoNum = 1;
-            Thing guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_merchant").SetNum(guilpoNum);
+            var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_merchant").SetNum(guilpoNum);
             DropReward(guilpo);
             MerchantGuildZone.ModInfluence(1);
         }

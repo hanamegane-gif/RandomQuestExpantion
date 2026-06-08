@@ -85,8 +85,9 @@ class TraitWGGuilpoVender : TraitGuilpoVender
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 25)
+        if (filterRoll < (chanceSum += 25))
         {
             // 精神系主能力
             rareEnchantFilter = row => row.category == "attribute" &&
@@ -97,12 +98,12 @@ class TraitWGGuilpoVender : TraitGuilpoVender
                 row.id == SKILL.MAG
             );
         }
-        else if (filterRoll < 50)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 属性追加
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
         }
-        else if (filterRoll < 75)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 魔法強化詠唱魔力制御瞑想
             rareEnchantFilter = row =>
@@ -133,8 +134,9 @@ class TraitWGGuilpoVender : TraitGuilpoVender
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 25)
+        if (filterRoll < (chanceSum += 25))
         {
             // 精神系主能力
             rareEnchantFilter = row => row.category == "attribute" &&
@@ -145,12 +147,12 @@ class TraitWGGuilpoVender : TraitGuilpoVender
                 row.id == SKILL.MAG
             );
         }
-        else if (filterRoll < 50)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 属性追加
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
         }
-        else if (filterRoll < 75)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 魔法強化詠唱魔力制御瞑想
             rareEnchantFilter = row =>

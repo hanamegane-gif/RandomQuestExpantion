@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using UnityEngine;
-using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -27,8 +26,8 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             for (int i = 0; i < num; i++)
             {
-                Point spawnPoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false);
-                Chara enemy = CreateEnemy(CalcDangerLv(), spawnPoint);
+                var spawnPoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false);
+                var enemy = CreateEnemy(CalcDangerLv(), spawnPoint);
                 EClass._zone.AddCard(enemy, spawnPoint);
 
                 if (CountEnemy)
@@ -38,15 +37,15 @@ namespace RandomQuestExpantion.ModQuestEvent
             }
         }
 
-        internal virtual Chara CreateEnemy(int dangerLv, in Point pos, Rarity rarity = Rarity.Normal, bool evolved = false)
+        internal virtual Chara CreateEnemy(int dangerLv, in Point pos, Rarity rarity = Rarity.Normal)
         {
-            SpawnList spawnList = GetSpawnListByBiome(pos.cell.biome);
+            var spawnList = GetSpawnListByBiome(pos.cell.biome);
 
             var spawnCharaSource = spawnList.Select(lv: dangerLv);
-            var charaRarity = (evolved) ? Rarity.Legendary : rarity;
+            var charaRarity = rarity;
             int charaLv = (spawnCharaSource.LV + ((dangerLv >= 51) ? 50 : 0)) * Mathf.Max(1, (dangerLv - 1) / 50);
-            charaLv = (evolved) ? charaLv * 2 + 20 :
-                      (rarity == Rarity.Legendary) ? charaLv * 3 / 2 : charaLv;
+            charaLv = (rarity == Rarity.Legendary) ? charaLv * 3 / 2 : charaLv;
+
 
             CardBlueprint.Set(new CardBlueprint
             {
@@ -54,23 +53,17 @@ namespace RandomQuestExpantion.ModQuestEvent
                 lv = charaLv,
             });
 
-            Chara createdChara = CharaGen.Create(spawnCharaSource.id);
+            var createdChara = CharaGen.Create(spawnCharaSource.id);
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;
 
-            if (evolved)
-            {
-                createdChara.c_bossType = BossType.Evolved;
-                CreateIdentity(createdChara);
-            }
-            else if (rarity == Rarity.Legendary)
+            if (rarity == Rarity.Legendary)
             {
                 createdChara.c_bossType = BossType.Boss;
             }
 
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;
-
 
             return createdChara;
         }
@@ -93,20 +86,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             }) : SpawnList.Get(biome.spawn.GetRandomCharaId()));
 
             return spawnList;
-        }
-
-        internal void CreateIdentity(Chara evolvedChara)
-        {
-            for (int i = 0; i < 2 + EClass.rnd(2); i++)
-            {
-                evolvedChara.ability.AddRandom();
-            }
-
-            evolvedChara.AddThing(evolvedChara.MakeGene(DNA.Type.Default));
-            if (EClass.rnd(2) == 0)
-            {
-                evolvedChara.AddThing(evolvedChara.MakeGene(DNA.Type.Superior));
-            }
         }
     }
 }

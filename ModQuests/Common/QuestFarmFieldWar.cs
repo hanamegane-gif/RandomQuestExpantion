@@ -30,7 +30,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override string GetTextProgress()
         {
-            ZoneEventFarmFieldWar @event = EClass._zone.events.GetEvent<ZoneEventFarmFieldWar>();
+            var @event = EClass._zone.events.GetEvent<ZoneEventFarmFieldWar>();
             if (@event == null)
             {
                 return "";

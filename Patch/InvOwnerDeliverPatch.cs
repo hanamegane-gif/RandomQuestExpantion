@@ -11,23 +11,11 @@ namespace RandomQuestExpantion.Patch
         [HarmonyPatch(typeof(InvOwnerDeliver), nameof(InvOwnerDeliver.ShouldShowGuide)), HarmonyPrefix]
         internal static bool NewDeliverModePatch(InvOwnerDeliver __instance, ref bool __result, Thing t)
         {
-            QuestHarvest quest = EClass.game.quests.list.Where(q => q is QuestHarvest && q.GetType().Assembly.GetName().Name == "RandomQuestExpantion")
-                                                        .Cast<QuestHarvest>()
-                                                        .FirstOrDefault();
+            // 通常は同時に2つ以上受けられないため1つ取得すればよい
+            var quest = EClass.game.quests.list.Where(q => q is IHarvest).Cast<IHarvest>().FirstOrDefault();
             if (quest != null)
             {
-                __result = false;
-
-                if (quest is QuestHerbHarvest)
-                {
-                    __result = (quest as QuestHerbHarvest).IsQuestItem(t);
-                }
-
-                if (quest is QuestCrimFactory)
-                {
-                    __result = (quest as QuestCrimFactory).IsQuestItem(t);
-                }
-
+                __result = quest.IsQuestItem(t);
                 return false;
             }
 

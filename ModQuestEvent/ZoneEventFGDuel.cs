@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -15,14 +14,14 @@ namespace RandomQuestExpantion.ModQuestEvent
             int generateLv = Mathf.Max(dangerLv * 3 / 2, 5);
             int BPLv = Mathf.Max(dangerLv * 3 / 2, 5);
 
-            CardBlueprint cardBlueprint = new CardBlueprint
+            var cardBlueprint = new CardBlueprint
             {
                 rarity = Rarity.Legendary,
                 lv = BPLv
             };
             CardBlueprint.Set(cardBlueprint);
 
-            Chara createdChara = CharaGen.Create((EClass.rnd(2) == 0 ? "guild_warrior" : "merc_warrior"), generateLv);
+            var createdChara = CharaGen.Create((EClass.rnd(2) == 0 ? "guild_warrior" : "merc_warrior"), generateLv);
 
             int charaLv = (dangerLv < 100) ? dangerLv * 4 / 5 :
                           (dangerLv < 300) ? dangerLv :

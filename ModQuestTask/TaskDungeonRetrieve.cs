@@ -29,10 +29,10 @@ namespace RandomQuestExpantion.ModQuestTask
 
             owner.bonusMoney += CalcBonusMoney(boss);
 
-            var questInstance = (QuestDungeonRetrieve)this.owner;
-            var targetIdThing = questInstance.idThing;
+            var questInstance = this.owner as QuestDungeonRetrieve;
+            string targetIdThing = questInstance.idThing;
             var spawnPosition = boss.pos.GetNearestPoint(allowInstalled: false, minRadius: 1);
-            var generateLv = boss.LV;
+            int generateLv = boss.LV;
 
             SpawnQuestChest(spawnPosition, targetIdThing, generateLv);
             hasNefiaBossKilled = true;
@@ -85,7 +85,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     continue;
                 }
 
-                var bonusEnchantStrength = CalcEnchantStrength(bonusEnchant, generateLv);
+                int bonusEnchantStrength = CalcEnchantStrength(bonusEnchant, generateLv);
                 generatedGear.elements.ModBase(bonusEnchant.id, bonusEnchantStrength);
             }
 
@@ -94,7 +94,7 @@ namespace RandomQuestExpantion.ModQuestTask
             generatedGear.Identify(show: false, idtSource: IDTSource.SuperiorIdentify);
             generatedGear.isStolen = true;
 
-            var questInstance = (QuestDungeonRetrieve)this.owner;
+            var questInstance = this.owner as QuestDungeonRetrieve;
             questInstance.SetDistribution(generatedGear);
 
 
@@ -109,7 +109,7 @@ namespace RandomQuestExpantion.ModQuestTask
             }
 
             var candidateList = new List<SourceElement.Row>();
-            var gearType = (generatedGear.category.IsChildOf("melee") ? "melee" : "armor");
+            string gearType = (generatedGear.category.IsChildOf("melee") ? "melee" : "armor");
             var gearCategory = generatedGear.category;
 
             // chanceによる抽選は残しつつレアエンチャは出やすくする
@@ -157,8 +157,9 @@ namespace RandomQuestExpantion.ModQuestTask
         {
             Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
             int filterRoll = EClass.rnd(100);
+            int chanceSum = 0;
 
-            if (filterRoll < 12)
+            if (filterRoll < (chanceSum += 12))
             {
                 // 肉体系主能力
                 rareEnchantFilter = row => row.category == "attribute" &&
@@ -169,7 +170,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == SKILL.CHA
                 );
             }
-            else if (filterRoll < 24)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 精神系主能力
                 rareEnchantFilter = row => row.category == "attribute" &&
@@ -180,22 +181,22 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == SKILL.MAG
                 );
             }
-            else if (filterRoll < 36)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 戦闘系
                 rareEnchantFilter = row => row.categorySub == "combat";
             }
-            else if (filterRoll < 48)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 耐性
                 rareEnchantFilter = row => row.type == "Resistance";
             }
-            else if (filterRoll < 60)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 生産系
                 rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
             }
-            else if (filterRoll < 68)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 慧眼反魔突撃者パリィ不屈
                 rareEnchantFilter = row =>
@@ -207,7 +208,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.guts
                 );
             }
-            else if (filterRoll < 76)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 魔法強化信仰見切り盾の暴君射撃防御
                 rareEnchantFilter = row =>
@@ -227,33 +228,34 @@ namespace RandomQuestExpantion.ModQuestTask
         {
             Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
             int filterRoll = EClass.rnd(100);
+            int chanceSum = 0;
 
-            if (filterRoll < 12)
+            if (filterRoll < (chanceSum += 12))
             {
                 // 武器エンチャ系
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
             }
-            else if (filterRoll < 24)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 属性追加
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
             }
-            else if (filterRoll < 36)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 特攻
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.alias.Contains("bane_");
             }
-            else if (filterRoll < 48)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 耐性
                 rareEnchantFilter = row => row.type == "Resistance";
             }
-            else if (filterRoll < 60)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 生産系
                 rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
             }
-            else if (filterRoll < 68)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 連撃慧眼ヴォーパル突撃者パリィ不屈
                 rareEnchantFilter = row =>
@@ -265,7 +267,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.guts
                 );
             }
-            else if (filterRoll < 76)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 逆襲魔法強化全特攻盾の暴君射撃防御
                 rareEnchantFilter = row =>

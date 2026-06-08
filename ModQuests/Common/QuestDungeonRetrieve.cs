@@ -59,13 +59,12 @@ namespace RandomQuestExpantion.ModQuests.Common
         // 配達対象アイテムのIdだけを決める、エンチャントを撃破ボスLvに依存させたいので実体はボス討伐時に作る
         public override void SetIdThing()
         {
-            CardRow cardRow;
-            do
+            CardRow cardRow = null;
+            while (cardRow == null)
             {
-                SourceCategory.Row r = PickTargetGearCategory();
+                var r = PickTargetGearCategory();
                 cardRow = SpawnListThing.Get("cat_" + r.id, (SourceThing.Row s) => EClass.sources.categories.map[s.category].IsChildOf(r.id)).Select();
             }
-            while (cardRow == null);
             idThing = cardRow.id;
         }
 
@@ -83,12 +82,12 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         private SourceCategory.Row PickTargetGearCategory()
         {
-            List<SourceCategory.Row> gearCategories = new List<SourceCategory.Row>();
+            var gearCategories = new List<SourceCategory.Row>();
 
             // 矢弾などをはじくため配達可能なカテゴリのみとする
             // 光源は面白そうだが出さない
             // 遠隔武器はエンチャをつけづらいしどうせmodだけ抜かれることになるので出さない
-            foreach (SourceCategory.Row row in EClass.sources.categories.rows)
+            foreach (var row in EClass.sources.categories.rows)
             {
                 if (row.deliver > 0 && (row.IsChildOf("melee") || row.IsChildOf("armor")) && row.id != "lightsource")
                 {

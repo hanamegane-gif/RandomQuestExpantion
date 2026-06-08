@@ -16,9 +16,9 @@ namespace RandomQuestExpantion.ModQuestEvent
             }
 
             EClass._zone.SetBGM(17);
-            Point centerPos = EClass._map.GetCenterPos();
+            var centerPos = EClass._map.GetCenterPos();
             PartialMap.Apply("Special/farm_chest.mp", centerPos);
-            GenBounds genBounds = GenBounds.Create(EClass._zone);
+            var genBounds = GenBounds.Create(EClass._zone);
             genBounds.marginPartial = 1;
             genBounds.FuncCheckEmpty = (Cell cell) => cell.sourceFloor.id == 42;
 
@@ -29,7 +29,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                 ModMapPiece.TryAddMapPiece(genBounds, "herb", onCreate);
             }
 
-            foreach (Thing thing in EClass._map.things)
+            foreach (var thing in EClass._map.things)
             {
                 thing.isNPCProperty = true;
             }
@@ -52,13 +52,13 @@ namespace RandomQuestExpantion.ModQuestEvent
                 EClass._zone.instance.status = OnReachTimeLimit();
             }
 
-            List<Thing> list = new List<Thing>();
-            foreach (Chara member in EClass.pc.party.members)
+            var list = new List<Thing>();
+            foreach (var member in EClass.pc.party.members)
             {
                 member.things.Foreach(delegate (Thing t)
                 {
                     // バレづらい
-                    if ((t.id == "herb_red" || t.id == "herb_blue" || t.id == "herb_purple" || t.id == "herb_green") && EClass.rnd(4) != 0)
+                    if (!t.isCrafted && (t.id == "herb_red" || t.id == "herb_blue" || t.id == "herb_purple" || t.id == "herb_green") && EClass.rnd(4) != 0)
                     {
                         list.Add(t);
                     }
@@ -71,7 +71,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             }
 
             Msg.Say("harvest_confiscate", list.Count.ToString() ?? "");
-            foreach (Thing item in list)
+            foreach (var item in list)
             {
                 item.Destroy();
             }

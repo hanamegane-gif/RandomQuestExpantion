@@ -75,6 +75,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             {
                 AggroEnemy();
             }
+            TeleportCheaters();
         }
 
         private void NextWave()
@@ -133,13 +134,13 @@ namespace RandomQuestExpantion.ModQuestEvent
                 spawnPoint = spawnDirection.RandomItem().GetRandomPoint(allowBlocked: false, allowChara: true, radius: 20);
 
                 // 水場に沸かせない(主にポトカとルミエストのせい)
-                if (spawnPoint != null && spawnPoint.cell.IsDeepWater)
+                if (spawnPoint != null && (spawnPoint.cell.IsDeepWater || !spawnPoint.IsInBounds))
                 {
                     spawnPoint = null;
                 }
             }
 
-            Chara chara = EClass._zone.TryGenerateEvolved(force: true, spawnPoint);
+            var chara = EClass._zone.TryGenerateEvolved(force: true, spawnPoint);
             chara.c_originalHostility = Hostility.Enemy;
             chara.hostility = Hostility.Enemy;
             chara.bossText = true;
@@ -156,6 +157,18 @@ namespace RandomQuestExpantion.ModQuestEvent
             ActEffect.ProcAt(EffectId.Summon, 100, BlessedState.Normal, EClass.pc, EClass.pc, EClass.pc.pos, isNeg: false, new ActRef
             {
                 n1 = "special_force"
+            });
+        }
+
+        private void TeleportCheaters()
+        {
+            enemies.ForeachReverse(delegate (int id)
+            {
+                var chara = EClass._map.FindChara(id);
+                if (chara == null && !chara.pos.IsInBounds && chara.IsAliveInCurrentZone)
+                {
+                    ActEffect.Proc(EffectId.Teleport, chara);
+                }
             });
         }
     }

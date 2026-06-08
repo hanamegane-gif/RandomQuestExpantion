@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -35,8 +34,8 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             for (int i = 0; i < numEnemies; i++)
             {
-                Point boundaryEdgePoint = spawnPointList.RandomItem().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 1);
-                Chara enemy = CreateEnemy(dangerLv);
+                var boundaryEdgePoint = spawnPointList.RandomItem().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 1);
+                var enemy = CreateEnemy(dangerLv);
                 EClass._zone.AddCard(enemy, boundaryEdgePoint);
                 enemies.Add(enemy.uid);
             }

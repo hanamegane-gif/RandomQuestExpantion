@@ -34,7 +34,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             enemies.ForeachReverse(delegate (int id)
             {
-                Chara chara = EClass._map.FindChara(id);
+                var chara = EClass._map.FindChara(id);
                 if (chara == null || !chara.IsAliveInCurrentZone || !EClass.pc.IsHostile(chara))
                 {
                     enemies.Remove(id);
@@ -64,7 +64,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             for (int i = 0; i < numEnemies; i++)
             {
-                Chara enemy = CreateEnemy(dangerLv);
+                var enemy = CreateEnemy(dangerLv);
                 EClass._zone.AddCard(enemy, EClass.pc.pos.GetRandomPointInRadius(10, 30, requireLos: false));
                 enemies.Add(enemy.uid);
             }
@@ -76,13 +76,13 @@ namespace RandomQuestExpantion.ModQuestEvent
             var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => r.race_row.IsUndead && r.race != "lich").Select(lv: dangerLv);
             int charaLv = (spawnCharaSource.LV + ((dangerLv >= 51) ? 50 : 0)) * Mathf.Max(1, (dangerLv - 1) / 50);
 
-            CardBlueprint cardBlueprint = new CardBlueprint
+            var cardBlueprint = new CardBlueprint
             {
                 lv = charaLv,
             };
             CardBlueprint.Set(cardBlueprint);
 
-            Chara createdChara = CharaGen.Create(spawnCharaSource.id);
+            var createdChara = CharaGen.Create(spawnCharaSource.id);
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;
 
@@ -91,7 +91,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         internal virtual void SetConcertHallPiece()
         {
-            GenBounds genBounds = GenBounds.Create(EClass._zone);
+            var genBounds = GenBounds.Create(EClass._zone);
             genBounds.marginPartial = 1;
             genBounds.FuncCheckEmpty = (Cell cell) => cell.sourceFloor.id == 76;
             for (int i = 0; i < 25; i++)
@@ -99,7 +99,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                 genBounds.TryAddMapPiece(MapPiece.Type.Concert, 0f, "");
             }
 
-            foreach (Thing thing in EClass._map.things)
+            foreach (var thing in EClass._map.things)
             {
                 thing.isNPCProperty = true;
             }

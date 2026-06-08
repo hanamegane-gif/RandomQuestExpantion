@@ -1,6 +1,4 @@
 ﻿using HarmonyLib;
-using System.Linq;
-using System.Reflection;
 using UnityEngine;
 
 namespace RandomQuestExpantion.Patch
@@ -24,7 +22,7 @@ namespace RandomQuestExpantion.Patch
         internal static void TryRestock(TraitGuilpoVender t)
         {
             var ownerCard = t.owner;
-            Thing merchantChest = ownerCard.things.Find("chest_merchant");
+            var merchantChest = ownerCard.things.Find("chest_merchant");
             if (merchantChest == null)
             {
                 merchantChest = ThingGen.Create("chest_merchant");
@@ -38,7 +36,7 @@ namespace RandomQuestExpantion.Patch
             ownerCard.c_dateStockExpire = EClass.world.date.GetRaw(24 * t.RestockDay);
             ownerCard.isRestocking = true;
             merchantChest.things.DestroyAll((Thing _t) => _t.GetInt(101) != 0);
-            foreach (Thing thing8 in merchantChest.things)
+            foreach (var thing8 in merchantChest.things)
             {
                 thing8.invX = -1;
             }

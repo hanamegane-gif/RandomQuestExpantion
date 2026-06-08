@@ -12,13 +12,13 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         private string PickTargetFurnitureCategory()
         {
-            List<SourceCategory.Row> furnitureCategories = new List<SourceCategory.Row>();
+            var furnitureCategories = new List<SourceCategory.Row>();
 
             // 鉢植え・カード・フィギアはクラフトできないので除外
             // 窓・装飾は特性を盛るのが困難なので除外
             // 特殊は欲しがる奴いないだろうということで除外
             // バニラで達成不可能なクエストは出さない
-            foreach (SourceCategory.Row row in EClass.sources.categories.rows)
+            foreach (var row in EClass.sources.categories.rows)
             {
                 if (row.deliver > 0 && (row.IsChildOf("bed") || row.IsChildOf("chair") || row.IsChildOf("table")))
                 {

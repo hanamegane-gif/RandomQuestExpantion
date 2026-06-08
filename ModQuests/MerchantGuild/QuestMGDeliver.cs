@@ -20,7 +20,7 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
             base.OnDropReward();
 
             int guilpoNum = 1;
-            Thing guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_merchant").SetNum(guilpoNum);
+            var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_merchant").SetNum(guilpoNum);
             DropReward(guilpo);
             MerchantGuildZone.ModInfluence(1);
         }

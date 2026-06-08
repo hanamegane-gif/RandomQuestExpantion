@@ -16,8 +16,8 @@ namespace RandomQuestExpantion.Patch
         {
             var ownerTrait = __instance.owner.trait;
             var traderTrait = InvOwner.Trader.owner.trait;
-            TraitGuilpoVender trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
-                                      (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
+            var trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
+                        (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
             if (trait == null)
             {
                 return true;
@@ -55,8 +55,8 @@ namespace RandomQuestExpantion.Patch
         {
             var ownerTrait = __instance.owner.trait;
             var traderTrait = InvOwner.Trader.owner.trait;
-            TraitGuilpoVender trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
-                                      (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
+            var trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
+                        (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
             if (trait == null)
             {
                 return true;
@@ -81,8 +81,8 @@ namespace RandomQuestExpantion.Patch
         {
             var ownerTrait = __instance.destInv.owner.trait;
             var traderTrait = InvOwner.Trader.owner.trait;
-            TraitGuilpoVender trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
-                                      (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
+            var trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
+                        (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
             if (trait is TraitGuilpoVender)
             {
                 __result = trait.CurrencyID;
@@ -96,8 +96,8 @@ namespace RandomQuestExpantion.Patch
         {
             var ownerTrait = __instance.owner.trait;
             var traderTrait = InvOwner.Trader.owner.trait;
-            TraitGuilpoVender trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
-                                      (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
+            var trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
+                        (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
 
             if (trait is TraitGuilpoVender)
             {
@@ -113,8 +113,8 @@ namespace RandomQuestExpantion.Patch
         {
             var ownerTrait = __instance.owner.trait;
             var traderTrait = InvOwner.Trader.owner.trait;
-            TraitGuilpoVender trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
-                                      (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
+            var trait = (ownerTrait is TraitGuilpoVender) ? (TraitGuilpoVender)ownerTrait :
+                        (traderTrait is TraitGuilpoVender) ? (TraitGuilpoVender)traderTrait : null;
             if (trait is TraitGuilpoVender)
             {
                 __result = "icon_ecopo";

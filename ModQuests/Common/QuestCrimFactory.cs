@@ -2,7 +2,7 @@
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestCrimFactory : QuestHarvest
+    class QuestCrimFactory : QuestHarvest, IHarvest
     {
         public override string IdZone => "instance_crim";
 
@@ -24,7 +24,7 @@ namespace RandomQuestExpantion.ModQuests.Common
             // 持ち込み対策がめんどくさいのでボーナスは出さない
         }
 
-        internal virtual bool IsQuestItem(in Thing t)
+        public bool IsQuestItem(in Thing t)
         {
             if (t.id == "drug_crim" && !t.IsImportant)
             {

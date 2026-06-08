@@ -9,8 +9,6 @@ namespace RandomQuestExpantion.ModQuests.MageGuild
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 
-        public Zone ReturnZone => MageGuildZone;
-
         public override ZoneEventQuest CreateEvent()
         {
             return new ZoneEventWGDuel();
@@ -31,7 +29,7 @@ namespace RandomQuestExpantion.ModQuests.MageGuild
             base.OnDropReward();
 
             int guilpoNum = 2 + EClass.rnd(2) + EClass.rnd(2);
-            Thing guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_mage").SetNum(guilpoNum);
+            var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_mage").SetNum(guilpoNum);
             DropReward(guilpo);
             MageGuildZone.ModInfluence(1);
         }

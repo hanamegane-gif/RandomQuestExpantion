@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Elin\Package\Mod_testmod\</OutputPath>
+    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\steamapps\common\Elin\Package\Mod_QEX\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -97,6 +97,7 @@
     <Compile Include="Guilpo\TraitTGGuilpoVender.cs" />
     <Compile Include="Guilpo\TraitWGGuilpoVender.cs" />
     <Compile Include="ModCore.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFGSubdueCave.cs" />
     <Compile Include="ModQuestEvent\ZoneEventTGCrimFactory.cs" />
     <Compile Include="ModQuestEvent\ZoneEventCrimFactory.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGDefence.cs" />
@@ -113,22 +114,30 @@
     <Compile Include="ModQuestEvent\ZoneEventHerbHarvest.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGHerbHarvest.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGSubdueGhost.cs" />
+    <Compile Include="ModQuests\Common\IHarvest.cs" />
+    <Compile Include="ModQuests\Common\IOverrideWildernessEncounter.cs" />
+    <Compile Include="ModQuests\Common\QuestBullyDoggo.cs" />
+    <Compile Include="ModQuests\Common\QuestDungeonRescue.cs" />
     <Compile Include="ModQuests\Common\QuestFish.cs" />
     <Compile Include="ModQuests\Common\QuestFlyer.cs" />
     <Compile Include="ModQuests\Common\QuestCrimFactory.cs" />
     <Compile Include="ModQuests\Common\QuestHerbHarvest.cs" />
     <Compile Include="ModQuests\Common\QuestInvest.cs" />
+    <Compile Include="ModQuests\Common\QuestRiskyDeliver.cs" />
+    <Compile Include="ModQuests\Common\QuestRiskyEscort.cs" />
     <Compile Include="ModQuests\Common\QuestSales.cs" />
     <Compile Include="ModQuests\Common\QuestSalesStolen.cs" />
     <Compile Include="ModQuests\Common\QuestShipping.cs" />
     <Compile Include="ModQuests\Common\QuestSlaver.cs" />
     <Compile Include="ModQuests\Common\QuestUrbanDefence.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGBullyDoggo.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGDefence.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGDuel.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGDungeonAttack.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGHunt.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGStrongerHunt.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGSubdue.cs" />
+    <Compile Include="ModQuests\FighterGuild\QuestFGSubdueCave.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGWithdrawal.cs" />
     <Compile Include="ModQuests\FighterGuild\QuestFGYeekHunt.cs" />
     <Compile Include="ModQuests\MageGuild\QuestWGDefence.cs" />
@@ -138,6 +147,8 @@
     <Compile Include="ModQuests\MageGuild\QuestWGHQPotion.cs" />
     <Compile Include="ModQuests\MageGuild\QuestWGSubdueGhost.cs" />
     <Compile Include="ModQuests\MerchantGuild\QuestMGDefence.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGHQFurniture.cs" />
+    <Compile Include="ModQuests\MerchantGuild\QuestMGRiskyEscort.cs" />
     <Compile Include="ModQuests\MerchantGuild\QuestMGEscort.cs" />
     <Compile Include="ModQuests\MerchantGuild\QuestMGHunt.cs" />
     <Compile Include="ModQuests\MerchantGuild\QuestMGInvest.cs" />
@@ -147,8 +158,12 @@
     <Compile Include="ModQuests\ThiefGuild\QuestTGDefence.cs" />
     <Compile Include="ModQuests\ThiefGuild\QuestTGDeliver.cs" />
     <Compile Include="ModQuests\ThiefGuild\QuestTGDungeonRetrieve.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGRiskyDliver.cs" />
+    <Compile Include="ModQuests\ThiefGuild\QuestTGRiskyEscort.cs" />
     <Compile Include="ModQuests\ThiefGuild\QuestTGSalesStolen.cs" />
     <Compile Include="ModQuests\ThiefGuild\QuestTGSlaver.cs" />
+    <Compile Include="ModQuestTask\TaskBullyDoggo.cs" />
+    <Compile Include="ModQuestTask\TaskFGBullyDoggo.cs" />
     <Compile Include="ModQuestTask\TaskFGDungeonAttack.cs" />
     <Compile Include="ModQuestTask\TaskFGHunt.cs" />
     <Compile Include="ModQuestTask\TaskFGStrongerHunt.cs" />
@@ -171,8 +186,14 @@
     <Compile Include="ModQuestTask\TaskWGDungeonRetrieve.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceSubdueGhost.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanDefence.cs" />
+    <Compile Include="ModQuestZone\Zone_Arena_Cave_RQX.cs" />
     <Compile Include="ModQuestZone\Zone_Harvest_RQX.cs" />
     <Compile Include="ModQuestZone\Zone_Arena_RQX.cs" />
+    <Compile Include="ModZonePreenter\ZonePreEnterDeliverBrigand.cs" />
+    <Compile Include="ModZonePreenter\ZonePreEnterEscortAssassin.cs" />
+    <Compile Include="ModZonePreenter\ZonePreEnterMGEscortAssassin.cs" />
+    <Compile Include="ModZonePreenter\ZonePreEnterTGDeliverBrigand.cs" />
+    <Compile Include="ModZonePreenter\ZonePreEnterTGEscortAssassin.cs" />
     <Compile Include="Patch\AIShoppingPatch.cs" />
     <Compile Include="Patch\CharaPatch.cs" />
     <Compile Include="Patch\DramaPatch.cs" />
@@ -181,12 +202,12 @@
     <Compile Include="Patch\PlayerPatch.cs" />
     <Compile Include="Patch\QuestExtender.cs" />
     <Compile Include="Patch\QuestPatch.cs" />
-    <Compile Include="Patch\ImportExcelPatch.cs" />
     <Compile Include="Deploy\DeployTypeFallback.cs" />
     <Compile Include="Patch\QuestTaskExtender.cs" />
     <Compile Include="Patch\GameDatePatch.cs" />
     <Compile Include="Patch\SpatialGenPatch.cs" />
     <Compile Include="Patch\TraitCharaPatch.cs" />
+    <Compile Include="Patch\TraitNewZonePatch.cs" />
     <Compile Include="Patch\TraitPatch.cs" />
     <Compile Include="Patch\ZonePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -212,7 +233,20 @@
     <Compile Include="ModQuests\QuestFactory.cs" />
     <Compile Include="ModQuestTask\TaskDungeonAttack.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceFarmFieldWar.cs" />
+    <Compile Include="Traits\TraitFGLiaison.cs" />
+    <Compile Include="Traits\TraitGuildLiaison.cs" />
+    <Compile Include="Traits\TraitMGLiaison.cs" />
+    <Compile Include="Traits\TraitTGLiaison.cs" />
+    <Compile Include="Traits\TraitWGLiaison.cs" />
+    <Compile Include="ModNefia\IQuestRandomNefia.cs" />
+    <Compile Include="ModNefia\ZoneRandomQuestNefia.cs" />
+    <Compile Include="ModNefia\ZoneRandomQuestNefiaFactory.cs" />
+    <Compile Include="ModNefia\ZoneRandomQuestNefiaPlain.cs" />
+    <Compile Include="ModNefia\ZoneRandomQuestNefiWater.cs" />
+    <Compile Include="ModNefia\ZoneRandomQuestNefiaForest.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include=".editorconfig" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

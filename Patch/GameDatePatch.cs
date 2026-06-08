@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Emit;
 
@@ -13,16 +14,17 @@ namespace RandomQuestExpantion.Patch
         internal static IEnumerable<CodeInstruction> HandleOnShippedEventPatch(IEnumerable<CodeInstruction> instructions)
         {
             var ci = new CodeMatcher(instructions)
-                .MatchStartForward
+                .MatchEndForward
                 (
-                    new CodeMatch(OpCodes.Ldc_I4_1),
+                    new CodeMatch(OpCodes.Ldfld),
+                    new CodeMatch(OpCodes.Ldloc_3),
                     new CodeMatch(OpCodes.Add),
-                    new CodeMatch(OpCodes.Stloc_2)
-                    //IL_01d7: ldc.i4.1
-                    //IL_01d8: add
-                    //IL_01d9: stloc.2
+                    new CodeMatch(OpCodes.Stfld)
 
-                    //IL_01da: ldloc.s 7
+                    //IL_02b7: ldfld int64 Player/Stats::shipMoney
+                    //IL_02bc: ldloc.3
+                    //IL_02bd: add
+                    //IL_02be: stfld int64 Player/Stats::shipMoney
                 )
                 .Advance(1)
                 .InsertAndAdvance
@@ -34,11 +36,13 @@ namespace RandomQuestExpantion.Patch
             return ci;
         }
 
-        internal static void HandleOnShippedEvent(int priceAmount)
+        internal static void HandleOnShippedEvent(long priceAmount)
         {
+            int pa = (int)(priceAmount > Int32.MaxValue ? Int32.MaxValue : priceAmount);
+
             EClass.game.quests.list.ForeachReverse(delegate (Quest q)
             {
-                q.OnShippedMod(priceAmount);
+                q.OnShippedMod(pa);
             });
         }
     }

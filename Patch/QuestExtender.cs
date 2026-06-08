@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace RandomQuestExpantion.Patch
 {
@@ -36,10 +35,22 @@ namespace RandomQuestExpantion.Patch
             InvokeMethod(quest, targetmethod, new object[] { boss });
         }
 
+        public static void OnNefiaRetreatedMod(this Quest quest, Zone currentZone)
+        {
+            string targetmethod = "OnNefiaRetreated";
+            InvokeMethod(quest, targetmethod, new object[] { currentZone });
+        }
+
+        public static void OnWildernessEncountedMod(this Quest quest, Zone newZone)
+        {
+            string targetmethod = "OnWildernessEncounted";
+            InvokeMethod(quest, targetmethod, new object[] { newZone });
+        }
+
         public static void InvokeMethod(in Quest quest, string targetMethod, object[] args = null)
         {
-            Type type = quest.GetType();
-            MethodInfo method = type.GetMethod(targetMethod, BindingFlags.Instance | BindingFlags.Public);
+            var type = quest.GetType();
+            var method = type.GetMethod(targetMethod, BindingFlags.Instance | BindingFlags.Public);
 
             if (method != null)
             {

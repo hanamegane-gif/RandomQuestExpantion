@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static RandomQuestExpantion.General.General;
+using static UnityEngine.UI.GridLayoutGroup;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -74,6 +75,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                 NextWave();
             }
             AggroEnemy();
+            TeleportCheaters();
         }
 
         public override void OnCharaDie(Chara c)
@@ -94,7 +96,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             enemies.ForeachReverse(delegate (int id)
             {
-                Chara chara = EClass._map.FindChara(id);
+                var chara = EClass._map.FindChara(id);
                 if (chara == null || !chara.IsAliveInCurrentZone || !EClass.pc.IsHostile(chara))
                 {
                     enemies.Remove(id);
@@ -154,7 +156,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                     spawnPoint = spawnDirection.RandomItem().GetRandomPoint(allowBlocked: false, allowChara: true, radius: 20);
 
                     // 水場に沸かせない(主にポトカとルミエストのせい)
-                    if (spawnPoint != null && !spawnPoint.cell.IsDeepWater)
+                    if (spawnPoint != null && !spawnPoint.cell.IsDeepWater && spawnPoint.IsInBounds)
                     {
                         break;
                     }
@@ -165,7 +167,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                     continue;
                 }
 
-                Chara enemy = CreateEnemy(dangerLv);
+                var enemy = CreateEnemy(dangerLv);
                 enemy.c_originalHostility = Hostility.Enemy;
                 enemy.hostility = Hostility.Enemy;
                 EClass._zone.AddCard(enemy, spawnPoint);
@@ -184,17 +186,29 @@ namespace RandomQuestExpantion.ModQuestEvent
             var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => SpawnCandidateList.Contains(r.id)).Select(lv: generateLv);
             int charaLv = (spawnCharaSource.LV + ((generateLv >= 51) ? 50 : 0)) * Mathf.Max(1, (generateLv - 1) / 50);
 
-            CardBlueprint cardBlueprint = new CardBlueprint
+            var cardBlueprint = new CardBlueprint
             {
                 lv = charaLv,
             };
             CardBlueprint.Set(cardBlueprint);
 
-            Chara createdChara = CharaGen.Create(spawnCharaSource.id);
+            var createdChara = CharaGen.Create(spawnCharaSource.id);
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;
 
             return createdChara;
+        }
+
+        private void TeleportCheaters()
+        {
+            enemies.ForeachReverse(delegate (int id)
+            {
+                var chara = EClass._map.FindChara(id);
+                if (chara == null && !chara.pos.IsInBounds && chara.IsAliveInCurrentZone)
+                {
+                    ActEffect.Proc(EffectId.Teleport, chara);
+                }
+            });
         }
     }
 }

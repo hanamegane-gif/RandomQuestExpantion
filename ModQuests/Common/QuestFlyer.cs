@@ -20,7 +20,7 @@
         public override void OnStart()
         {
             // なんとチラシ支給だ　喜べ
-            Thing thing = ThingGen.Create("flyer");
+            var thing = ThingGen.Create("flyer");
             thing.Identify(show: false, IDTSource.SuperiorIdentify);
             thing.SetNum(Requirement * 3 / 2);
             Msg.Say("get_quest_item");

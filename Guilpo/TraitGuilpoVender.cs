@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using static RandomQuestExpantion.General.General;
 
@@ -69,7 +68,7 @@ class TraitGuilpoVender : TraitVendingMachine
                 continue;
             }
 
-            var bonusEnchantStrength = CalcEnchantStrength(bonusEnchant, generateLv);
+            int bonusEnchantStrength = CalcEnchantStrength(bonusEnchant, generateLv);
             generatedGear.elements.ModBase(bonusEnchant.id, bonusEnchantStrength);
         }
 
@@ -93,7 +92,7 @@ class TraitGuilpoVender : TraitVendingMachine
 
     internal virtual Thing GenerateRune(int generateLv, string forceId = "", bool reverse = false)
     {
-        Thing rune = ThingGen.Create("rune");
+        var rune = ThingGen.Create("rune");
         SourceElement.Row enchant;
         if (!forceId.IsEmpty())
         {
@@ -108,7 +107,7 @@ class TraitGuilpoVender : TraitVendingMachine
         {
             return rune;
         }
-        var enchantStrength = CalcEnchantStrength(enchant, generateLv);
+        int enchantStrength = CalcEnchantStrength(enchant, generateLv);
 
         rune.refVal = enchant.id;
         rune.encLV = enchantStrength * (reverse ? -1 : 1);
@@ -121,7 +120,7 @@ class TraitGuilpoVender : TraitVendingMachine
         var bp = new CardBlueprint { rarity = Rarity.Normal, blesstedState = bless };
         CardBlueprint.Set(bp);
 
-        Thing createdThing = ThingGen.Create(id, idMat, generateLv);
+        var createdThing = ThingGen.Create(id, idMat, generateLv);
         createdThing.SetNum((stockNum != -1) ? stockNum : CalcItemStack(createdThing));
 
         if (createdThing.trait.HasCharges)
@@ -169,7 +168,7 @@ class TraitGuilpoVender : TraitVendingMachine
         }
 
         var candidateList = new List<SourceElement.Row>();
-        var enchantType = (generatedThing.trait is TraitRune) ? "rune" :
+        string enchantType = (generatedThing.trait is TraitRune) ? "rune" :
                           (generatedThing.category.IsChildOf("melee") ? "melee" : "armor");
         var gearCategory = generatedThing.category;
 
@@ -226,8 +225,9 @@ class TraitGuilpoVender : TraitVendingMachine
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 12)
+        if (filterRoll < (chanceSum += 12))
         {
             // 肉体系主能力
             rareEnchantFilter = row => row.category == "attribute" &&
@@ -238,7 +238,7 @@ class TraitGuilpoVender : TraitVendingMachine
                 row.id == SKILL.CHA
             );
         }
-        else if (filterRoll < 24)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 精神系主能力
             rareEnchantFilter = row => row.category == "attribute" &&
@@ -249,22 +249,22 @@ class TraitGuilpoVender : TraitVendingMachine
                 row.id == SKILL.MAG
             );
         }
-        else if (filterRoll < 36)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 戦闘系
             rareEnchantFilter = row => row.categorySub == "combat";
         }
-        else if (filterRoll < 48)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 耐性
             rareEnchantFilter = row => row.type == "Resistance";
         }
-        else if (filterRoll < 60)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 生産系
             rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
         }
-        else if (filterRoll < 68)
+        else if (filterRoll < (chanceSum += 8))
         {
             // 慧眼反魔突撃者パリィ不屈
             rareEnchantFilter = row =>
@@ -276,7 +276,7 @@ class TraitGuilpoVender : TraitVendingMachine
                 row.id == ENC.guts
             );
         }
-        else if (filterRoll < 76)
+        else if (filterRoll < (chanceSum += 8))
         {
             // 魔法強化信仰見切り盾の暴君射撃防御
             rareEnchantFilter = row =>
@@ -296,33 +296,34 @@ class TraitGuilpoVender : TraitVendingMachine
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 12)
+        if (filterRoll < (chanceSum += 12))
         {
             // 武器エンチャ系
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
         }
-        else if (filterRoll < 24)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 属性追加
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
         }
-        else if (filterRoll < 36)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 特攻
             rareEnchantFilter = row => row.encSlot == "weapon" && row.alias.Contains("bane_");
         }
-        else if (filterRoll < 48)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 耐性
             rareEnchantFilter = row => row.type == "Resistance";
         }
-        else if (filterRoll < 60)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 生産系
             rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
         }
-        else if (filterRoll < 68)
+        else if (filterRoll < (chanceSum += 8))
         {
             // 連撃慧眼ヴォーパル突撃者パリィ不屈
             rareEnchantFilter = row =>
@@ -334,7 +335,7 @@ class TraitGuilpoVender : TraitVendingMachine
                 row.id == ENC.guts
             );
         }
-        else if (filterRoll < 76)
+        else if (filterRoll < (chanceSum += 8))
         {
             // 逆襲魔法強化全特攻盾の暴君射撃防御
             rareEnchantFilter = row =>
@@ -354,33 +355,34 @@ class TraitGuilpoVender : TraitVendingMachine
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 12)
+        if (filterRoll < (chanceSum += 12))
         {
             // 武器エンチャ系
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
         }
-        else if (filterRoll < 24)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 属性追加
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
         }
-        else if (filterRoll < 36)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 特攻
             rareEnchantFilter = row => row.encSlot == "weapon" && row.alias.Contains("bane_");
         }
-        else if (filterRoll < 48)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 耐性
             rareEnchantFilter = row => row.type == "Resistance";
         }
-        else if (filterRoll < 60)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 生産系
             rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
         }
-        else if (filterRoll < 68)
+        else if (filterRoll < (chanceSum += 8))
         {
             // 連撃慧眼ヴォーパル突撃者パリィ不屈
             rareEnchantFilter = row =>
@@ -392,7 +394,7 @@ class TraitGuilpoVender : TraitVendingMachine
                 row.id == ENC.guts
             );
         }
-        else if (filterRoll < 76)
+        else if (filterRoll < (chanceSum += 8))
         {
             // 逆襲魔法強化全特攻盾の暴君射撃防御
             rareEnchantFilter = row =>

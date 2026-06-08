@@ -7,8 +7,6 @@ namespace RandomQuestExpantion.ModQuests.FighterGuild
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 
-        public Zone ReturnZone => FighterGuildZone;
-
         public override ZoneEventQuest CreateEvent()
         {
             return new ZoneEventFGSubdue();
@@ -24,7 +22,7 @@ namespace RandomQuestExpantion.ModQuests.FighterGuild
             base.OnDropReward();
 
             int guilpoNum = 2 + EClass.rnd(2) + EClass.rnd(2);
-            Thing guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_fighter").SetNum(guilpoNum);
+            var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_fighter").SetNum(guilpoNum);
             DropReward(guilpo);
             FighterGuildZone.ModInfluence(1);
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Reflection;
+﻿using System.Reflection;
 
 namespace RandomQuestExpantion.Patch
 {
@@ -38,8 +37,8 @@ namespace RandomQuestExpantion.Patch
 
         public static void InvokeMethod(in QuestTask task, string targetMethod, object[] args = null)
         {
-            Type type = task.GetType();
-            MethodInfo method = type.GetMethod(targetMethod, BindingFlags.Instance | BindingFlags.Public);
+            var type = task.GetType();
+            var method = type.GetMethod(targetMethod, BindingFlags.Instance | BindingFlags.Public);
 
             if (method != null)
             {

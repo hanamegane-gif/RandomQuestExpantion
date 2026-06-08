@@ -1,0 +1,11 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+/obj/.*
+/obj/Release
+/obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
+/obj/Release/QuestExpantion.csproj.AssemblyReference.cache
+/obj/Release/QuestExpantion.csproj.CoreCompileInputs.cache
+/.vs/QuestExpantion.csproj.dtbcache.json
+/.editorconfig

@@ -49,9 +49,9 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         internal virtual void SpawnEnemy(int dangerLv)
         {
-            Point spawnPoint = EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false, minRadius : 3);
+            var spawnPoint = EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false, minRadius : 3);
 
-            Chara enemy = CreateEnemy(dangerLv);
+            var enemy = CreateEnemy(dangerLv);
 
             EClass._zone.AddCard(enemy, spawnPoint);
 
@@ -63,14 +63,14 @@ namespace RandomQuestExpantion.ModQuestEvent
             int generateLv = Mathf.Max(dangerLv * 3 / 2, 5);
             int BPLv = Mathf.Max(dangerLv * 3 / 2, 5);
 
-            CardBlueprint cardBlueprint = new CardBlueprint
+            var cardBlueprint = new CardBlueprint
             {
                 rarity = Rarity.Legendary,
                 lv = BPLv
             };
             CardBlueprint.Set(cardBlueprint);
 
-            Chara createdChara = CharaGen.Create((EClass.rnd(10) == 0 ? "adv_fairy" : "adv"), generateLv);
+            var createdChara = CharaGen.Create((EClass.rnd(10) == 0 ? "adv_fairy" : "adv"), generateLv);
             createdChara.RestockEquip(true);
 
             createdChara.c_bossType = BossType.Boss;

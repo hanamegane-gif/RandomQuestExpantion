@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuests.Common
@@ -8,7 +7,7 @@ namespace RandomQuestExpantion.ModQuests.Common
     {
         internal override void SetTargetCategory()
         {
-            List<SourceCategory.Row> list = EClass.sources.categories.rows.Where((SourceCategory.Row c) => c._parent == "meal" && c.id != "meal_lunch").ToList();
+            var list = EClass.sources.categories.rows.Where((SourceCategory.Row c) => c._parent == "meal" && c.id != "meal_lunch").ToList();
             idCat = list.RandomItem().id;
         }
 

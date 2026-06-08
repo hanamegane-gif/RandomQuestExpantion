@@ -4,9 +4,7 @@ using RandomQuestExpantion.Patch;
 using RandomQuestExpantion.General;
 using System.Collections.Generic;
 using System;
-using System.Reflection.Emit;
 using System.Reflection;
-using System.Linq;
 using RandomQuestExpantion.Config;
 
 namespace RandomQuestExpantion
@@ -36,14 +34,6 @@ namespace RandomQuestExpantion
         public void OnStartCore()
         {
             DeployTypeFallback.DeployTypeFallbackSetting();
-
-            if (!AppDomain.CurrentDomain.GetAssemblies().Any(a => a.GetName().Name == "CustomWhateverLoader"))
-            {
-                ImportExcelPatch.ExecImportQuests(Info);
-                ImportExcelPatch.ExecImportLanguages(Info);
-                ImportExcelPatch.ExecImportZones(Info);
-                ImportExcelPatch.ExecImportThings(Info);
-            }
             ModConfig.LoadConfig();
             ModMapPieceManager.Init(Info);
         }
@@ -57,7 +47,7 @@ namespace RandomQuestExpantion
         {
             foreach (var instruction in instructions)
             {
-                OpCode opCode = instruction.opcode;
+                var opCode = instruction.opcode;
                 object operand = instruction.operand;
                 Console.WriteLine($"OpCode: {opCode} Operand: {operand}");
                 switch (opCode.Name)

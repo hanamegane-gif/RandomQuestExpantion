@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestTask
@@ -23,7 +22,7 @@ namespace RandomQuestExpantion.ModQuestTask
         {
             for (int i = 0; i < 100; i++)
             {
-                SourceRace.Row row = EClass.sources.races.rows.RandomItem();
+                var row = EClass.sources.races.rows.RandomItem();
                 if (ListTargets(row.id).Count != 0)
                 {
                     idRace = row.id;
@@ -67,10 +66,10 @@ namespace RandomQuestExpantion.ModQuestTask
                 return;
             }
 
-            List<SourceChara.Row> list = ListTargets(idRace);
+            var list = ListTargets(idRace);
             int num = 0;
             detail = detail + Environment.NewLine + Environment.NewLine + "target_huntRace".lang() + Environment.NewLine;
-            foreach (SourceChara.Row item in list)
+            foreach (var item in list)
             {
                 detail = detail + item.GetName().ToTitleCase(wholeText: true) + " (" + EClass.sources.races.map[idRace].GetName() + ")";
                 num++;

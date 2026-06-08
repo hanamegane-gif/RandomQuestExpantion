@@ -2,7 +2,7 @@
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestHerbHarvest : QuestHarvest
+    class QuestHerbHarvest : QuestHarvest, IHarvest
     {
         public override ZoneEventQuest CreateEvent()
         {
@@ -22,7 +22,7 @@ namespace RandomQuestExpantion.ModQuests.Common
             // 持ち込み対策がめんどくさいのでボーナスは出さない
         }
 
-        internal virtual bool IsQuestItem(in Thing t)
+        public bool IsQuestItem(in Thing t)
         {
             if (t.category.id == "herb")
             {

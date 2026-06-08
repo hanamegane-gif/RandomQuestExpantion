@@ -39,7 +39,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
 
         public override void OnStart()
         {
-            Thing thing = ThingGen.Create(idThing);
+            var thing = ThingGen.Create(idThing);
             thing.isStolen = true;
 
             if (idThing == "rod_wish")
@@ -58,7 +58,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             base.OnDropReward();
 
             int guilpoNum = 1 + EClass.rnd(2);
-            Thing guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_thief").SetNum(guilpoNum);
+            var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_thief").SetNum(guilpoNum);
             DropReward(guilpo);
             ThiefGuildZone.ModInfluence(1);
         }

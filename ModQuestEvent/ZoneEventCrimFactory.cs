@@ -27,11 +27,11 @@ namespace RandomQuestExpantion.ModQuestEvent
             }
 
             EClass._zone.SetBGM(79);
-            Point centerPos = EClass._map.GetCenterPos();
+            var centerPos = EClass._map.GetCenterPos();
             EClass._zone.AddCard(ThingGen.Create("container_shipping_farm"), centerPos).Install().isNPCProperty = true;
             EClass._zone.AddCard(ThingGen.Create("376"), centerPos.GetRandomNeighbor()).Install().isNPCProperty = true;
 
-            GenBounds genBounds = GenBounds.Create(EClass._zone);
+            var genBounds = GenBounds.Create(EClass._zone);
             genBounds.marginPartial = 1;
 
             // インスタンスマップにはチョコレートの床を敷き詰めた
@@ -39,15 +39,15 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             Action<PartialMap, GenBounds> onCreate = delegate (PartialMap p, GenBounds b)
             {
-                List<Point> list = b.ListEmptyPoint();
+                var list = b.ListEmptyPoint();
                 for (int i = 0; i < EClass.rndHalf(5); i++)
                 {
                     if (list.Count == 0)
                     {
                         break;
                     }
-                    Point spawnPoint = list.RandomItem();
-                    Chara extraChara = CreateExtraChara();
+                    var spawnPoint = list.RandomItem();
+                    var extraChara = CreateExtraChara();
                     EClass._zone.AddCard(extraChara, spawnPoint);
                     list.Remove(spawnPoint);
                 }
@@ -59,7 +59,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                 ModMapPiece.TryAddMapPiece(genBounds, pieceType, onCreate);
             }
 
-            foreach (Thing thing in EClass._map.things)
+            foreach (var thing in EClass._map.things)
             {
                 thing.isNPCProperty = true;
             }
@@ -72,12 +72,12 @@ namespace RandomQuestExpantion.ModQuestEvent
                 EClass._zone.instance.status = OnReachTimeLimit();
             }
 
-            List<Thing> list = new List<Thing>();
-            foreach (Chara member in EClass.pc.party.members)
+            var list = new List<Thing>();
+            foreach (var member in EClass.pc.party.members)
             {
                 member.things.Foreach(delegate (Thing t)
                 {
-                    if ((t.id == "crim" || t.id == "drug_crim") && EClass.rnd(2) != 0)
+                    if (!t.isCrafted && (t.id == "crim" || t.id == "drug_crim") && EClass.rnd(2) != 0)
                     {
                         list.Add(t);
                     }
@@ -90,7 +90,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             }
 
             Msg.Say("harvest_confiscate", list.Count.ToString() ?? "");
-            foreach (Thing item in list)
+            foreach (var item in list)
             {
                 item.Destroy();
             }
@@ -101,7 +101,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => SpawnCandidateList.Contains(r.id)).Select(lv: 50);
 
-            Chara createdChara = CharaGen.Create(spawnCharaSource.id);
+            var createdChara = CharaGen.Create(spawnCharaSource.id);
             createdChara.c_originalHostility = Hostility.Neutral;
             createdChara.hostility = Hostility.Neutral;
             createdChara.AddCondition<ConHallucination>(10000, force: true);
@@ -109,19 +109,20 @@ namespace RandomQuestExpantion.ModQuestEvent
 
             // 赤本曰くアッパー系らしい
             int conditionRoll = EClass.rnd(100);
-            if (conditionRoll < 26)
+            int chanceSum = 0;
+            if (conditionRoll < (chanceSum += 26))
             {
                 createdChara.AddCondition<ConSmoking>(10000, force: true);
             }
-            else if (conditionRoll < 52)
+            else if (conditionRoll < (chanceSum += 26))
             {
                 createdChara.AddCondition<ConAwakening>(10000, force: true);
             }
-            else if (conditionRoll < 78)
+            else if (conditionRoll < (chanceSum += 26))
             {
                 createdChara.AddCondition<ConEuphoric>(10000, force: true);
             }
-            else if (conditionRoll < 89)
+            else if (conditionRoll < (chanceSum += 11))
             {
                 createdChara.AddCondition<ConConfuse>(10000, force: true);
             }

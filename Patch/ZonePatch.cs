@@ -45,7 +45,7 @@ namespace RandomQuestExpantion.Patch
         [HarmonyPatch(typeof(Zone), nameof(Zone.UpdateQuests))]
         internal static IEnumerable<CodeInstruction> GuildQuestFilterPatch(IEnumerable<CodeInstruction> instructions)
         {
-            var ci = new CodeMatcher(instructions)
+            IEnumerable<CodeInstruction> ci = new CodeMatcher(instructions)
                 .MatchEndForward
                 (
                     new CodeMatch(ci =>
@@ -67,6 +67,27 @@ namespace RandomQuestExpantion.Patch
                 )
                 .InstructionEnumeration();
             return ci;
+        }
+
+        [HarmonyPatch(typeof(Zone), nameof(Zone.UpdateQuests)), HarmonyPostfix]
+        internal static void UpdateGuildLiaisonQuestPatch(Zone __instance, bool force)
+        {
+            if (IsNotTownOrGuild(__instance))
+            {
+                return;
+            }
+
+            /*
+            var liaisons = __instance.map.charas.Where(c => c.trait is TraitGuildLiaison);
+
+            foreach (var chara in liaisons)
+            {
+                if (chara.quest == null)
+                {
+                    Quest.Create("byakko_mod_guild_liaison_merchant_escort_risky", null, chara);
+                }
+            }
+            */
         }
 
         [HarmonyPatch(typeof(Zone), nameof(Zone.ModInfluence)), HarmonyPrefix]

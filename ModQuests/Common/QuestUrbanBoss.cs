@@ -27,7 +27,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override string GetTextProgress()
         {
-            ZoneEventUrbanBoss @event = EClass._zone.events.GetEvent<ZoneEventUrbanBoss>();
+            var @event = EClass._zone.events.GetEvent<ZoneEventUrbanBoss>();
             if (@event == null)
             {
                 return "";

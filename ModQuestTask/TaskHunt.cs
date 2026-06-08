@@ -48,6 +48,5 @@ namespace RandomQuestExpantion.ModQuestTask
         {
             return;
         }
-
     }
 }

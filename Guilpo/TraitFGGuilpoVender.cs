@@ -22,7 +22,7 @@ class TraitFGGuilpoVender : TraitGuilpoVender
     {
         int generateLv = CalcGenerateLv();
 
-        foreach (var skill in WeaponTypeList)
+        foreach (string skill in WeaponTypeList)
         {
             string weaponId = (EClass.rnd(4) == 0) ? null : PickRandomWeaponID(skill);
             if (weaponId != null)
@@ -59,23 +59,24 @@ class TraitFGGuilpoVender : TraitGuilpoVender
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 25)
+        if (filterRoll < (chanceSum += 25))
         {
             // 武器エンチャ系
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
         }
-        else if (filterRoll < 50)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 属性追加
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
         }
-        else if (filterRoll < 75)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 特攻
             rareEnchantFilter = row => row.encSlot == "weapon" && row.alias.Contains("bane_");
         }
-        else if (filterRoll < 87)
+        else if (filterRoll < (chanceSum += 12))
         {
             // 連撃慧眼ヴォーパル突撃者
             rareEnchantFilter = row =>
@@ -105,23 +106,24 @@ class TraitFGGuilpoVender : TraitGuilpoVender
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 25)
+        if (filterRoll < (chanceSum += 25))
         {
             // 武器エンチャ系
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
         }
-        else if (filterRoll < 40)
+        else if (filterRoll < (chanceSum += 15))
         {
             // 属性追加
             rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
         }
-        else if (filterRoll < 65)
+        else if (filterRoll < (chanceSum += 25))
         {
             // 特攻
             rareEnchantFilter = row => row.encSlot == "weapon" && row.alias.Contains("bane_");
         }
-        else if (filterRoll < 83)
+        else if (filterRoll < (chanceSum += 18))
         {
             // 連撃慧眼ヴォーパル突撃者
             rareEnchantFilter = row =>

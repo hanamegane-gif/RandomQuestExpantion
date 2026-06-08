@@ -14,8 +14,9 @@ namespace RandomQuestExpantion.ModQuestTask
             // 魔術師ギルドなので魔法系を出やすくする
             Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
             int filterRoll = EClass.rnd(100);
+            int chanceSum = 0;
 
-            if (filterRoll < 12)
+            if (filterRoll < (chanceSum += 12))
             {
                 // 肉体系主能力
                 rareEnchantFilter = row => row.category == "attribute" &&
@@ -26,7 +27,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == SKILL.CHA
                 );
             }
-            else if (filterRoll < 24)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 精神系主能力
                 rareEnchantFilter = row => row.category == "attribute" &&
@@ -37,22 +38,22 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == SKILL.MAG
                 );
             }
-            else if (filterRoll < 32)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 戦闘系
                 rareEnchantFilter = row => row.categorySub == "combat";
             }
-            else if (filterRoll < 44)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 耐性
                 rareEnchantFilter = row => row.type == "Resistance";
             }
-            else if (filterRoll < 56)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 生産系
                 rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
             }
-            else if (filterRoll < 64)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 魔法強化慧眼突撃者パリィ不屈
                 rareEnchantFilter = row =>
@@ -64,7 +65,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.guts
                 );
             }
-            else if (filterRoll < 72)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 魔法強化信仰見切り盾の暴君射撃防御
                 rareEnchantFilter = row =>
@@ -76,7 +77,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.defense_range
                 );
             }
-            else if (filterRoll < 84)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 魔法強化魔力意志魔力の限界マナ運用
                 rareEnchantFilter = row =>
@@ -97,33 +98,34 @@ namespace RandomQuestExpantion.ModQuestTask
             // 魔術師ギルドなので魔法系を出やすくする
             Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
             int filterRoll = EClass.rnd(100);
+            int chanceSum = 0;
 
-            if (filterRoll < 8)
+            if (filterRoll < (chanceSum += 8))
             {
                 // 武器エンチャ系
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub != "eleAttack";
             }
-            else if (filterRoll < 20)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 属性追加
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.categorySub == "eleAttack";
             }
-            else if (filterRoll < 28)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 特攻
                 rareEnchantFilter = row => row.encSlot == "weapon" && row.alias.Contains("bane_");
             }
-            else if (filterRoll < 40)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 耐性
                 rareEnchantFilter = row => row.type == "Resistance";
             }
-            else if (filterRoll < 48)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 生産系
                 rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
             }
-            else if (filterRoll < 56)
+            else if (filterRoll < (chanceSum += 8))
             {
                 // 連撃慧眼ヴォーパル突撃者パリィ不屈
                 rareEnchantFilter = row => row.category == "attribute" &&
@@ -135,7 +137,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.guts
                 );
             }
-            else if (filterRoll < 68)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 逆襲魔法強化全特攻盾の暴君射撃防御
                 rareEnchantFilter = row => row.category == "attribute" &&
@@ -147,7 +149,7 @@ namespace RandomQuestExpantion.ModQuestTask
                     row.id == ENC.defense_range
                 );
             }
-            else if (filterRoll < 80)
+            else if (filterRoll < (chanceSum += 12))
             {
                 // 魔法強化魔力意志魔力の限界マナ運用
                 rareEnchantFilter = row =>

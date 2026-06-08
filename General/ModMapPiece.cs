@@ -10,7 +10,7 @@ namespace RandomQuestExpantion.General
     {
         public static PartialMap TryAddMapPiece(GenBounds targetBound, string pieceType, Action<PartialMap, GenBounds> onCreate = null)
         {
-            PartialMap partialMap = ModMapPieceManager.GetMapPieceRandomOne(pieceType);
+            var partialMap = ModMapPieceManager.GetMapPieceRandomOne(pieceType);
             if (partialMap == null)
             {
                 return null;
@@ -18,7 +18,7 @@ namespace RandomQuestExpantion.General
 
             bool flag = partialMap.dir == 1 || partialMap.dir == 3;
 
-            GenBounds applyBound = targetBound.GetBounds(flag ? partialMap.h : partialMap.w, flag ? partialMap.w : partialMap.h, partialMap.ignoreBlock);
+            var applyBound = targetBound.GetBounds(flag ? partialMap.h : partialMap.w, flag ? partialMap.w : partialMap.h, partialMap.ignoreBlock);
             if (applyBound == null)
             {
                 return null;
@@ -63,7 +63,7 @@ namespace RandomQuestExpantion.General
 
         internal static PartialMap GetMapPieceRandomOne(string type)
         {
-            MapPieceSet pieceSet = PieceSet.Where(a => a.type == type).FirstOrDefault();
+            var pieceSet = PieceSet.Where(a => a.type == type).FirstOrDefault();
 
             if (pieceSet == null || !pieceSet.pathList.Any())
             {
@@ -71,7 +71,7 @@ namespace RandomQuestExpantion.General
             }
 
             string path = pieceSet.pathList.RandomItem();
-            PartialMap partialMap = MapPieceCache.TryGetValue(path);
+            var partialMap = MapPieceCache.TryGetValue(path);
             if (partialMap == null)
             {
                 partialMap = PartialMap.Load(path);
@@ -96,9 +96,9 @@ namespace RandomQuestExpantion.General
             }
 
             PieceSet = new List<MapPieceSet>();
-            var mapPieceDir = Path.Combine(Path.GetDirectoryName(info.Location), __MOD_MAP_PIECE_DIR__);
+            string mapPieceDir = Path.Combine(Path.GetDirectoryName(info.Location), __MOD_MAP_PIECE_DIR__);
 
-            foreach (var type in PieceTypeList)
+            foreach (string type in PieceTypeList)
             {
                 string dir = Path.Combine(mapPieceDir, type);
                 string[] files = Directory.GetFiles(dir, "*.mp", SearchOption.AllDirectories);
@@ -106,7 +106,7 @@ namespace RandomQuestExpantion.General
                 var pathes = new List<string>(); 
                 foreach (string path in files)
                 {
-                    DirectoryInfo directory = new FileInfo(path).Directory;
+                    var directory = new FileInfo(path).Directory;
                     pathes.Add(path);
                 }
 

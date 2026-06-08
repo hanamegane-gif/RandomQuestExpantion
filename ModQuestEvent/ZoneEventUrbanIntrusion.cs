@@ -24,6 +24,12 @@ namespace RandomQuestExpantion.ModQuestEvent
             }
         }
 
+        public override void _OnTickRound()
+        {
+            base._OnTickRound();
+            TeleportCheaters();
+        }
+
         internal virtual int CalcZoneDangerLv()
         {
             return Mathf.Max(base.quest.DangerLv - 2, 1);
@@ -53,6 +59,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                 new Point(centerX, south),
                 new Point(west, centerZ),
             };
+
             for (int i = 0; i < num; i++)
             {
                 Point spawnPoint = null;
@@ -61,7 +68,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                     spawnPoint = spawnDirection.RandomItem().GetRandomPoint(allowBlocked: false, allowChara: true, radius: 20);
 
                     // 水場に沸かせない(主にポトカとルミエストのせい)
-                    if (spawnPoint != null && !spawnPoint.cell.IsDeepWater)
+                    if (spawnPoint != null && !spawnPoint.cell.IsDeepWater && spawnPoint.IsInBounds)
                     {
                         break;
                     }
@@ -72,7 +79,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                     continue;
                 }
 
-                Chara enemy = EClass._zone.SpawnMob(spawnPoint, SpawnSetting.DefenseEnemy(dangerLv));
+                var enemy = EClass._zone.SpawnMob(spawnPoint, SpawnSetting.DefenseEnemy(dangerLv));
 
                 enemy.c_originalHostility = Hostility.Enemy;
                 enemy.hostility = Hostility.Enemy;
@@ -81,6 +88,18 @@ namespace RandomQuestExpantion.ModQuestEvent
                     enemies.Add(enemy.uid);
                 }
             }
+        }
+
+        private void TeleportCheaters()
+        {
+            enemies.ForeachReverse(delegate (int id)
+            {
+                var chara = EClass._map.FindChara(id);
+                if (chara == null && !chara.pos.IsInBounds && chara.IsAliveInCurrentZone)
+                {
+                    ActEffect.Proc(EffectId.Teleport, chara);
+                }
+            });
         }
     }
 }

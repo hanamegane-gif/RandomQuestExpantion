@@ -1,5 +1,4 @@
 ﻿using RandomQuestExpantion.ModQuests.Common;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace RandomQuestExpantion.ModQuestEvent
@@ -32,19 +31,19 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         private void SetFarmFieldPiece()
         {
-            GenBounds genBounds = GenBounds.Create(EClass._zone);
+            var genBounds = GenBounds.Create(EClass._zone);
             genBounds.marginPartial = 2;
             genBounds.FuncCheckEmpty = (Cell cell) => cell.sourceFloor.id == 42;
 
-            List<SourceObj.Row> crops = EClass.sources.objs.rows.Where((SourceObj.Row o) => o.tag.Contains("harvest")).ToList();
+            var crops = EClass.sources.objs.rows.Where((SourceObj.Row o) => o.tag.Contains("harvest")).ToList();
             for (int i = 0; i < 50; i++)
             {
                 genBounds.TryAddMapPiece(MapPiece.Type.Farm, 0f, "", delegate (PartialMap p, GenBounds b)
                 {
-                    List<Point> list = b.ListEmptyPoint();
-                    SourceObj.Row row = crops.RandomItemWeighted((SourceObj.Row o) => o.chance);
+                    var list = b.ListEmptyPoint();
+                    var row = crops.RandomItemWeighted((SourceObj.Row o) => o.chance);
 
-                    foreach (Point item in list)
+                    foreach (var item in list)
                     {
                         if (item.sourceFloor.id == 4)
                         {
@@ -55,7 +54,7 @@ namespace RandomQuestExpantion.ModQuestEvent
                     }
                 });
             }
-            foreach (Thing thing in EClass._map.things)
+            foreach (var thing in EClass._map.things)
             {
                 thing.isNPCProperty = true;
             }
@@ -108,8 +107,8 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             for (int i = 0; i < num; i++)
             {
-                Point boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
-                Chara spawnedChara = EClass._zone.SpawnMob(boundaryEdgePoint, SpawnSetting.HomeWild(EClass._zone.DangerLv));
+                var boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
+                var spawnedChara = EClass._zone.SpawnMob(boundaryEdgePoint, SpawnSetting.HomeWild(EClass._zone.DangerLv));
                 spawnedChara.c_originalHostility = Hostility.Enemy;
                 spawnedChara.hostility = Hostility.Enemy;
             }
@@ -117,11 +116,11 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         private void SpawnBossAnimal()
         {
-            Point boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
+            var boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
             var bossSpawnSetting = SpawnSetting.Boss(EClass._zone.DangerLv);
             bossSpawnSetting.idSpawnList = "c_animal";
-            Chara chara = EClass._zone.SpawnMob(boundaryEdgePoint, bossSpawnSetting);
-            Hostility hostility2 = (chara.c_originalHostility = Hostility.Enemy);
+            var chara = EClass._zone.SpawnMob(boundaryEdgePoint, bossSpawnSetting);
+            var hostility2 = (chara.c_originalHostility = Hostility.Enemy);
             chara.hostility = hostility2;
 
             Msg.Say("defense_boss", chara.Name);

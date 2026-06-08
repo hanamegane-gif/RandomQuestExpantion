@@ -12,6 +12,7 @@ namespace RandomQuestExpantion.Patch
         private static List<string> TargetNamespaceList { get; } = new List<string>
         {
             null, // ModQuestZone
+            "RandomQuestExpantion.ModNefia",
             "RandomQuestExpantion.ModQuestEvent",
             "RandomQuestExpantion.ModQuests.Common",
             "RandomQuestExpantion.ModQuests.FighterGuild",
@@ -30,16 +31,17 @@ namespace RandomQuestExpantion.Patch
             { typeof(ZoneInstance), "ZoneInstance" },
             { typeof(Zone_Arena), "Zone_Arena" },
             { typeof(Zone_Harvest), "Zone_Harvest" },
+            { typeof(Zone_RandomDungeon), "Zone_RandomDungeon" },
         };
 
 
         internal static void DeployTypeFallbackSetting()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             var typeFallbackSetting = ReadTypeFallbackSetting();
             bool shouldFileUpdate = false;
 
-            foreach (var targetNamespace in TargetNamespaceList)
+            foreach (string targetNamespace in TargetNamespaceList)
             {
                 var classes = assembly.GetTypes().Where(t => t.IsClass && t.Namespace == targetNamespace);
 
@@ -63,7 +65,7 @@ namespace RandomQuestExpantion.Patch
                     }
 
                     // "「アセンブリ名」,「名前空間.クラス名」, 「フォールバック先Elinクラス名」"
-                    StringBuilder fallbackSB = new StringBuilder(110);
+                    var fallbackSB = new StringBuilder(110);
                     fallbackSB.Append(assembly.GetName().Name).Append(",");
                     fallbackSB.Append(targetNamespace).Append(String.IsNullOrEmpty(targetNamespace) ? "" : ".");
                     fallbackSB.Append(className).Append(",");

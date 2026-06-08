@@ -16,7 +16,7 @@ namespace RandomQuestExpantion.Patch
                 return true;
             }
 
-            Quest quest = QuestFactory.CreateQuestInstance(_id, _idPerson, c);
+            var quest = QuestFactory.CreateQuestInstance(_id, _idPerson, c);
             __result = quest;
             return false;
         }

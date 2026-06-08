@@ -19,7 +19,7 @@ class TraitMGGuilpoVender : TraitGuilpoVender
             int hammerStock = 1 + EClass.rnd(2);
             for (int j = 0; j < hammerStock; j++)
             {
-                SourceMaterial.Row randomMaterial = MATERIAL.GetRandomMaterial((25 * j) + 5, tryLevelMatTier: true);
+                var randomMaterial = MATERIAL.GetRandomMaterial((25 * j) + 5, tryLevelMatTier: true);
                 AddStockById(merchantChest, "mathammer", stockNum: 1, idMat: randomMaterial.id);
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -27,8 +26,8 @@ namespace RandomQuestExpantion.ModQuestEvent
             for (int i = 0; i < numEnemies; i++)
             {
                 // 商人ギルドは階段がなくマップ端から進入する作りになっている
-                Point boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 2);
-                Chara enemy = CreateEnemy(dangerLv);
+                var boundaryEdgePoint = EClass._map.bounds.GetRandomEdge().GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 2);
+                var enemy = CreateEnemy(dangerLv);
                 EClass._zone.AddCard(enemy, boundaryEdgePoint);
                 enemies.Add(enemy.uid);
             }

@@ -53,7 +53,7 @@ class TraitTGGuilpoVender : TraitGuilpoVender
     {
         int generateLv = CalcGenerateLv();
 
-        foreach (var skill in WeaponTypeList)
+        foreach (string skill in WeaponTypeList)
         {
             for (int i = 0; i < 2; i++)
             {

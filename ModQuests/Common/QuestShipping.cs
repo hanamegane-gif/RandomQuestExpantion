@@ -43,10 +43,10 @@ namespace RandomQuestExpantion.ModQuests.Common
 
             if (EClass._zone != null && !EClass._zone.IsRegion)
             {
-                Zone zone = EClass._zone.GetTopZone();
+                var zone = EClass._zone.GetTopZone();
                 if ((!zone.IsTown || zone.IsPCFaction) && base.ClientZone != null)
                 {
-                    Zone topZone = base.ClientZone.GetTopZone();
+                    var topZone = base.ClientZone.GetTopZone();
                     if (topZone.IsTown && !topZone.IsPCFaction)
                     {
                         zone = topZone;
@@ -59,7 +59,7 @@ namespace RandomQuestExpantion.ModQuests.Common
             }
 
 
-            Thing thing = ThingGen.Create("plat").SetNum(GetRewardPlat(num2));
+            var thing = ThingGen.Create("plat").SetNum(GetRewardPlat(num2));
             DropReward(thing);
 
             if (FameOnComplete > 0)

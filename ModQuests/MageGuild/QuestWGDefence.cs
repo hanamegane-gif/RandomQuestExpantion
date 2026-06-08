@@ -26,7 +26,7 @@ namespace RandomQuestExpantion.ModQuests.MageGuild
             base.OnDropReward();
 
             int guilpoNum = 3 + EClass.rnd(2) + EClass.rnd(2);
-            Thing guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_mage").SetNum(guilpoNum);
+            var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_mage").SetNum(guilpoNum);
             DropReward(guilpo);
             MageGuildZone.ModInfluence(3);
             ThiefGuildZone.ModInfluence(-1);

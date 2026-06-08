@@ -45,29 +45,9 @@ namespace RandomQuestExpantion.General
             return zone.id == "guild_merchant";
         }
 
-        internal static bool IsNefiaBoss(in Chara killedChara)
-        {
-            // ネフィアボス討伐時はzone.Bossをnullにした後にOnKillCharaが呼ばれるため、EClass._zone.Boss == killedCharaで楽に判定できない
-            // まともにネフィアの主を判定する方法がないので力業
-
-            // 「ネフィアの主＝最下層にいるボス」として、最下層かどうかはShouldMakeExitで判定する
-            if (!EClass._zone.IsNefia || EClass._zone.ShouldMakeExit)
-            {
-                return false;
-            }
-
-            // 争いの祠で出てくるのもボス扱いなので引っかからないようにする
-            if (EClass._zone.Boss != null)
-            {
-                return false;
-            }
-
-            return killedChara.c_bossType == BossType.Boss;
-        }
-
         internal static void RemoveAllInhabitants(Map map)
         {
-            List<int> shouldDieUID = new List<int>();
+            var shouldDieUID = new List<int>();
             foreach (var chara in map.charas)
             {
                 if (chara != null && !chara.IsPCFactionOrMinion)
@@ -76,7 +56,7 @@ namespace RandomQuestExpantion.General
                 }
             }
 
-            foreach (var UID in shouldDieUID)
+            foreach (int UID in shouldDieUID)
             {
                 map.charas.Where(c => c.uid == UID).First().Destroy();
             }
@@ -84,7 +64,7 @@ namespace RandomQuestExpantion.General
 
         internal static void RemoveAllMedals(Map map)
         {
-            List<int> shouldDieUID = new List<int>();
+            var shouldDieUID = new List<int>();
             foreach (var thing in map.things)
             {
                 if (thing != null && thing.id == "medal")
@@ -93,7 +73,7 @@ namespace RandomQuestExpantion.General
                 }
             }
 
-            foreach (var UID in shouldDieUID)
+            foreach (int UID in shouldDieUID)
             {
                 map.things.Where(c => c.uid == UID).First().Destroy();
             }
@@ -101,7 +81,7 @@ namespace RandomQuestExpantion.General
 
         internal static void RemoveAllStairs(Map map)
         {
-            List<int> shouldDieUID = new List<int>();
+            var shouldDieUID = new List<int>();
             foreach (var thing in map.things)
             {
                 if (thing != null && (thing.source.trait.Contains("StairsDown") || thing.source.trait.Contains("StairsUp")))
@@ -110,7 +90,7 @@ namespace RandomQuestExpantion.General
                 }
             }
 
-            foreach (var UID in shouldDieUID)
+            foreach (int UID in shouldDieUID)
             {
                 map.things.Where(c => c.uid == UID).First().Destroy();
             }
