@@ -204,7 +204,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             enemies.ForeachReverse(delegate (int id)
             {
                 var chara = EClass._map.FindChara(id);
-                if (chara == null && !chara.pos.IsInBounds && chara.IsAliveInCurrentZone)
+                if (chara != null && !chara.pos.IsInBounds && chara.IsAliveInCurrentZone)
                 {
                     ActEffect.Proc(EffectId.Teleport, chara);
                 }
