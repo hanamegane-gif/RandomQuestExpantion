@@ -9,7 +9,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         public override string TextWidgetDate => "byakko_mod_status_crim_produce".lang((TimeLimit - minElapsed <= 30) ? "end_soon".lang() : "", Lang._weight(questHarvest.weightDelivered), Lang._weight(questHarvest.destWeight)) + "byakko_mod_progress_timer".lang((TimeLimit - minElapsed).ToString());
 
         // ならず者はすれ違いのスリが割とストレス要因になるため出禁
-        internal virtual HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
+        internal virtual HashSet<string> SpawnCandidateList => new HashSet<string>
         {
             "punk",
             "guild_thief",
@@ -99,9 +99,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         // 賑やかしさんを作る
         internal virtual Chara CreateExtraChara()
         {
-            var spawnCharaSource = SpawnListChara.Get("all", (SourceChara.Row r) => SpawnCandidateList.Contains(r.id)).Select(lv: 50);
-
-            var createdChara = CharaGen.Create(spawnCharaSource.id);
+            var createdChara = CharaGen.Create(SpawnCandidateList.RandomItem());
             createdChara.c_originalHostility = Hostility.Neutral;
             createdChara.hostility = Hostility.Neutral;
             createdChara.AddCondition<ConHallucination>(10000, force: true);

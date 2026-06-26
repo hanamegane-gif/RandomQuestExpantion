@@ -4,7 +4,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MageGuild
 {
-    class QuestWGHQPotion : QuestHQCraft
+    public class QuestWGHQPotion : QuestHQCraft
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 
@@ -26,7 +26,7 @@ namespace RandomQuestExpantion.ModQuests.MageGuild
 
         internal override void SetQualityRequirement()
         {
-            QualityLvRequirement = Mathf.Clamp((EClass.pc.FameLv / 15) * 10, 20, 50);
+            QualityLvRequirement = Mathf.Clamp((EClass.pc.FameLv / 15) * 10, 10, 50);
         }
 
         internal override void SetAttributeRequirement()

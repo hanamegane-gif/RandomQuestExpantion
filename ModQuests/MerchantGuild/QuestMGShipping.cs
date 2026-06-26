@@ -4,7 +4,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MerchantGuild
 {
-    class QuestMGShipping : QuestShipping
+    public class QuestMGShipping : QuestShipping
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

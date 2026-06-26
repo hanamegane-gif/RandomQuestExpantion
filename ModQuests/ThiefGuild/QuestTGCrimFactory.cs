@@ -4,17 +4,13 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.ThiefGuild
 {
-    class QuestTGCrimFactory : QuestCrimFactory
+    public class QuestTGCrimFactory : QuestCrimFactory
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 
         public override ZoneEventQuest CreateEvent()
         {
             return new ZoneEventTGCrimFactory();
-        }
-        public override string GetTextProgress()
-        {
-            return "byakko_mod_progress_crim_produce".lang(Lang._weight(weightDelivered), Lang._weight(destWeight));
         }
 
         public override int GetRewardPlat(int money)

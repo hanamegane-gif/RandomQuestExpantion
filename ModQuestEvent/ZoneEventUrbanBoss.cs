@@ -7,7 +7,7 @@ using static RandomQuestExpantion.General.General;
 namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventUrbanBoss : ZoneEventSubdue
-    {        
+    {
         public int WaveIntervalRound => 6; // TickRoundはだいたい3～4Tに一度
 
         public int MaxWaves => base.quest.difficulty * 2 / 7 + 2; // 1～3: 2, 4～6:3, 7:4
@@ -52,7 +52,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         public override void OnCharaDie(Chara c)
         {
-            if (c != null && enemies.Any(uid => uid ==  c.uid))
+            if (c != null && enemies.Any(uid => uid == c.uid))
             {
                 enemies.Remove(c.uid);
 

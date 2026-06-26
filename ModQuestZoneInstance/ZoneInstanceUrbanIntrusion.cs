@@ -1,6 +1,6 @@
 ﻿namespace RandomQuestExpantion.ModQuestZoneInstance
 {
-    class ZoneInstanceUrbanIntrusion: ZoneInstanceSubdue
+    class ZoneInstanceUrbanIntrusion : ZoneInstanceSubdue
     {
     }
 }

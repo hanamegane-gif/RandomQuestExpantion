@@ -16,8 +16,8 @@ class TraitMGGuilpoVender : TraitGuilpoVender
 
         for (int i = 0; i < 4; i++)
         {
-            int hammerStock = 1 + EClass.rnd(2);
-            for (int j = 0; j < hammerStock; j++)
+            int hammerTier = 1 + EClass.rnd(2);
+            for (int j = 0; j < hammerTier; j++)
             {
                 var randomMaterial = MATERIAL.GetRandomMaterial((25 * j) + 5, tryLevelMatTier: true);
                 AddStockById(merchantChest, "mathammer", stockNum: 1, idMat: randomMaterial.id);
@@ -27,8 +27,8 @@ class TraitMGGuilpoVender : TraitGuilpoVender
         // 8280: 軽量化(羽巻)
         AddStockById(merchantChest, "scroll_random", stockNum: 10, fixedRefVal: SPELL.SpReconstruction);
         AddStockById(merchantChest, "rp_food", stockNum: 20, lv: 50);
-        AddStockById(merchantChest, "medal", stockNum: 10);
-        AddStockById(merchantChest, "plat", stockNum: 500);
+        AddStockById(merchantChest, "medal");
+        AddStockById(merchantChest, "plat");
         AddStockById(merchantChest, "bill_tax", stockNum: 3);
         AddStockById(merchantChest, "crystal_earth", stockNum: 20);
         AddStockById(merchantChest, "crystal_sun", stockNum: 20);
@@ -39,13 +39,14 @@ class TraitMGGuilpoVender : TraitGuilpoVender
     {
         Func<SourceElement.Row, bool> rareEnchantFilter = row => true;
         int filterRoll = EClass.rnd(100);
+        int chanceSum = 0;
 
-        if (filterRoll < 20)
+        if (filterRoll < (chanceSum += 20))
         {
             // 生産系
             rareEnchantFilter = row => row.categorySub == "craft" || row.categorySub == "labor";
         }
-        else if (filterRoll < 53)
+        else if (filterRoll < (chanceSum += 33))
         {
             // 耐性
             rareEnchantFilter = row => row.type == "Resistance";

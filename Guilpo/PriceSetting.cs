@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RandomQuestExpantion.Guilpo
 {
@@ -7,57 +9,53 @@ namespace RandomQuestExpantion.Guilpo
         internal static int GetPrice(in Thing thing, int num)
         {
             int price = 1;
-            if (thing.IsWeapon)
+            if (thing.IsWeapon || thing.IsEquipment)
             {
-                price = GetWeaponPrice(thing);
-            }
-            else if (thing.trait is TraitRune)
-            {
-                price = GetRunePrice(thing);
-            }
-            else if (thing.trait is TraitMaterialHammer)
-            {
-                price = GetHammerPrice(thing);
-            }
-            else if (thing.trait is TraitBill)
-            {
-                price = GetBillPrice(thing);
-            }
-            else if (thing.trait is TraitRecipeCat)
-            {
-                price = GetRecipePrice(thing);
-            }
-            else if (thing.trait is TraitCurrency)
-            {
-                price = GetCurrencyPrice(thing);
-            }
-            else if (thing.trait is TraitDrink)
-            {
-                price = GetPotionPrice(thing);
-            }
-            else if (thing.trait is TraitSpellbook)
-            {
-                price = GetSpellBookPrice(thing);
-            }
-            else if (thing.trait is TraitRod)
-            {
-                price = GetRodPrice(thing);
-            }
-            else if (thing.trait is TraitScrollRandom)
-            {
-                price = GetScrollPrice(thing);
+                price = GetGearPrice(thing);
             }
             else if (thing.id.Contains("crystal_"))
             {
                 price = GetCrystalPrice(thing);
             }
+            else if (thing.trait != null && PriceFuncByTraitDict.ContainsKey(thing.trait.GetType()))
+            {
+                price = PriceFuncByTraitDict[thing.trait.GetType()](thing);
+            }
 
             return price * num;
         }
 
-        internal static int GetWeaponPrice(in Thing weapon)
+        public static Dictionary<Type, Func<Thing, int>> PriceFuncByTraitDict = new Dictionary<Type, Func<Thing, int>>()
+        {
+            { typeof(TraitRune), t => GetRunePrice(t) },
+            { typeof(TraitMaterialHammer), t => GetHammerPrice(t) },
+            { typeof(TraitBill), t => GetBillPrice(t) },
+            { typeof(TraitRecipeCat), t => GetRecipePrice(t) },
+            { typeof(TraitCurrencyMedal), t => GetMedalPrice(t) },
+            { typeof(TraitCurrency), t => GetCurrencyPrice(t) },
+            { typeof(TraitDrink), t => GetPotionPrice(t) },
+            { typeof(TraitSpellbook), t => GetSpellBookPrice(t) },
+            { typeof(TraitRod), t => GetRodPrice(t) },
+            { typeof(TraitScrollRandom), t => GetScrollPrice(t) }
+        };
+
+        internal static int GetGearPrice(in Thing weapon)
         {
             return (weapon.rarity == Rarity.Mythical) ? 60 : 50;
+        }
+
+        internal static int GetCrystalPrice(in Thing clystal)
+        {
+            if (clystal.id == "crystal_earth")
+            {
+                return 3;
+            }
+            else if (clystal.id == "crystal_sun")
+            {
+                return 4;
+            }
+
+            return 5;
         }
 
         internal static int GetRunePrice(in Thing rune)
@@ -67,7 +65,7 @@ namespace RandomQuestExpantion.Guilpo
                 return 10;
             }
 
-            if(rune.encLV < 0)
+            if (rune.encLV < 0)
             {
                 return 8;
             }
@@ -90,9 +88,14 @@ namespace RandomQuestExpantion.Guilpo
             return 4;
         }
 
+        internal static int GetMedalPrice(in Thing currency)
+        {
+            return 3;
+        }
+
         internal static int GetCurrencyPrice(in Thing currency)
         {
-            return (currency.trait is TraitCurrencyMedal) ? 3 : 1;
+            return 1;
         }
 
         internal static int GetPotionPrice(in Thing potion)
@@ -145,20 +148,6 @@ namespace RandomQuestExpantion.Guilpo
                 return 3;
             }
             return 2;
-        }
-
-        internal static int GetCrystalPrice(in Thing clystal)
-        {
-            if (clystal.id == "crystal_earth")
-            {
-                return 3;
-            }
-            else if (clystal.id == "crystal_sun")
-            {
-                return 4;
-            }
-
-            return 5;
         }
     }
 }

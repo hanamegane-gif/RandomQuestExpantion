@@ -17,7 +17,7 @@ namespace RandomQuestExpantion.Patch
                 (
                     new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(Player.Stats), "set_nefiaBeaten"))
 
-                    //IL_00ec: callvirt instance void Player / Stats::set_nefiaBeaten(int64)
+                //IL_00ec: callvirt instance void Player / Stats::set_nefiaBeaten(int64)
                 )
                 .Advance(1)
                 .InsertAndAdvance

@@ -1,5 +1,5 @@
 ﻿using HarmonyLib;
-using RandomQuestExpantion.ModQuests.Common;
+using RandomQuestExpantion.ModQuests.QuestAttribute;
 using System.Linq;
 
 namespace RandomQuestExpantion.Patch

@@ -22,7 +22,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             genBounds.marginPartial = 1;
             genBounds.FuncCheckEmpty = (Cell cell) => cell.sourceFloor.id == 42;
 
-            Action<PartialMap, GenBounds> onCreate = delegate (PartialMap p, GenBounds b){};
+            Action<PartialMap, GenBounds> onCreate = delegate (PartialMap p, GenBounds b) { };
 
             for (int i = 0; i < 50; i++)
             {

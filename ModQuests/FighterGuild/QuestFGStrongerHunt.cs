@@ -4,7 +4,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.FighterGuild
 {
-    class QuestFGStrongerHunt : QuestFGHunt
+    public class QuestFGStrongerHunt : QuestFGHunt
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

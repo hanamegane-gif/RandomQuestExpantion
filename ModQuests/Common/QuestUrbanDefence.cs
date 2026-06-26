@@ -1,13 +1,13 @@
 ﻿using RandomQuestExpantion.Config;
 using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.ModQuestZoneInstance;
-using static RandomQuestExpantion.General.General;
 using System;
 using UnityEngine;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestUrbanDefence : QuestSubdue
+    public class QuestUrbanDefence : QuestSubdue
     {
         public override string IdZone => "instance_" + ((this.chara.currentZone.IsTown || IsGuild(this.chara.currentZone)) ? this.chara.currentZone.id : "tinkerCamp");
 

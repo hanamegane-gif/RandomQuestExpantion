@@ -1,10 +1,18 @@
-﻿namespace RandomQuestExpantion.ModZonePreenter
+﻿using RandomQuestExpantion.ModQuests.Common;
+using System.Collections.Generic;
+
+namespace RandomQuestExpantion.ModZonePreenter
 {
     class ZonePreEnterTGDeliverBrigand : ZonePreEnterDeliverBrigand
     {
-        public ZonePreEnterTGDeliverBrigand(Thing demanded) : base(demanded)
+        public ZonePreEnterTGDeliverBrigand(QuestRiskyDeliver q) : base(q)
         {
-            DemandedThing = demanded;
         }
+
+        internal override HashSet<string> DramaStartStepList => new HashSet<string>
+        {
+            "brigand_TG_nonego_1_main",
+            "brigand_TG_nego_1_main",
+        };
     }
 }

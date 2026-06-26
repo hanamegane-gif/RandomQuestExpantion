@@ -1,6 +1,6 @@
 ﻿namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestFlyer : QuestRandom
+    public class QuestFlyer : QuestRandom
     {
         public override string RefDrama2 => Requirement.ToString();
 

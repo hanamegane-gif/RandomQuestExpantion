@@ -5,7 +5,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventFarmFieldWar : ZoneEventDefenseGame
     {
-        public override string TextWidgetDate => "byakko_mod_status_farmfield_war".lang(wave.ToString() ?? "",  EClass._zone.DangerLv.ToString() ?? "", kills.ToString() ?? "", KillRequirements.ToString()) + ((instance != null && retreated) ? "defenseRetreating".lang() : "");
+        public override string TextWidgetDate => "byakko_mod_status_farmfield_war".lang(wave.ToString() ?? "", EClass._zone.DangerLv.ToString() ?? "", kills.ToString() ?? "", KillRequirements.ToString()) + ((instance != null && retreated) ? "defenseRetreating".lang() : "");
 
         public int KillRequirements => 30 + 10 * base.quest.difficulty;
 

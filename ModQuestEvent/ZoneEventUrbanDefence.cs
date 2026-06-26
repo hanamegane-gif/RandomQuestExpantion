@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static RandomQuestExpantion.General.General;
-using static UnityEngine.UI.GridLayoutGroup;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
@@ -39,7 +38,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 
         // クエストに登場させる敵を選ぶ仕組み
         // 街で出されるクエストではないので適当なの置いておく
-        internal virtual HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
+        internal virtual HashSet<string> SpawnCandidateList => new HashSet<string>
         {
             "jure",
         };

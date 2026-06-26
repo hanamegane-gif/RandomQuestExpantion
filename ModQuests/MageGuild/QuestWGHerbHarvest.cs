@@ -4,7 +4,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MageGuild
 {
-    class QuestWGHerbHarvest : QuestHerbHarvest
+    public class QuestWGHerbHarvest : QuestHerbHarvest
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

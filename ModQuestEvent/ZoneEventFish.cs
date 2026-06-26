@@ -1,6 +1,6 @@
-﻿using System;
+﻿using RandomQuestExpantion.General;
+using System;
 using System.Linq;
-using RandomQuestExpantion.General;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestEvent

@@ -4,7 +4,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MageGuild
 {
-    class QuestWGSubdueGhost : QuestSubdue
+    public class QuestWGSubdueGhost : QuestSubdue
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

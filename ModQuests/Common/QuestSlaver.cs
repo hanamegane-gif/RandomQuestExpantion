@@ -3,7 +3,7 @@ using RandomQuestExpantion.Patch;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestSlaver : QuestRandom
+    public class QuestSlaver : QuestRandom
     {
         public override string RefDrama2 => Requirement.ToString();
 

@@ -1,10 +1,14 @@
-﻿using static RandomQuestExpantion.General.General;
+﻿using RandomQuestExpantion.ModQuests.QuestAttribute;
+using UnityEngine;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MerchantGuild
 {
-    class QuestMGEscort : QuestEscort
+    public class QuestMGEscort : QuestEscort, IExtendDeadline
     {
         public override string RewardSuffix => "_byakko_mod_guild";
+
+        public virtual int DaysExtraDeadline => 2 + (7 - Mathf.Clamp(this.difficulty, 1, 7)) / 2;
 
         public override void OnStart()
         {
@@ -13,6 +17,7 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
             chara.MakeMinion(EClass.pc);
             uidChara = chara.uid;
             chara.Talk("parasite", null, null, forceSync: true);
+            OnStartExtendDeadline();
         }
 
         public override bool ForbidTeleport => false;
@@ -30,6 +35,17 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_merchant").SetNum(guilpoNum);
             DropReward(guilpo);
             MerchantGuildZone.ModInfluence(1);
+        }
+
+        public Quest OnStartExtendDeadline()
+        {
+            deadline += DaysExtraDeadline * Date.DayToken;
+            return this;
+        }
+
+        public string GetAltTextDeadline()
+        {
+            return AltTextDeadline((Hours >= 0) ? Hours : 0, DaysExtraDeadline);
         }
     }
 }

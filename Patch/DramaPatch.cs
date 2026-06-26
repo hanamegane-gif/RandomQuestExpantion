@@ -28,11 +28,11 @@ namespace RandomQuestExpantion.Patch
                 .MatchStartForward
                 (
                     new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(Zone), nameof(Zone.ModInfluence)))
-                    //IL_006d: call class Zone EClass::get__zone()
-                    //IL_0072: ldc.i4.1
-	                //IL_0073: callvirt instance void Zone::ModInfluence(int32)
+                //IL_006d: call class Zone EClass::get__zone()
+                //IL_0072: ldc.i4.1
+                //IL_0073: callvirt instance void Zone::ModInfluence(int32)
 
-                    //IL_0078: call class Chara EClass::get_pc()
+                //IL_0078: call class Chara EClass::get_pc()
                 )
                 .Advance(1)
                 .InsertAndAdvance

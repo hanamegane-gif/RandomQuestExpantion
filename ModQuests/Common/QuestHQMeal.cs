@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestHQMeal : QuestHQCraft
+    public class QuestHQMeal : QuestHQCraft
     {
         internal override void SetTargetCategory()
         {

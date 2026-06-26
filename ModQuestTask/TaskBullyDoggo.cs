@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RandomQuestExpantion.DayBreak;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestTask
@@ -7,10 +8,6 @@ namespace RandomQuestExpantion.ModQuestTask
     {
         [JsonProperty]
         public int UIDDoggo = -1;
-
-        public override string RefDrama1 => numHunted.ToString();
-
-        public override string RefDrama2 => numRequired.ToString();
 
         public override void OnInit()
         {
@@ -27,7 +24,7 @@ namespace RandomQuestExpantion.ModQuestTask
             if (!IsComplete() && IsDoggo(c))
             {
                 numHunted++;
-                owner.bonusMoney += CalcBonusMoney(c);
+                owner.SetBonusMoney(owner.GetBonusMoney() + CalcBonusMoney(c));
             }
         }
 
@@ -39,7 +36,7 @@ namespace RandomQuestExpantion.ModQuestTask
 
         public override string GetTextProgress()
         {
-            return "progressHunt".lang(RefDrama1, RefDrama2);
+            return "byakko_mod_progress_doggo".lang();
         }
 
         public override void OnGetDetail(ref string detail, bool onJournal)

@@ -4,14 +4,14 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.ThiefGuild
 {
-    class QuestTGRiskyDliver : QuestRiskyDeliver
+    public class QuestTGRiskyDliver : QuestRiskyDeliver
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 
         public override void OnWildernessEncounted(Zone newZone)
         {
             TravelEncounterdCount++;
-            newZone.events.AddPreEnter(new ZonePreEnterTGDeliverBrigand(Distribution));
+            newZone.events.AddPreEnter(new ZonePreEnterTGDeliverBrigand(this));
         }
 
         public override int GetRewardPlat(int money)
@@ -29,10 +29,18 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             ThiefGuildZone.ModInfluence(1);
         }
 
-        public override Thing GenerateDistribution()
+        public override void OnFail()
         {
-            var thing = ThingGen.Create(idThing);
-            thing.Identify(show: false, IDTSource.SuperiorIdentify);
+            base.OnFail();
+
+            // リロードがしやすい依頼のため、影響度でバランスを取ろうとする
+            ThiefGuildZone.ModInfluence(-2);
+        }
+
+        internal override Thing GenerateDistribution()
+        {
+            var thing = base.GenerateDistribution();
+            thing.isStolen = true;
 
             return thing;
         }

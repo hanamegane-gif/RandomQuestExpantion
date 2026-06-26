@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using UnityEngine;
 class TraitWGGuilpoVender : TraitGuilpoVender
 {
     public override string CurrencyID => "MOD_byakko_RQX_guilpo_mage";
@@ -24,50 +23,31 @@ class TraitWGGuilpoVender : TraitGuilpoVender
         int rodStock = 2 + EClass.rnd(3);
         for (int i = 0; i < runeStock; i++)
         {
-            AddStockById(merchantChest, "rod", charges: 30);
-        }
-
-        if (EClass.rnd(1000) == 0)
-        {
-            // 願い
-            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpWish);
-        }
-        else
-        {
-            AddStockById(merchantChest, "372", charges: 7, generateLv: 200);
-        }
-
-        if (EClass.rnd(200) == 0)
-        {
-            // ジュアッグ
-            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpHealJure);
-        }
-        else
-        {
-            AddStockById(merchantChest, "372", charges: 7, generateLv: 200);
-        }
-
-        if (EClass.rnd(200) == 0)
-        {
-            // 不死鳥
-            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpRebirth);
-        }
-        else
-        {
-            AddStockById(merchantChest, "372", charges: 7, generateLv: 200);
+            AddStockById(merchantChest, "rod");
         }
 
         int bookStock = 3 + EClass.rnd(2);
-        for (int i = 0; i < runeStock; i++)
+        if (EClass.rnd(1000) == 0)
         {
-            AddStockById(merchantChest, "372", charges: 7, generateLv: 200);
+            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpWish);
+            bookStock--;
+        }
+        if (EClass.rnd(200) == 0)
+        {
+            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpHealJure);
+            bookStock--;
+        }
+        if (EClass.rnd(200) == 0)
+        {
+            AddStockById(merchantChest, "372", charges: 1, fixedRefVal: SPELL.SpRebirth);
+            bookStock--;
+        }
+        for (int i = 0; i < bookStock; i++)
+        {
+            AddStockById(merchantChest, "372", generateLv: 200);
         }
 
-        int progress = Mathf.Max(EClass.pc.FameLv, EClass.player.stats.deepest, 15);
-        int hanemakiStock = (progress <= 500) ? 2 : 1 + progress / 100;
-
-        // 8280: 軽量化(羽巻)
-        AddStockById(merchantChest, "scroll_random", stockNum: hanemakiStock, fixedRefVal: SPELL.SpLighten);
+        AddStockById(merchantChest, "scroll_random", fixedRefVal: SPELL.SpLighten);
     }
 
     private string PickRandomWeaponID(string weaponSkill)

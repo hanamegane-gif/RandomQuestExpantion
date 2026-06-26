@@ -4,7 +4,7 @@ namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventWGDefence : ZoneEventUrbanDefence
     {
-        internal override HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
+        internal override HashSet<string> SpawnCandidateList => new HashSet<string>
         {
             "dog_hound",
             "rock_thrower",

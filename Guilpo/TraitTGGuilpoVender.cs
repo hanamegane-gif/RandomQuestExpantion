@@ -5,14 +5,14 @@ class TraitTGGuilpoVender : TraitGuilpoVender
 {
     public override string CurrencyID => "MOD_byakko_RQX_guilpo_thief";
 
-    internal List<string> NomalRuneIdList { get; } = new List<string>
+    internal static List<string> NomalRuneIdList => new List<string>
     {
         "lockpicking",
         "stealing",
     };
 
     // 発動など基本的にネタ枠のルーン
-    internal List<string> RareRuneIdList { get; } = new List<string>
+    internal static List<string> RareRuneIdList => new List<string>
     {
         "meleeDistance",
         "ActNeckHunt",
@@ -26,7 +26,7 @@ class TraitTGGuilpoVender : TraitGuilpoVender
     };
 
     // マイナス生産ルーン
-    internal List<string> CursedRuneIdList { get; } = new List<string>
+    internal static List<string> CursedRuneIdList => new List<string>
     {
         "swimming",
         "travel",
@@ -40,7 +40,7 @@ class TraitTGGuilpoVender : TraitGuilpoVender
         "cooking",
     };
 
-    internal List<string> WeaponTypeList { get; } = new List<string>
+    internal static List<string> WeaponTypeList => new List<string>
     {
         "bow",
         "crossbow",
@@ -93,12 +93,13 @@ class TraitTGGuilpoVender : TraitGuilpoVender
 
         if (EClass.rnd(4) == 0)
         {
+            // エテ抗
             AddStockById(merchantChest, "1165", stockNum: 1);
         }
 
-        AddStockById(merchantChest, "338", stockNum: 100, bless: BlessedState.Cursed);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantWeapon);
-        AddStockById(merchantChest, "scroll_random", stockNum: 100, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantArmor);
+        AddStockById(merchantChest, "338", bless: BlessedState.Cursed);
+        AddStockById(merchantChest, "scroll_random", bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantWeapon);
+        AddStockById(merchantChest, "scroll_random", bless: BlessedState.Cursed, fixedRefVal: SPELL.SpEnchantArmor);
         AddStockById(merchantChest, "bucket", stockNum: 30, bless: BlessedState.Blessed);
         AddStockById(merchantChest, "bucket", stockNum: 30, bless: BlessedState.Cursed);
     }

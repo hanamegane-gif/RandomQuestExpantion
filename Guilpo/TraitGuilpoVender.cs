@@ -1,6 +1,5 @@
-﻿using RandomQuestExpantion.Config;
+﻿using RandomQuestExpantion.Guilpo;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static RandomQuestExpantion.General.General;
@@ -51,28 +50,18 @@ class TraitGuilpoVender : TraitVendingMachine
 
         var generatedGear = ThingGen.Create(idThing, lv: generateLv);
 
-        // 素材エンチャが破壊に巻き込まれないようにするため一旦ダークマターにする
-        var originalMaterial = generatedGear.material;
-        generatedGear.ChangeMaterial("void");
-
-        for (int i = 0; i < 2; i++)
+        // chanceによる抽選は残しつつレアエンチャは出やすくする
+        Func<Func<SourceElement.Row, bool>> rareEnchantFilter;
+        if (generatedGear.category.IsChildOf("melee"))
         {
-            RemoveEnchantRandomOne(generatedGear);
+            rareEnchantFilter = GetWeaponEnchantFilter;
+        }
+        else
+        {
+            rareEnchantFilter = GetArmorEnchantFilter;
         }
 
-        for (int i = 0; i < 2; i++)
-        {
-            var bonusEnchant = PickBonusEnchant(generatedGear, generateLv);
-            if (bonusEnchant == null)
-            {
-                continue;
-            }
-
-            int bonusEnchantStrength = CalcEnchantStrength(bonusEnchant, generateLv);
-            generatedGear.elements.ModBase(bonusEnchant.id, bonusEnchantStrength);
-        }
-
-        generatedGear.ChangeMaterial(originalMaterial);
+        generatedGear = AddBonusRareEnchants(generatedGear, 2, generateLv, rareEnchantFilter);
         generatedGear.Identify(show: false, idtSource: IDTSource.SuperiorIdentify);
 
         return generatedGear;
@@ -100,14 +89,14 @@ class TraitGuilpoVender : TraitVendingMachine
         }
         else
         {
-            enchant = PickBonusEnchant(rune, generateLv);
+            enchant = PickBonusEnchant(rune, generateLv, GetRuneEnchantFilter());
         }
 
         if (enchant == null)
         {
             return rune;
         }
-        int enchantStrength = CalcEnchantStrength(enchant, generateLv);
+        int enchantStrength = CalcEnchantMagnitude(enchant, generateLv);
 
         rune.refVal = enchant.id;
         rune.encLV = enchantStrength * (reverse ? -1 : 1);
@@ -121,18 +110,12 @@ class TraitGuilpoVender : TraitVendingMachine
         CardBlueprint.Set(bp);
 
         var createdThing = ThingGen.Create(id, idMat, generateLv);
-        createdThing.SetNum((stockNum != -1) ? stockNum : CalcItemStack(createdThing));
-
-        if (createdThing.trait.HasCharges)
-        {
-            createdThing.SetCharge((charges != -1) ? charges : CalcItemCharge(createdThing));
-        }
 
         if (fixedRefVal != -1)
         {
             createdThing.refVal = fixedRefVal;
         }
-        else if(createdThing.refVal != 0)
+        else if (createdThing.refVal != 0)
         {
             if (EClass.sources.elements.rows.Where(r => r.id == createdThing.refVal).First().tag.Contains("noShop"))
             {
@@ -149,6 +132,13 @@ class TraitGuilpoVender : TraitVendingMachine
             createdThing.SetLv(lv);
         }
 
+        createdThing.SetNum((stockNum != -1) ? stockNum : StackSetting.GetStackNum(createdThing));
+
+        if (createdThing.trait.HasCharges)
+        {
+            createdThing.SetCharge((charges != -1) ? charges : StackSetting.GetChargeNum(createdThing));
+        }
+
         createdThing.idSkin = ((idSkin == -1) ? EClass.rnd(createdThing.source.skins.Length + 1) : idSkin);
 
         AddStockByThing(merchantChest, createdThing);
@@ -158,67 +148,6 @@ class TraitGuilpoVender : TraitVendingMachine
     {
         stock.Identify(show: false, idtSource: IDTSource.SuperiorIdentify);
         merchantChest.AddThing(stock);
-    }
-
-    internal virtual SourceElement.Row PickBonusEnchant(in Thing generatedThing, int generateLv)
-    {
-        if (!(generatedThing.trait is TraitRune) && EClass.rnd(100) == 0 && ModConfig.EnableRuneVesselFeature)
-        {
-            return EClass.sources.elements.rows.Where(r => r.alias == "slot_rune").FirstOrDefault();
-        }
-
-        var candidateList = new List<SourceElement.Row>();
-        string enchantType = (generatedThing.trait is TraitRune) ? "rune" :
-                          (generatedThing.category.IsChildOf("melee") ? "melee" : "armor");
-        var gearCategory = generatedThing.category;
-
-        Func<SourceElement.Row, bool> applicableFilter = (enchantType == "rune") ? row => true : row => row.IsEncAppliable(gearCategory);
-        // フラグ系エンチャがボーナスで付くのはかわいそうなので弾いておく
-        Func<SourceElement.Row, bool> flagEnchantFilter = (enchantType == "rune") ? row => true : row => !row.tag.Contains("flag");
-
-        // chanceによる抽選は残しつつレアエンチャは出やすくする
-        Func<SourceElement.Row, bool> rareEnchantFilter;
-        if (enchantType == "melee")
-        {
-            rareEnchantFilter = GetWeaponEnchantFilter();
-        }
-        else if (enchantType == "armor")
-        {
-            rareEnchantFilter = GetArmorEnchantFilter();
-        }
-        else
-        {
-            rareEnchantFilter = GetRuneEnchantFilter();
-        }
-
-        int sumChance = 0;
-
-        foreach (var enchant in EClass.sources.elements.rows.Where(r => applicableFilter(r) && flagEnchantFilter(r) && rareEnchantFilter(r) && !r.tag.Contains("unused")))
-        {
-            if (enchant.LV < generateLv + 15)
-            {
-                candidateList.Add(enchant);
-                sumChance += enchant.chance;
-            }
-        }
-
-        if (sumChance == 0)
-        {
-            return null;
-        }
-
-        int enchantRoll = EClass.rnd(sumChance);
-        int temp = 0;
-        foreach (var enchant in candidateList)
-        {
-            temp += enchant.chance;
-            if (enchantRoll < temp)
-            {
-                return enchant;
-            }
-        }
-
-        return null;
     }
 
     internal virtual Func<SourceElement.Row, bool> GetArmorEnchantFilter()
@@ -410,97 +339,11 @@ class TraitGuilpoVender : TraitVendingMachine
         return rareEnchantFilter;
     }
 
-    internal virtual int CalcItemStack(in Thing stackableThing)
-    {
-        var trait = stackableThing.trait;
-
-        if (trait == null || !trait.CanStack)
-        {
-            return 1;
-        }
-
-        if (stackableThing.trait is TraitCurrencyMedal)
-        {
-            return 50;
-        }
-
-        if (stackableThing.trait is TraitCurrency)
-        {
-            return 500;
-        }
-
-        if (stackableThing.trait is TraitDrink || stackableThing.trait is TraitScroll)
-        {
-            return 999;
-        }
-
-        if (stackableThing.trait is TraitMaterialHammer)
-        {
-            return 3;
-        }
-
-        return 1;
-    }
-
-    internal virtual int CalcItemCharge(in Thing chargableThing)
-    {
-        var trait = chargableThing.trait;
-
-        if (trait == null || !trait.HasCharges)
-        {
-            return 0;
-        }
-
-        if (trait is TraitRod)
-        {
-            return 30 + EClass.rnd(10);
-        }
-
-        if (trait is TraitSpellbook)
-        {
-            return 10;
-        }
-        return 1;
-    }
-
     internal static int CalcGenerateLv()
     {
         // 現状の進行度(ボスのLv)より少し弱い程度
         int progress = Mathf.Max(EClass.pc.FameLv, EClass.player.stats.deepest, 15);
         int genLv = (int)(Math.Min(progress * 4L / 3L, Int32.MaxValue));
         return Mathf.Max(genLv, 20);
-    }
-
-    internal static int CalcEnchantStrength(in SourceElement.Row enchant, int generateLv)
-    {
-        if (enchant.alias == "meleeDistance")
-        {
-            return 1;
-        }
-
-        if (enchant.alias == "ActNeckHunt")
-        {
-            return 5 + EClass.rnd(11);
-        }
-
-        if (enchant.alias == "slot_rune")
-        {
-            return (EClass.rnd(4) == 0) ? 2 : 1;
-        }
-
-        int linear = 3 + Mathf.Min(generateLv / 10, 15);
-        int curvy = (int)Math.Min((long)generateLv * enchant.encFactor / 100, Int32.MaxValue);
-
-        int maxStrength = linear + (int)Mathf.Sqrt(curvy);
-
-        int strength = (maxStrength * 7 / 10) + EClass.rnd(1 + maxStrength * 3 / 10);
-        strength = (enchant.mtp + strength) / enchant.mtp;
-
-        if (enchant.encFactor == 0 && strength > 25)
-        {
-            strength = 25;
-        }
-
-        return strength;
     }
 }

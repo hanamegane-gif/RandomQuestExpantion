@@ -1,9 +1,10 @@
-﻿using RandomQuestExpantion.ModQuestEvent;
+﻿using RandomQuestExpantion.DayBreak;
+using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.ModQuestZoneInstance;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestFarmFieldWar : QuestDefenseGame
+    public class QuestFarmFieldWar : QuestDefenseGame
     {
         // これは序盤向けクエストなので報酬は安め
         public override bool FameContent => false;
@@ -25,7 +26,7 @@ namespace RandomQuestExpantion.ModQuests.Common
         }
         public override void OnBeforeComplete()
         {
-            bonusMoney += bonus;
+            this.SetBonusMoney(this.GetBonusMoney() + bonus);
         }
 
         public override string GetTextProgress()

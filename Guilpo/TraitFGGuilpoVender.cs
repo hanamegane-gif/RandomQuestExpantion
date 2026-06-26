@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 class TraitFGGuilpoVender : TraitGuilpoVender
 {
     public override string CurrencyID => "MOD_byakko_RQX_guilpo_fighter";
 
-    internal List<string> WeaponTypeList { get; } = new List<string>
+    internal static List<string> WeaponTypeList => new List<string>
     {
         "sword",
         "dagger",
@@ -37,11 +36,8 @@ class TraitFGGuilpoVender : TraitGuilpoVender
             AddStockByThing(merchantChest, GenerateRune(generateLv));
         }
 
-        // 8280: 軽量化(羽巻)
-        int progress = Mathf.Max(EClass.pc.FameLv, EClass.player.stats.deepest, 15);
-        int hanemakiStock = (progress <= 500) ? 2 : 1 + progress / 100;
-        AddStockById(merchantChest, "scroll_random", stockNum: hanemakiStock, bless: BlessedState.Blessed, fixedRefVal: SPELL.SpLighten);
-        AddStockById(merchantChest, "scroll_random", stockNum: hanemakiStock, bless: BlessedState.Cursed, fixedRefVal: SPELL.SpLighten);
+        AddStockById(merchantChest, "scroll_random", bless: BlessedState.Blessed, fixedRefVal: SPELL.SpLighten);
+        AddStockById(merchantChest, "scroll_random", bless: BlessedState.Cursed, fixedRefVal: SPELL.SpLighten);
     }
 
     private string PickRandomWeaponID(string weaponSkill)

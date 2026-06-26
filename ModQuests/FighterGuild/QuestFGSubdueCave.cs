@@ -3,7 +3,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.FighterGuild
 {
-    class QuestFGSubdueCave : QuestSubdue
+    public class QuestFGSubdueCave : QuestSubdue
     {
         public override string IdZone => "instance_cave0";
 

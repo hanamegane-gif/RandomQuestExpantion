@@ -3,7 +3,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.FighterGuild
 {
-    class QuestFGSubdue : QuestSubdue
+    public class QuestFGSubdue : QuestSubdue
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

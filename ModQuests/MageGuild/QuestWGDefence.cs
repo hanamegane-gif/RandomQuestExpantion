@@ -4,7 +4,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MageGuild
 {
-    class QuestWGDefence : QuestUrbanDefence
+    public class QuestWGDefence : QuestUrbanDefence
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

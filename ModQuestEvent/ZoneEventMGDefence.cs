@@ -6,7 +6,7 @@ namespace RandomQuestExpantion.ModQuestEvent
     {
         // ギルド構成員だけを出すと簡単すぎる(あと面白くない)のでそれっぽいのを混ぜる
         // ギルド構成員、傭兵、盗賊っぽい人型モンスター、飼いならしやすそうなモンスターや動物
-        internal override HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
+        internal override HashSet<string> SpawnCandidateList => new HashSet<string>
         {
             "dog_hound",
             "rock_thrower",

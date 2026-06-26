@@ -1,8 +1,9 @@
 ﻿using RandomQuestExpantion.ModQuestEvent;
+using RandomQuestExpantion.ModQuests.QuestAttribute;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestCrimFactory : QuestHarvest, IHarvest
+    public class QuestCrimFactory : QuestHarvest, IHarvest
     {
         public override string IdZone => "instance_crim";
 
@@ -17,6 +18,11 @@ namespace RandomQuestExpantion.ModQuests.Common
             int norma = 30 + EClass.rndHalf((difficulty - 1) * 3 + 1);
 
             destWeight = drugWeight * norma;
+        }
+
+        public override string GetTextProgress()
+        {
+            return "byakko_mod_progress_crim_produce".lang(Lang._weight(weightDelivered), Lang._weight(destWeight));
         }
 
         public override void OnBeforeComplete()

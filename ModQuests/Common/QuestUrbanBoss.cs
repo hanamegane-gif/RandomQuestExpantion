@@ -1,13 +1,13 @@
-﻿using RandomQuestExpantion.ModQuestZoneInstance;
+﻿using RandomQuestExpantion.Config;
 using RandomQuestExpantion.ModQuestEvent;
-using RandomQuestExpantion.Config;
-using static RandomQuestExpantion.General.General;
-using UnityEngine;
+using RandomQuestExpantion.ModQuestZoneInstance;
 using System;
+using UnityEngine;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestUrbanBoss : QuestSubdue
+    public class QuestUrbanBoss : QuestSubdue
     {
         public override string IdZone => "instance_" + ((this.chara.currentZone.IsTown || IsGuild(this.chara.currentZone)) ? this.chara.currentZone.id : "tinkerCamp");
 
@@ -37,7 +37,7 @@ namespace RandomQuestExpantion.ModQuests.Common
             {
                 return "byakko_mod_progress_urban_boss_interval".lang(@event.RemainWaves.ToString());
             }
-            else if(@event.IsEngaging)
+            else if (@event.IsEngaging)
             {
                 return "byakko_mod_progress_urban_boss_engage".lang(@event.CurrentBoss.NameBraced);
             }

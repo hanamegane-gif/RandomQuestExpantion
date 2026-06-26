@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using RandomQuestExpantion.ModQuests.QuestAttribute;
+using System.Collections.Generic;
+using UnityEngine;
 using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.ThiefGuild
 {
-    class QuestTGDeliver : QuestDeliver
+    public class QuestTGDeliver : QuestDeliver, IExtendDeadline
     {
         public override string RewardSuffix => "_byakko_mod_guild";
+
+        public virtual int DaysExtraDeadline => 2 + (7 - Mathf.Clamp(this.difficulty, 1, 7)) / 2;
 
         // 手段は問わない
         public override bool ForbidTeleport => false;
@@ -21,9 +25,9 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             // 958: 謎の影
             // 1172: 途方もない
             // 1269: カレー
-            var candidateList = new HashSet<string> { 
-                "drug_crim", "334", "gallows", "diary_lady", 
-                "statue_weird", "267", "torture_cross", "syringe_gene", 
+            var candidateList = new HashSet<string> {
+                "drug_crim", "334", "gallows", "diary_lady",
+                "statue_weird", "267", "torture_cross", "syringe_gene",
                 "syringe_heaven", "stethoscope", "butcherknife" ,"837",
                 "271", "272", "273", "958",
                 "mask_jason", "mask_anon", "rod_wish", "goodness",
@@ -51,6 +55,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             thing.Identify(show: false, IDTSource.SuperiorIdentify);
             Msg.Say("get_quest_item");
             EClass.pc.Pick(thing);
+            OnStartExtendDeadline();
         }
 
         public override void OnDropReward()
@@ -61,6 +66,17 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_thief").SetNum(guilpoNum);
             DropReward(guilpo);
             ThiefGuildZone.ModInfluence(1);
+        }
+
+        public Quest OnStartExtendDeadline()
+        {
+            deadline += DaysExtraDeadline * Date.DayToken;
+            return this;
+        }
+
+        public string GetAltTextDeadline()
+        {
+            return AltTextDeadline((Hours >= 0) ? Hours : 0, DaysExtraDeadline);
         }
     }
 }

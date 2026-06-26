@@ -2,7 +2,7 @@
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestFish : QuestHarvest
+    public class QuestFish : QuestHarvest
     {
         public override ZoneEventQuest CreateEvent()
         {

@@ -21,10 +21,10 @@ namespace RandomQuestExpantion.Patch
                     new CodeMatch(OpCodes.Add),
                     new CodeMatch(OpCodes.Stfld)
 
-                    //IL_02b7: ldfld int64 Player/Stats::shipMoney
-                    //IL_02bc: ldloc.3
-                    //IL_02bd: add
-                    //IL_02be: stfld int64 Player/Stats::shipMoney
+                //IL_02b7: ldfld int64 Player/Stats::shipMoney
+                //IL_02bc: ldloc.3
+                //IL_02bd: add
+                //IL_02be: stfld int64 Player/Stats::shipMoney
                 )
                 .Advance(1)
                 .InsertAndAdvance

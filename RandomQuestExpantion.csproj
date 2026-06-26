@@ -31,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>5</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
@@ -88,16 +89,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ModConfig.cs" />
+    <Compile Include="DayBreak\QuestPatchup.cs" />
+    <Compile Include="General\Direction.cs" />
+    <Compile Include="General\DramaWrapper.cs" />
     <Compile Include="General\General.cs" />
     <Compile Include="General\ModMapPiece.cs" />
     <Compile Include="Guilpo\PriceSetting.cs" />
+    <Compile Include="Guilpo\StackSetting.cs" />
     <Compile Include="Guilpo\TraitFGGuilpoVender.cs" />
     <Compile Include="Guilpo\TraitGuilpoVender.cs" />
     <Compile Include="Guilpo\TraitMGGuilpoVender.cs" />
     <Compile Include="Guilpo\TraitTGGuilpoVender.cs" />
     <Compile Include="Guilpo\TraitWGGuilpoVender.cs" />
     <Compile Include="ModCore.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventBullyDoggo.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventFGBullyDoggo.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGSubdueCave.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventOrganizingBook.cs" />
     <Compile Include="ModQuestEvent\ZoneEventTGCrimFactory.cs" />
     <Compile Include="ModQuestEvent\ZoneEventCrimFactory.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGDefence.cs" />
@@ -113,9 +121,11 @@
     <Compile Include="ModQuestEvent\ZoneEventWGDuel.cs" />
     <Compile Include="ModQuestEvent\ZoneEventHerbHarvest.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGHerbHarvest.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventWGOrganizingBook.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGSubdueGhost.cs" />
-    <Compile Include="ModQuests\Common\IHarvest.cs" />
-    <Compile Include="ModQuests\Common\IOverrideWildernessEncounter.cs" />
+    <Compile Include="ModQuests\QuestAttribute\IExtendDeadline.cs" />
+    <Compile Include="ModQuests\QuestAttribute\IHarvest.cs" />
+    <Compile Include="ModQuests\QuestAttribute\IOverrideWildernessEncounter.cs" />
     <Compile Include="ModQuests\Common\QuestBullyDoggo.cs" />
     <Compile Include="ModQuests\Common\QuestDungeonRescue.cs" />
     <Compile Include="ModQuests\Common\QuestFish.cs" />
@@ -123,6 +133,7 @@
     <Compile Include="ModQuests\Common\QuestCrimFactory.cs" />
     <Compile Include="ModQuests\Common\QuestHerbHarvest.cs" />
     <Compile Include="ModQuests\Common\QuestInvest.cs" />
+    <Compile Include="ModQuests\Common\QuestOrganizingBook.cs" />
     <Compile Include="ModQuests\Common\QuestRiskyDeliver.cs" />
     <Compile Include="ModQuests\Common\QuestRiskyEscort.cs" />
     <Compile Include="ModQuests\Common\QuestSales.cs" />
@@ -145,6 +156,7 @@
     <Compile Include="ModQuests\MageGuild\QuestWGDungeonRetrieve.cs" />
     <Compile Include="ModQuests\MageGuild\QuestWGHerbHarvest.cs" />
     <Compile Include="ModQuests\MageGuild\QuestWGHQPotion.cs" />
+    <Compile Include="ModQuests\MageGuild\QuestWGOrganizingBook.cs" />
     <Compile Include="ModQuests\MageGuild\QuestWGSubdueGhost.cs" />
     <Compile Include="ModQuests\MerchantGuild\QuestMGDefence.cs" />
     <Compile Include="ModQuests\MerchantGuild\QuestMGHQFurniture.cs" />
@@ -197,8 +209,11 @@
     <Compile Include="Patch\AIShoppingPatch.cs" />
     <Compile Include="Patch\CharaPatch.cs" />
     <Compile Include="Patch\DramaPatch.cs" />
+    <Compile Include="Patch\DramaRambdaPatch.cs" />
     <Compile Include="Patch\InvOwnerDeliverPatch.cs" />
     <Compile Include="Patch\InvOwnerPatch.cs" />
+    <Compile Include="Patch\ItemQuestPatch.cs" />
+    <Compile Include="Patch\LayerQuestBoardPatch.cs" />
     <Compile Include="Patch\PlayerPatch.cs" />
     <Compile Include="Patch\QuestExtender.cs" />
     <Compile Include="Patch\QuestPatch.cs" />
@@ -233,11 +248,11 @@
     <Compile Include="ModQuests\QuestFactory.cs" />
     <Compile Include="ModQuestTask\TaskDungeonAttack.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceFarmFieldWar.cs" />
-    <Compile Include="Traits\TraitFGLiaison.cs" />
-    <Compile Include="Traits\TraitGuildLiaison.cs" />
-    <Compile Include="Traits\TraitMGLiaison.cs" />
-    <Compile Include="Traits\TraitTGLiaison.cs" />
-    <Compile Include="Traits\TraitWGLiaison.cs" />
+    <Compile Include="Liaison\TraitFGLiaison.cs" />
+    <Compile Include="Liaison\TraitGuildLiaison.cs" />
+    <Compile Include="Liaison\TraitMGLiaison.cs" />
+    <Compile Include="Liaison\TraitTGLiaison.cs" />
+    <Compile Include="Liaison\TraitWGLiaison.cs" />
     <Compile Include="ModNefia\IQuestRandomNefia.cs" />
     <Compile Include="ModNefia\ZoneRandomQuestNefia.cs" />
     <Compile Include="ModNefia\ZoneRandomQuestNefiaFactory.cs" />
@@ -248,5 +263,6 @@
   <ItemGroup>
     <None Include=".editorconfig" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

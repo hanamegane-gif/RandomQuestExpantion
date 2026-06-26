@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace RandomQuestExpantion.General
 {
-    class ModMapPiece
+    internal class ModMapPiece
     {
         public static PartialMap TryAddMapPiece(GenBounds targetBound, string pieceType, Action<PartialMap, GenBounds> onCreate = null)
         {
@@ -30,40 +30,42 @@ namespace RandomQuestExpantion.General
         }
     }
 
-    class ModMapPieceManager
+    internal class ModMapPieceManager
     {
         const string __MOD_MAP_PIECE_DIR__ = "mappiece";
 
-        internal static List<string> PieceTypeList { get; } = new List<string>
+        private static bool _Initialized;
+
+        private static List<MapPieceSet> _PieceSet;
+
+        private static Dictionary<string, PartialMap> _MapPieceCache = new Dictionary<string, PartialMap>();
+
+        internal static List<string> PieceTypeList => new List<string>
         {
             "fish",
             "herb",
             "crim_crop",
             "crim_factory",
+            "study",
+            "study_room",
         };
 
         internal class MapPieceSet
         {
-            public string type;
+            internal readonly string type;
 
-            public List<string> pathList = new List<string>();
+            internal readonly List<string> pathList = new List<string>();
 
-            public MapPieceSet(string _type, List<string> _pathList)
+            internal MapPieceSet(string _type, List<string> _pathList)
             {
                 type = _type;
                 pathList = _pathList;
             }
         }
 
-        internal static bool Initialized;
-
-        internal static List<MapPieceSet> PieceSet;
-
-        internal static Dictionary<string, PartialMap> MapPieceCache = new Dictionary<string, PartialMap>();
-
         internal static PartialMap GetMapPieceRandomOne(string type)
         {
-            var pieceSet = PieceSet.Where(a => a.type == type).FirstOrDefault();
+            var pieceSet = _PieceSet.Where(a => a.type == type).FirstOrDefault();
 
             if (pieceSet == null || !pieceSet.pathList.Any())
             {
@@ -71,11 +73,11 @@ namespace RandomQuestExpantion.General
             }
 
             string path = pieceSet.pathList.RandomItem();
-            var partialMap = MapPieceCache.TryGetValue(path);
+            var partialMap = _MapPieceCache.TryGetValue(path);
             if (partialMap == null)
             {
                 partialMap = PartialMap.Load(path);
-                MapPieceCache.Add(path, partialMap);
+                _MapPieceCache.Add(path, partialMap);
             }
 
             if (partialMap.allowRotate)
@@ -90,12 +92,12 @@ namespace RandomQuestExpantion.General
 
         internal static void Init(in PluginInfo info)
         {
-            if (Initialized)
+            if (_Initialized)
             {
                 return;
             }
 
-            PieceSet = new List<MapPieceSet>();
+            _PieceSet = new List<MapPieceSet>();
             string mapPieceDir = Path.Combine(Path.GetDirectoryName(info.Location), __MOD_MAP_PIECE_DIR__);
 
             foreach (string type in PieceTypeList)
@@ -103,22 +105,22 @@ namespace RandomQuestExpantion.General
                 string dir = Path.Combine(mapPieceDir, type);
                 string[] files = Directory.GetFiles(dir, "*.mp", SearchOption.AllDirectories);
 
-                var pathes = new List<string>(); 
+                var pathes = new List<string>();
                 foreach (string path in files)
                 {
                     var directory = new FileInfo(path).Directory;
                     pathes.Add(path);
                 }
 
-                PieceSet.Add(new MapPieceSet(type, pathes));
+                _PieceSet.Add(new MapPieceSet(type, pathes));
             }
 
-            Initialized = true;
+            _Initialized = true;
         }
 
         internal void Reset()
         {
-            Initialized = false;
+            _Initialized = false;
         }
     }
 }

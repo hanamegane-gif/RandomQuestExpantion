@@ -8,7 +8,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         public override string TextWidgetDate => "defenseWave".lang(wave.ToString() ?? "", kills.ToString() ?? "", CalcDangerLv().ToString() ?? "") + ((instance != null && retreated) ? "defenseRetreating" : "").lang();
 
         public new bool CanRetreat => wave >= CanRetreatWave;
-        
+
         // 10Waveだときつすぎ5Waveだとゆるい
         public int CanRetreatWave => 7;
 
@@ -30,7 +30,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         }
 
         internal virtual int CalcDangerLv()
-        { 
+        {
             return EClass.pc.FameLv * 75 / 100 + 5;
         }
 

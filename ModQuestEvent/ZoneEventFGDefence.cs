@@ -5,7 +5,7 @@ namespace RandomQuestExpantion.ModQuestEvent
     class ZoneEventFGDefence : ZoneEventUrbanDefence
     {
         // 魔法属性持ち共は出禁です！！！！
-        internal override HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
+        internal override HashSet<string> SpawnCandidateList => new HashSet<string>
         {
             "mage_app",
             "imp_nether",

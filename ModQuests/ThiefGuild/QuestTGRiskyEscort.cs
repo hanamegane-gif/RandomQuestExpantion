@@ -1,17 +1,28 @@
 ﻿using RandomQuestExpantion.ModQuests.Common;
 using RandomQuestExpantion.ModZonePreenter;
+using System.Collections.Generic;
 using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.ThiefGuild
 {
-    class QuestTGRiskyEscort : QuestRiskyEscort
+    public class QuestTGRiskyEscort : QuestRiskyEscort
     {
+        internal override HashSet<string> SpawnCandidateList => new HashSet<string>
+        {
+            "rogue",
+            "guild_thief",
+            "hitman",
+            "thief",
+            "ratkin",
+            "prisoner",
+        };
+
         public override string RewardSuffix => "_byakko_mod_guild";
 
         public override void OnWildernessEncounted(Zone newZone)
         {
             TravelEncounterdCount++;
-            newZone.events.AddPreEnter(new ZonePreEnterTGEscortAssassin(TargetName));
+            newZone.events.AddPreEnter(new ZonePreEnterTGEscortAssassin(this));
         }
 
         public override int GetRewardPlat(int money)
@@ -27,15 +38,6 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_thief").SetNum(guilpoNum);
             DropReward(guilpo);
             MerchantGuildZone.ModInfluence(1);
-        }
-
-        public override Chara SpawnEscortTarget()
-        {
-            var chara = CharaGen.Create("merchant_app");
-            EClass._zone.AddCard(chara, EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false));
-            chara.MakeMinion(EClass.pc);
-
-            return chara;
         }
     }
 }

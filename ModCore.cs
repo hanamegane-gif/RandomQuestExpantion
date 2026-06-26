@@ -1,11 +1,11 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using RandomQuestExpantion.Patch;
-using RandomQuestExpantion.General;
-using System.Collections.Generic;
-using System;
-using System.Reflection;
 using RandomQuestExpantion.Config;
+using RandomQuestExpantion.General;
+using RandomQuestExpantion.Patch;
+using System;
+using System.Collections.Generic;
+using System.Reflection;
 
 namespace RandomQuestExpantion
 {

@@ -6,6 +6,8 @@ namespace RandomQuestExpantion.ModNefia
 {
     class ZoneRandomQuestNefiaFactory : Zone_RandomDungeonFactory, IQuestRandomNefia
     {
+        public override string Name => "byakko_mod_nefia_rescue_prefix".lang() + Lang.space + ((idPrefix == 0) ? "" : (EClass.sources.zoneAffixes.map[idPrefix].GetName().ToTitleCase() + Lang.space)) + name.IsEmpty(source.GetText()) + NameSuffix;
+
         [JsonProperty]
         private string ModZoneId = "";
 
@@ -15,11 +17,6 @@ namespace RandomQuestExpantion.ModNefia
         public override string GetNewZoneID(int destLv)
         {
             return this.ModZoneId;
-        }
-
-        public void Init()
-        {
-            RevertToVanillaZoneId();
         }
 
         public void RevertToVanillaZoneId()

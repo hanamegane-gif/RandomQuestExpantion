@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RandomQuestExpantion.DayBreak;
+using System;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestTask
@@ -43,7 +44,7 @@ namespace RandomQuestExpantion.ModQuestTask
             if (!IsComplete() && c.OriginalHostility == Hostility.Enemy)
             {
                 numHunted++;
-                owner.bonusMoney += CalcBonusMoney(c);
+                owner.SetBonusMoney(owner.GetBonusMoney() + CalcBonusMoney(c));
             }
         }
 

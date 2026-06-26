@@ -1,8 +1,9 @@
 ﻿using RandomQuestExpantion.ModQuestEvent;
+using RandomQuestExpantion.ModQuests.QuestAttribute;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
-    class QuestHerbHarvest : QuestHarvest, IHarvest
+    public class QuestHerbHarvest : QuestHarvest, IHarvest
     {
         public override ZoneEventQuest CreateEvent()
         {

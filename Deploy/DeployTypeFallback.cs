@@ -9,7 +9,7 @@ namespace RandomQuestExpantion.Patch
 {
     class DeployTypeFallback
     {
-        private static List<string> TargetNamespaceList { get; } = new List<string>
+        private static List<string> TargetNamespaceList => new List<string>
         {
             null, // ModQuestZone
             "RandomQuestExpantion.ModNefia",
@@ -23,7 +23,7 @@ namespace RandomQuestExpantion.Patch
             "RandomQuestExpantion.ModQuestZoneInstance"
         };
 
-        private static Dictionary<Type, string> BaseClassResolver { get; } = new Dictionary<Type, string>
+        private static Dictionary<Type, string> BaseClassResolver => new Dictionary<Type, string>
         {
             { typeof(Quest), "QuestDummy" }, // Questはタイプフォールバックを効かせても結局保存されたidから依頼文章などを復元しようとするのでもきゅもきゅクエストにしないといけない
             { typeof(QuestTask), "QuestTask" },

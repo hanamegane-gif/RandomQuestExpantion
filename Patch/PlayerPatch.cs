@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
+using RandomQuestExpantion.General;
 using RandomQuestExpantion.ModQuests.Common;
+using RandomQuestExpantion.ModQuests.QuestAttribute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +33,10 @@ namespace RandomQuestExpantion.Patch
                 TryInstallQuestEquipment(EClass._zone);
             }
 
-            /*
             if (EClass._zone.IsTown && EClass._zone.lv == 0)
             {
                 TrySpawnGuildLiaison(EClass._zone);
             }
-            */
         }
 
         [HarmonyTranspiler]
@@ -56,6 +56,7 @@ namespace RandomQuestExpantion.Patch
             cm.InsertAndAdvance
             (
                 new CodeInstruction(OpCodes.Ldarg_3),
+                new CodeInstruction(OpCodes.Ldarg, 4),
                 new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PlayerPatch), nameof(HasEncounterOverridesQuests))),
                 new CodeInstruction(OpCodes.Brfalse_S, continueLabel),
                 new CodeInstruction(OpCodes.Ldloc_0),
@@ -100,7 +101,7 @@ namespace RandomQuestExpantion.Patch
                 {
                     guildName = item.Key;
                 }
-                    
+
             }
             bool hasBoard = guildMap.things.Where(t => t.trait is TraitQuestBoard).Any();
             bool hasVender = guildMap.things.Where(t => t.trait is TraitGuilpoVender).Any();
@@ -108,7 +109,7 @@ namespace RandomQuestExpantion.Patch
             if (!hasBoard)
             {
                 var coordinate = BoardCoordinateDict[guildName];
-                int direction = BoardDirectionDict[guildName];
+                int direction = (int)BoardDirectionDict[guildName];
 
                 if (coordinate != null)
                 {
@@ -123,7 +124,7 @@ namespace RandomQuestExpantion.Patch
             {
                 var coordinate = VenderCoordinateDict[guildName];
 
-                int direction = VenderDirectionDict[guildName];
+                int direction = (int)VenderDirectionDict[guildName];
 
                 string thingId = VenderIdDict[guildName];
 
@@ -159,19 +160,23 @@ namespace RandomQuestExpantion.Patch
 
         internal static void TrySpawnGuildLiaison(Zone townZone)
         {
-            foreach (var guild in GuildList)
-            {
-                SpawnLiaison(LiaisonIdDict[guild], LiaisonPosDict[guild]);
-            }
+            SpawnLiaison(TraitFGLiaison.LiaisonId, TraitFGLiaison.LiaisonPosDict);
+            SpawnLiaison(TraitMGLiaison.LiaisonId, TraitMGLiaison.LiaisonPosDict);
+            SpawnLiaison(TraitTGLiaison.LiaisonId, TraitTGLiaison.LiaisonPosDict);
+            SpawnLiaison(TraitWGLiaison.LiaisonId, TraitWGLiaison.LiaisonPosDict);
 
-
-            void SpawnLiaison(string liaisonID, Dictionary<string, Tuple<int, int, int>>  posDict)
+            void SpawnLiaison(string liaisonID, Dictionary<string, Tuple<int, int, int>> posDict)
             {
                 if (!posDict.ContainsKey(townZone.id))
                 {
                     return;
                 }
-                int count = townZone.map.charas.Concat(townZone.map.deadCharas).Where(c => c.id == liaisonID).Count();
+                var deads = townZone.map?.charas;
+                if (deads == null)
+                {
+                    deads = new List<Chara>();
+                }
+                int count = townZone.map.charas.Concat(deads).Where(c => c.id == liaisonID).Count();
 
                 int xPos = posDict[townZone.id].Item1;
                 int zPos = posDict[townZone.id].Item2;
@@ -190,9 +195,9 @@ namespace RandomQuestExpantion.Patch
             }
         }
 
-        internal static bool HasEncounterOverridesQuests(bool encounter)
+        internal static bool HasEncounterOverridesQuests(bool encounter, Chara mob)
         {
-            return encounter && EClass.game.quests.list.Where(q => q is IOverrideWildernessEncounter && (q as IOverrideWildernessEncounter).ShouldOverrideEncounter()).Any();
+            return encounter && mob == null && EClass.game.quests.list.Where(q => q is IOverrideWildernessEncounter && (q as IOverrideWildernessEncounter).ShouldOverrideEncounter()).Any();
         }
 
         internal static void HandleOnWildernessEncounteredEvent(Zone newZone)
@@ -206,18 +211,8 @@ namespace RandomQuestExpantion.Patch
         }
 
         #region きたない
-        class Direction
-        {
-            internal static int Vertical => 0;
-            internal static int Horizontal => 1;
-        }
 
-        private static HashSet<string> GuildList { get; } = new HashSet<string>
-        {
-            "fighter","merchant","thief","mage",
-        };
-
-        private static Dictionary<string, Func<Zone, bool>> GuildZoneDict { get; } = new Dictionary<string, Func<Zone, bool>>
+        private static Dictionary<string, Func<Zone, bool>> GuildZoneDict => new Dictionary<string, Func<Zone, bool>>
         {
             { "fighter", z => IsFighterGuild(z) },
             { "merchant", z => IsMerchantGuild(z) },
@@ -225,7 +220,7 @@ namespace RandomQuestExpantion.Patch
             { "mage", z => IsMageGuild(z) },
         };
 
-        private static Dictionary<string, Point> BoardCoordinateDict { get; } = new Dictionary<string, Point>
+        private static Dictionary<string, Point> BoardCoordinateDict => new Dictionary<string, Point>
         {
             { "fighter", new Point(53, 91) },
             { "merchant", new Point(42, 51) },
@@ -233,7 +228,7 @@ namespace RandomQuestExpantion.Patch
             { "mage", new Point(36, 91) },
         };
 
-        private static Dictionary<string, int> BoardDirectionDict { get; } = new Dictionary<string, int>
+        private static Dictionary<string, Direction> BoardDirectionDict => new Dictionary<string, Direction>
         {
             { "fighter", Direction.Vertical },
             { "merchant", Direction.Vertical },
@@ -241,7 +236,7 @@ namespace RandomQuestExpantion.Patch
             { "mage", Direction.Vertical },
         };
 
-        private static Dictionary<string, string> VenderIdDict { get; } = new Dictionary<string, string>
+        private static Dictionary<string, string> VenderIdDict => new Dictionary<string, string>
         {
             { "fighter", "MOD_byakko_RQX_guilpo_exc_fighter" },
             { "merchant", "MOD_byakko_RQX_guilpo_exc_merchant" },
@@ -249,7 +244,7 @@ namespace RandomQuestExpantion.Patch
             { "mage", "MOD_byakko_RQX_guilpo_exc_mage" },
         };
 
-        private static Dictionary<string, Point> VenderCoordinateDict { get; } = new Dictionary<string, Point>
+        private static Dictionary<string, Point> VenderCoordinateDict => new Dictionary<string, Point>
         {
             { "fighter", new Point(67, 91) },
             { "merchant", new Point(47, 50) },
@@ -257,106 +252,13 @@ namespace RandomQuestExpantion.Patch
             { "mage", new Point(45, 91) },
         };
 
-        private static Dictionary<string, int> VenderDirectionDict { get; } = new Dictionary<string, int>
+        private static Dictionary<string, Direction> VenderDirectionDict => new Dictionary<string, Direction>
         {
             { "fighter", Direction.Horizontal },
             { "merchant", Direction.Vertical },
             { "thief", Direction.Vertical },
             { "mage", Direction.Horizontal },
         };
-
-        private static Dictionary<string, string> LiaisonIdDict { get; } = new Dictionary<string, string>
-        {
-            { "fighter", "liaisonfg" },
-            { "merchant", "liaisonmg" },
-            { "thief", "liaisontg" },
-            { "mage", "liaisonwg" },
-        };
-
-        private static Dictionary<string, Dictionary<string, Tuple<int, int, int>>> LiaisonPosDict { get; } = new Dictionary<string, Dictionary<string, Tuple<int, int, int>>>
-        {
-            { "fighter", FGLiaisonPosDict },
-            { "merchant", MGLiaisonPosDict },
-            { "thief", TGLiaisonPosDict },
-            { "mage", MGLiaisonPosDict },
-        };
-
-        private static Dictionary<string, Tuple<int, int, int>> FGLiaisonPosDict { get; } = new Dictionary<string, Tuple<int, int, int>>
-        {
-            { "kapul", new Tuple<int, int, int>(61, 96, 0) },
-            { "tinkerCamp", new Tuple<int, int, int>(56, 43, 1) },
-            { "olvina", new Tuple<int, int, int>(34, 59, 1) },
-            { "aquli", new Tuple<int, int, int>(58, 64, 2) },
-            { "yowyn", new Tuple<int, int, int>(46, 49, 1) },
-            { "specwing", new Tuple<int, int, int>(52, 42, 1) },
-            { "village_exile", new Tuple<int, int, int>(35, 52, 0) },
-            { "foxtown", new Tuple<int, int, int>(39, 40, 1) },
-            { "foxtown_nefu", new Tuple<int, int, int>(33, 39, 1) },
-            { "palmia", new Tuple<int, int, int>(70, 69, 2) },
-            { "lothria", new Tuple<int, int, int>(60, 57, 2) },
-            { "mysilia", new Tuple<int, int, int>(46, 100, 2) },
-            { "derphy", new Tuple<int, int, int>(58, 71, 2) },
-            { "lumiest", new Tuple<int, int, int>(78, 62, 1) },
-            { "noyel", new Tuple<int, int, int>(37, 58, 2) },
-        };
-
-        private static Dictionary<string, Tuple<int, int, int>> MGLiaisonPosDict { get; } = new Dictionary<string, Tuple<int,int,int>>
-        {
-            { "kapul", new Tuple<int, int, int>(54, 75, 2) },
-            { "tinkerCamp", new Tuple<int, int, int>(50, 53, 1) },
-            { "olvina", new Tuple<int, int, int>(50, 42, 1) },
-            { "aquli", new Tuple<int, int, int>(54, 55, 1) },
-            { "yowyn", new Tuple <int, int, int>(40, 57, 1) },
-            { "specwing", new Tuple <int, int, int>(50, 51, 1)  },
-            { "village_exile", new Tuple <int, int, int>(55, 52, 0) },
-            { "foxtown", new Tuple <int, int, int>(55, 46, 2) },
-            { "foxtown_nefu", new Tuple <int, int, int>(56, 63, 2) },
-            { "palmia", new Tuple <int, int, int>(73, 55, 2) },
-            { "lothria", new Tuple <int, int, int>(47, 49, 1) },
-            { "mysilia", new Tuple <int, int, int>(78, 78, 2) },
-            { "derphy", new Tuple <int, int, int>(93, 70, 1) },
-            { "lumiest", new Tuple <int, int, int>(61, 57, 1) },
-            { "noyel", new Tuple <int, int, int>(43, 73, 1) },
-        };
-
-        private static Dictionary<string, Tuple<int, int, int>> TGLiaisonPosDict { get; } = new Dictionary<string, Tuple<int, int, int>>
-        {
-            { "kapul", new Tuple<int, int, int>(76, 68, 2) },
-            { "tinkerCamp", new Tuple<int, int, int>(57, 64, 1) },
-            { "olvina", new Tuple<int, int, int>(64, 45, 1) },
-            { "aquli", new Tuple <int, int, int>(36, 36, 1) },
-            { "yowyn", new Tuple <int, int, int>(50, 39, 1) },
-            { "specwing", new Tuple <int, int, int>(61, 46, 1) },
-            { "village_exile", new Tuple <int, int, int>(51, 33, 0) },
-            { "foxtown", new Tuple <int, int, int>(61, 59, 1) },
-            { "foxtown_nefu", new Tuple <int, int, int>(40, 59, 1) },
-            { "palmia", new Tuple <int, int, int>(28, 55, 2) },
-            { "lothria", new Tuple <int, int, int>(59, 40, 1) },
-            { "mysilia", new Tuple <int, int, int>(75, 46, 2) },
-            { "derphy", new Tuple <int, int, int>(68, 70, 0) },
-            { "lumiest", new Tuple <int, int, int>(58, 105, 1) },
-            { "noyel", new Tuple <int, int, int>(90, 52, 1) },
-        };
-
-        private static Dictionary<string, Tuple<int, int, int>> WGLiaisonPosDict { get; } = new Dictionary<string, Tuple<int, int, int>>
-        {
-            { "kapul", new Tuple<int, int, int>(50, 95, 2) },
-            { "tinkerCamp", new Tuple<int, int, int>(64, 51, 1) },
-            { "olvina", new Tuple<int, int, int>(53, 53, 1) },
-            { "aquli", new Tuple<int, int, int>(48, 53, 1) },
-            { "yowyn", new Tuple<int, int, int>(33, 41, 1) },
-            { "specwing", new Tuple<int, int, int>(58, 59, 1) },
-            { "village_exile", new Tuple<int, int, int>(39, 63, 0) },
-            { "foxtown", new Tuple<int, int, int>(39, 58, 1) },
-            { "foxtown_nefu", new Tuple<int, int, int>(58, 46, 2) },
-            { "palmia", new Tuple<int, int, int>(54, 44, 2) },
-            { "lothria", new Tuple<int, int, int>(39, 50, 1) },
-            { "mysilia", new Tuple<int, int, int>(50, 70, 2) },
-            { "derphy", new Tuple<int, int, int>(71, 79, 1) },
-            { "lumiest", new Tuple<int, int, int>(41, 92, 0) },
-            { "noyel", new Tuple<int, int, int>(75, 87, 2) },
-        };
-
         #endregion
     }
 }

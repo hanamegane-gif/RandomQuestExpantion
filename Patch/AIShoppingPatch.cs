@@ -21,9 +21,9 @@ namespace RandomQuestExpantion.Patch
                     new CodeMatch(OpCodes.Callvirt, AccessTools.Method(typeof(Card), "set_isSale"))
 
 
-                    //IL_0072: ldloc.2
-                    //IL_0073: ldc.i4.0
-                    //IL_0074: callvirt instance void Card::set_isSale(bool)           
+                //IL_0072: ldloc.2
+                //IL_0073: ldc.i4.0
+                //IL_0074: callvirt instance void Card::set_isSale(bool)           
                 )
                 .InsertAndAdvance
                 (

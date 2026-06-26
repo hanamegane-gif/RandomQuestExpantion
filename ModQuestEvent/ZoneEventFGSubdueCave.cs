@@ -26,7 +26,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             return Mathf.Max(base.quest.DangerLv - 2, 1);
         }
 
-        internal void MoveToEnterPosition() 
+        internal void MoveToEnterPosition()
         {
             var enterPos = new Point(EClass._map.bounds.CenterX, EClass._map.bounds.z + 2);
 

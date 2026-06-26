@@ -43,13 +43,13 @@ namespace RandomQuestExpantion.ModQuestEvent
 
 
         internal virtual int CalcNumberOfEnemies()
-        { 
+        {
             return 1 + base.quest.difficulty / 2;
         }
 
         internal virtual void SpawnEnemy(int dangerLv)
         {
-            var spawnPoint = EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false, minRadius : 3);
+            var spawnPoint = EClass.pc.pos.GetNearestPoint(allowBlock: false, allowChara: false, minRadius: 3);
 
             var enemy = CreateEnemy(dangerLv);
 

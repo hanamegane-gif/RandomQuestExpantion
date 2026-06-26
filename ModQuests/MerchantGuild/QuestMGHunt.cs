@@ -3,7 +3,7 @@ using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.MerchantGuild
 {
-    class QuestMGHunt : QuestHunt
+    public class QuestMGHunt : QuestHunt
     {
         public override string RewardSuffix => "_byakko_mod_guild";
 

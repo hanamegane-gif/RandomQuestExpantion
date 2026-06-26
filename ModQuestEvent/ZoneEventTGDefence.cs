@@ -5,7 +5,7 @@ namespace RandomQuestExpantion.ModQuestEvent
     class ZoneEventTGDefence : ZoneEventUrbanDefence
     {
         // ギルド構成員、傭兵、戦士っぽい人型モンスター
-        internal override HashSet<string> SpawnCandidateList { get; } = new HashSet<string>
+        internal override HashSet<string> SpawnCandidateList => new HashSet<string>
         {
             "centaur_archer",
             "merc",
