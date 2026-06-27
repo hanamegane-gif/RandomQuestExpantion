@@ -31,12 +31,6 @@ namespace RandomQuestExpantion.ModQuestEvent
             //"doggohint_FG_1",
         };
 
-        public ZoneEventBullyDoggo(QuestBullyDoggo ownerQuest)
-        {
-            OwnerQuestUID = ownerQuest.uid;
-            UIDDoggo = ownerQuest.UIDDoggo;
-        }
-
         public override void OnTickRound()
         {
             if (!IsExistQuest())
@@ -130,6 +124,16 @@ namespace RandomQuestExpantion.ModQuestEvent
                     EClass.Sound.Play("warcry", vector, 0.3f);
                     break;
             }
+        }
+
+        public void SetOwnerQuest(QuestBullyDoggo ownerQuest)
+        {
+            OwnerQuestUID = ownerQuest.uid;
+        }
+
+        public void SetUIDDoggo(int uidDoggo)
+        {
+            UIDDoggo = uidDoggo;
         }
 
         private bool IsExistQuest()

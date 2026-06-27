@@ -26,7 +26,10 @@ namespace RandomQuestExpantion.ModQuests.Common
             UIDDoggo = doggo.uid;
             (task as TaskBullyDoggo).SetUIDDoggo(doggo.uid);
 
-            EClass._zone.events.Add(new ZoneEventBullyDoggo(this));
+            var woofEvent = new ZoneEventBullyDoggo();
+            woofEvent.SetOwnerQuest(this);
+            woofEvent.SetUIDDoggo(doggo.uid);
+            EClass._zone.events.Add(woofEvent);
         }
 
         public override void OnFail()

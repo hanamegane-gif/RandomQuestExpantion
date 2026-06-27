@@ -9,9 +9,5 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             "doggohint_FG_1",
         };
-
-        public ZoneEventFGBullyDoggo(QuestBullyDoggo ownerQuest) : base(ownerQuest)
-        {
-        }
     }
 }

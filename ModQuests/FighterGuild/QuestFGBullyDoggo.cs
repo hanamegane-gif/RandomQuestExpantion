@@ -26,7 +26,10 @@ namespace RandomQuestExpantion.ModQuests.FighterGuild
             UIDDoggo = doggo.uid;
             (task as TaskFGBullyDoggo).SetUIDDoggo(doggo.uid);
 
-            EClass._zone.events.Add(new ZoneEventFGBullyDoggo(this));
+            var woofEvent = new ZoneEventFGBullyDoggo();
+            woofEvent.SetOwnerQuest(this);
+            woofEvent.SetUIDDoggo(doggo.uid);
+            EClass._zone.events.Add(woofEvent);
         }
 
         public override void OnDropReward()
