@@ -14,13 +14,13 @@ namespace RandomQuestExpantion.Config
         private static ConfigEntry<bool> _EnableRuneVesselFeature;
         private static ConfigEntry<bool> _EnableDangerousDoggo;
 
-        internal static int RewardPlatRate { get => _RewardPlatRate.Value; }
+        internal static int RewardPlatRate { get => _RewardPlatRate?.Value ?? 100; }
 
-        internal static int MaxQuestLimit { get => _MaxQuestLimit.Value; }
+        internal static int MaxQuestLimit { get => _MaxQuestLimit?.Value ?? 12; }
 
-        internal static bool EnableRuneVesselFeature { get => _EnableRuneVesselFeature.Value; }
+        internal static bool EnableRuneVesselFeature { get => _EnableRuneVesselFeature?.Value ?? true; }
 
-        internal static bool EnableDangerousDoggo { get => _EnableDangerousDoggo.Value; }
+        internal static bool EnableDangerousDoggo { get => _EnableDangerousDoggo?.Value ?? false; }
 
         internal static void LoadConfig()
         {

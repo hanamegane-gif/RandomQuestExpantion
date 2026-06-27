@@ -10,7 +10,7 @@ namespace RandomQuestExpantion.Patch
     {
         [HarmonyTranspiler]
         [HarmonyPatch(typeof(LayerQuestBoard), nameof(LayerQuestBoard.RefreshQuest))]
-        internal static IEnumerable<CodeInstruction> HandleOnShippedEventPatch(IEnumerable<CodeInstruction> instructions)
+        internal static IEnumerable<CodeInstruction> ChangeMaxQuestLimitPatch(IEnumerable<CodeInstruction> instructions)
         {
             var ci = new CodeMatcher(instructions)
                 .MatchEndForward
