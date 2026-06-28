@@ -81,7 +81,12 @@ namespace RandomQuestExpantion.ModQuestEvent
             {
                 member.things.Foreach(delegate (Thing t)
                 {
-                    if ((t.id == "book_ancient" || t.id == "spellbook") && t.GetBool(115) && EClass.rnd(2) != 0)
+                    if (t.GetBool(115) || EClass.rnd(2) != 0)
+                    {
+                        return;
+                    }
+
+                    if (t.id == "book_ancient" || t.id == "spellbook")
                     {
                         list.Add(t);
                     }

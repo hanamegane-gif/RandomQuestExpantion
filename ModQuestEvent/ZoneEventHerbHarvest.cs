@@ -58,7 +58,12 @@ namespace RandomQuestExpantion.ModQuestEvent
                 member.things.Foreach(delegate (Thing t)
                 {
                     // バレづらい
-                    if (!t.isCrafted && (t.id == "herb_red" || t.id == "herb_blue" || t.id == "herb_purple" || t.id == "herb_green") && EClass.rnd(4) != 0)
+                    if (t.encLV != 0 || t.isCrafted || EClass.rnd(4) != 0)
+                    {
+                        return;
+                    }
+
+                    if (t.id == "herb_red" || t.id == "herb_blue" || t.id == "herb_purple" || t.id == "herb_green")
                     {
                         list.Add(t);
                     }

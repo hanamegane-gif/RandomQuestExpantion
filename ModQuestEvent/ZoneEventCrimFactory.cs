@@ -75,9 +75,15 @@ namespace RandomQuestExpantion.ModQuestEvent
             var list = new List<Thing>();
             foreach (var member in EClass.pc.party.members)
             {
+
                 member.things.Foreach(delegate (Thing t)
                 {
-                    if (!t.isCrafted && (t.id == "crim" || t.id == "drug_crim") && EClass.rnd(2) != 0)
+                    if (t.encLV != 0 || t.isCrafted || EClass.rnd(2) != 0)
+                    {
+                        return;
+                    }
+
+                    if (t.id == "crim" || t.id == "drug_crim")
                     {
                         list.Add(t);
                     }
