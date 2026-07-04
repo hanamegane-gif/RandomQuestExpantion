@@ -32,7 +32,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public bool IsQuestItem(in Thing t)
         {
-            if (t.id == "drug_crim" && !t.IsImportant)
+            if (t.id == "drug_crim" && !(t.IsImportant || t.isCrafted || t.encLV > 0))
             {
                 return true;
             }

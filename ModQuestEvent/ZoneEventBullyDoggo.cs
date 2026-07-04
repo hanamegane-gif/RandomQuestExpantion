@@ -35,6 +35,10 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             if (!IsExistQuest())
             {
+                if (IsExistDoggo())
+                {
+                    KillDoggo();
+                }
                 this.Kill();
                 return;
             }
@@ -144,6 +148,15 @@ namespace RandomQuestExpantion.ModQuestEvent
         private bool IsExistDoggo()
         {
             return EClass._zone.map.charas.Any(c => c.uid == this.UIDDoggo);
+        }
+
+        private void KillDoggo()
+        {
+            var doggo = EClass._zone.map.charas.FirstOrDefault(c => c.uid == this.UIDDoggo);
+            if (doggo != null)
+            {
+                doggo.Destroy();
+            }
         }
     }
 }

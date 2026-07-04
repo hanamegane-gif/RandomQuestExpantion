@@ -1,0 +1,476 @@
+$About this Mod
+Increasing the types of requests on the Request Board. (9 types total)
+
+Each guild will now generate guild-exclusive requests.
+(Merchants Guild: 10, Fighters Guild: 9, Mages Guild: 7, Thieves Guild: 8)
+Guild-exclusive requests will add guild-specific currency as rewards,
+which can be exchanged for prizes once a certain amount is collected.
+
+Also, increasing the maximum number of requests that can be accepted simultaneously to 12.
+
+
+$Requests from citizens
+<size=24>Hunting Type</size>
+<i>Requests that frequently appears in cities where hunting requests are common (like Teola or Nefu).</i>
+{topic|Nefia Raid (No fame requirement)}
+{pair|Name|"Preemptive defense", "Menace of Nefia"}
+
+・Complete ANY one random Nefia to complete the request.
+
+{topic|Rescue (Fame 1500+)}
+{pair|Name|"Requesting rescue!", "Rash courage"}
+
+
+{image,questnefia}
+
+
+
+・After accepting, a random Nefia labeled "(Rescue Request)" will be spawned near the city.
+・WHen you conquer that Nefia labeled "(Rescue Request)", the rescue target will appear.
+・After that, Escort the rescue target to the city safely, then completes the request.
+
+・If you fail to conquer a Nefia labeled "(Rescue Request)", the request will also fail.
+・If the rescue target dies, the request fails.
+
+{topic|Item Retrieve (Fame 2000+)}
+{pair|Name|"Stolen relic", "Price of a rumor"}
+
+
+{image,questchest}
+
+
+
+・First, conquer ANY one random Nefia.
+・Doing so will cause an additional treasure chest to appear among the boss drops.
+・Handing the contents of that treasure chest to the client completes the request. You cannot substitute them with other items.
+
+・The distribution often comes with <b>powerful enchantments</b>. You might think twice before handing it over...
+
+{topic|Duel with Adventurer (Fame 5500+)}
+{pair|Name|"Here comes new challengers!", "SAVE me!", "Unforgivens"}
+
+・You will be transported to a quest map.
+・Defeat all enemies on the map to complete the request.
+
+{topic|Urban Subdue (Fame 6000+)}
+{pair|Name|"The intruders", "Anvil strategy"}
+
+・You will be transported to the mock town map.
+・Defeat all enemies on the map to complete the request.
+
+・"Collateral damage" caused during combat doesn't affect the original map; Wowie.
+
+{topic|Urban Evolved Monster Extermination (Fame 10000+)}
+{pair|Name|"Grandiose threat", "War clouds gather"}
+
+・You will be transported to the mock town map.
+・The period immediately after the start is a preparation phase; Cast buffs or move to a suitable position.
+・Once the preparation phase ends, an evolved enemy will appear. Defeating it will trigger another preparation phase.
+・Repeat this cycle until the request is complete.
+
+・The Palmian Suicide Squad are on your side. Please make good use of them in <b>various ways</b>.
+・"Collateral damage" caused during combat doesn't affect the original map; Wowie.
+
+
+<size=24>Harvesting Type</size>
+<i>Requests that frequently appears in cities where harvesting requests are common (like Yowyn or Mofu).</i>
+{topic|War in the Fields (Fame 500+)}
+{pair|Name|"Grudge over food", "Hunting season", "Eat or be eaten"}
+
+・You will be transported to a quest map.
+・Once you defeat a certain number of animals that keep spawning frequently, you will begin to retreat automatically.
+・If you retreat successfully, the request is complete.
+
+・The danger level increases very slowly with each wave. Don't take too long, or you might end up getting roasted by Fire Hounds.
+
+
+<size=24>Cooking Type</size>
+<i>Requests that frequently appears in cities where cooking requests are common (like Kapul or Exiles).</i>
+{topic|HQ Cooking (Fame 1000+)}
+{pair|Name|"Ultimate menu", "Gourmet seeker", "Potential of fusion cuisine"}
+
+・When a request is issued, three elements are specified: "Category", "Quality", and "Trait".
+・Deliver a dish that has Quality and Traits equal to or higher than the requested.
+・The maximum specified "Quality" is Lv6 (【Royal Quality】).
+
+・The quality bonus is heavily influenced by the dish's base price and quality.
+
+<size=24>Procurement Type</size>
+<i>Requests that frequently appears in cities where procurement requests are common (like your base or Exiles).</i>
+{topic|HQ Furniture (Fame 1000+)}
+{pair|Name|"Gift for dear", "Custommade furniture"}
+
+・When a request is issued, three elements are specified: "Category", "Quality", and "Trait".
+・Deliver a furniture that has Quality and Traits equal to or higher than the requested.
+・The maximum specified "Quality" is Lv6 (【Royal Quality】).
+
+・The quality bonus is heavily influenced by the furniture's base price and quality.
+
+$Requests from Fighters Guild
+{topic|Hunting (No fame requirement)}
+{pair|Name|"Public safety activities", "Exercise"}
+
+・Defeat the specified number of enemies; at any location.
+
+{topic|Yeeks (No fame requirement)}
+{pair|Name|"Yeeeeeeek!", "Yeek again"}
+
+・Defeat the specified number of yeeks; at any location.
+
+・Created for a joke and for lore; basically just a nuisance.
+
+{topic|Nefia Raid (No fame requirement)}
+{pair|Name|"Campaign now underway", "Ensuring safety"}
+
+・Complete ANY one random Nefia to complete the request.
+
+{topic|Subdue (Fame 500+)}
+{pair|Name|"Usual monster hunting", "A thankless job"}
+
+・You will be transported to a quest map.
+・Defeat all enemies on the map to complete the request.
+
+{topic|High-Lv Hunting (Fame 1000+)}
+{pair|Name|"Show of force", "Testing in Nefia"}
+
+・When a request is issued, Nefai DangerLv is specified.
+・Defeat the specified number of enemies within a Nefia with a designated DangerLv or higher.
+
+{topic|Mock Battle (Fame 3000+)}
+{pair|Name|"Training for newbies", "To experience defeat"}
+
+・You will be transported to a quest map.
+・Defeat all 『』ed fighters on the map to complete the request.
+
+・You will be facing multiple 『』ed enemies simultaneously. Ensure your forces are fully prepared.
+・The number of enemies increases based on the request's ★ rating. With 4 or more, prepare to be anihilated.
+
+{topic|Short-term War (Fame 4000+)}
+{pair|Name|"Two-pronged approach", "Guild's retreat"}
+
+・You will be transported to a quest map.
+・Once the time limit for 7 Wave has passed, the retreat will begin automatically.
+・If you retreat successfully, the request is complete.
+
+・If things get out of hand, it might be a good idea to cast invisible and run around.
+
+{topic|Guild Defence (Fame 7000+)}
+{pair|Name|"It's all academic", "Guild mock battle"}
+
+・You will be transported to the mock guild map.
+・The enemies are coming in from the stairs. Defeat all enemies until no more reinforcements arrive.
+・Upon completing the request, Mages Guild's influence will decrease slightly.
+
+・If you don't wipe them quickly enough, the next wave of reinforcements will arrive. Take them out before they overwhelm you.
+・You'll be attacked with magic of various elements. Be sure to check your resistances carefully.
+・Enemies possessing magic-domain spells is BANNED. As you know, Everyone hates imp.
+
+{topic|Werewolf Hunting (Fame 1500+, Liaison only)}
+{pair|Name|"Werewolf Hunt", "When the Imposter is sus"}
+
+・After accepting, a werewolf will spawn somewhere in the city.
+・While in progress, the approximate distance to the werewolf is indicated by sound and messages.
+・Defeat spawned werewolf on the map to complete the request.
+
+・The level of the werewolf is capped at 2500.
+・You can disable the cap via the options, but if the city turns into a ruin, you do so at your own risk.
+
+$Requests from Merchants Guild
+{topic|Hunting (No fame requirement)}
+{pair|Name|"Ensuring road safety", "The invisible force"}
+
+・Defeat the specified number of enemies; at any location.
+
+{topic|Delivery (No fame requirement)}
+{pair|Name|"Express transport request", "Delivery mistakes"}
+
+・Deliver the item to the designated NPC in the specified city to complete the request.
+・The distribution can be substituted with an item of the same name.
+
+・Locations closer by are more likely to be selected compared to vanilla.
+・Return spell and teleporters are allowed.
+
+{topic|Escort (No fame requirement)}
+{pair|Name|"Escort the stray", "Directionally challenged"}
+
+・Escort the target to the designated city to complete the request.
+・The request fails if the person you are escorting dies, or is abandoned.
+
+・Locations closer by are more likely to be selected compared to vanilla.
+・Return spell and teleporters are allowed.
+
+{topic|Flyer (No fame requirement)}
+{pair|Name|"Flyer distribution", "Promotional activities"}
+
+・After accepting, You will receive free flyers.
+・Distribute the specified number of flyers successfully to complete the request.
+
+・While the request is active, NPCs become ready to accept the flyer every time you enter the town.
+・Pay for flyers out of your own pocket if you run out.
+
+{topic|Investment (Fame 500+)}
+{pair|Name|"Invester A", "Business support"}
+
+・Invest in towns or shops the specified number of times to complete the request.
+
+{topic|Base Sale (Fame 500+)}
+{pair|Name|"Market research", "Guild’s review"}
+
+・<b>Attach price tags to merchandise and sell them AT YOUR BASE</b> to reach the sales target.
+
+{topic|Base Shipment (Fame 1000+)}
+{pair|Name|"Model of pioneer", "Visit the producers"}
+
+・Ship items from your base's shipping box and reach the sales target.
+
+{topic|Guild Defence (Fame 7000+)}
+{pair|Name|"Pay with life", "Mousetrap"}
+
+・You will be transported to the mock guild map.
+・Enemies enter from the edge of the map. Defeat all enemies until no more reinforcements arrive.
+・Upon completing the request, Thieves Guild's influence will decrease slightly.
+
+・If you don't wipe them quickly enough, the next wave of reinforcements will arrive. Take them out before they overwhelm you.
+・Due to the spawn locations and the map layout, there are few spots where you can safely intercept the enemy.
+・Windows allow both LoS and LoF to pass through. Beware of unexpected ranged attacks.
+
+{topic|HQ Furniture (Fame 1000+, Liaison only)}
+{pair|Name|"Put on a show", "Commitment to furniture"}
+
+・When a request is issued, three elements are specified: "Category" "Quality" and "Trait".
+・Deliver a furniture with "Quality" and "Trait" that same or exceed the specified requirements.
+・The maximum specified "Quality" is Lv6 (【Royal Quality】).
+
+{topic|Risky Escort (Fame 2000+, Liaison only)}
+{pair|Name|"Witnessed too much", "Journey of escape"}
+
+・Escort the target to the designated city to complete the request.
+・While in progress, there is a chance that a random raid will be replaced by an adventurer's raid.
+・The request fails if the person you are escorting dies, is sold off, or is abandoned.
+
+・Locations closer by are more likely to be selected compared to vanilla.
+・Return spell and teleporters are allowed.
+
+$Requests from Mages Guild
+{topic|Isekai Herbalism (No fame requirement)}
+{pair|Name|"Rookie Quest", "Botanical experiment"}
+
+・You will be transported to a quest map.
+・Harvest herbs and deliver them to complete the request.
+
+{topic|HQ Potion (No fame requirement)}
+{pair|Name|"Subcontracting from the noble", "Laboratory medications"}
+
+・When a request is issued, two elements are specified: "Quality" and "Trait".
+・Deliver a potion that has Quality and Trait equal to or higher than the requested.
+・The maximum specified "Quality" is Lv6 (【Royal Quality】).
+
+・Some Traits are easy with devised bottles. Hammer dyes.
+
+{topic|Ghostbusters  (Fame 1000+)}
+{pair|Name|"Unfinished business", "Ghostbusters"}
+
+・You will be transported to a quest map.
+・Only ghost-type enemies appear.
+・Defeat all enemies on the map to complete the request.
+
+・Since there are only ghosts there, you cannot detect enemies through telepathy. Be cautious when moving and using autocombat.
+・Liches are BANNED. I HATE THAT FUCKERS, GOOD RIDDANCE!
+
+{topic|Mock Battle (Fame 1000+)}
+{pair|Name|"Radical student", "Dueling club"}
+
+・You will be transported to a quest map.
+・Defeat all 『』ed mages on the map to complete the request.
+
+・You will be facing multiple 『』ed enemies simultaneously. Ensure your forces are fully prepared.
+・The number of enemies increases based on the request's ★ rating.
+
+{topic|Item Retrieve (Fame 2000+)}
+{pair|Name|"Legendary magic item", "I saw it...!?"}
+
+
+{image,questchest}
+
+
+
+・First, conquer ANY one random Nefia.
+・Doing so will cause an additional treasure chest to appear among the boss drops.
+・Handing the contents of that treasure chest to the client completes the request. You cannot substitute them with other items.
+
+・The distribution often comes with <b>powerful enchantments related to magic</b>.
+
+{topic|Guild Defence (Fame 7000+)}
+{pair|Name|"My answer is", "Guild security"}
+
+・You will be transported to the mock guild map.
+・The enemies are coming in from the stair. Defeat all enemies until no more reinforcements arrive.
+・Upon completing the request, Thieves Guild's influence will decrease slightly.
+
+・If you don't wipe them quickly enough, the next wave of reinforcements will arrive. Take them out before they overwhelm you.
+
+{topic|Book Organizing (Fame 500+, Liaison only)}
+{pair|Name|"Organizing Collection", "Rampage of the Imps"}
+
+・You will be transported to a quest map.
+・Pick up the old books and spellbooks scattered across the map and deliver them to complete the request.
+
+・Won't get caught just skimming through it for a bit...
+・You'll encounter imps and fairy brats, since there is no scaling.
+
+$Requests from Thieves Guild
+{topic|Delivery (No fame requirement)}
+{pair|Name|"An “ordinary” delivery", "Delivery with a story"}
+
+・Deliver the item to the designated NPC in the specified city to complete the request.
+・The distribution can be substituted with an item of the same name.
+
+・Locations closer by are more likely to be selected compared to vanilla.
+・Return spell and teleporters are allowed.
+・You might receive something weird.
+
+{topic|Drug manufacturing (No fame requirement)}
+{pair|Name|"Workers wanted", "Simple job"}
+
+・You will be transported to a quest map.
+・Harvest crims, grind them into powder using the facilities on the map, and deliver them.
+
+・Since the process involves grinding crim into powder, it consumes a lot of stamina.
+・Addicts you see around here are sometimes confused or paralysed. lol they're wide open!
+
+{topic|Base Stolen Goods Sale (No fame requirement)}
+{pair|Name|"Challenge of theft", "Seed of blackmail"}
+
+・<b>Attach price tags to stolen goods and sell them AT YOUR BASE</b> to reach the sales target.
+・<b>You CANNOT complete the request by selling stolen goods directly to merchants.</b>
+
+{topic|Slavery (No fame requirement)}
+{pair|Name|" “Staffing agency” ", "Seeking workers"}
+
+・<b>Attach price tags to slaves and sell them AT YOUR BASE</b> to reach the sales target.
+
+・There is apparently an anecdote that sailors in the past used animals to satisfy their sexual desires.
+
+{topic|Item Retrieve (Fame 2000+)}
+{pair|Name|"The most important thing", "Secret treasure hunt"}
+
+
+{image,questchest}
+
+
+
+・First, conquer ANY one random Nefia.
+・Doing so will cause an additional treasure chest to appear among the boss drops.
+・Handing the contents of that treasure chest to the client completes the request. You cannot substitute them with other items.
+
+・The distribution often comes with <b>powerful enchantments</b>.
+
+{topic|Guild Defence (Fame 7000+)}
+{pair|Name|"Play decoy", "Bouncers"}
+
+・You will be transported to the mock guild map.
+・The enemies are coming in from the stairs. Defeat all enemies until no more reinforcements arrive.
+・Upon completing the request, Fighters Guild's influence will decrease slightly.
+
+・If you don't wipe them quickly enough, the next wave of reinforcements will arrive. Take them out before they overwhelm you.
+・Enemies rely almost exclusively on physical attacks. Be careful in the higher-level.
+
+{topic|Risky Escort (Fame 1500+, Liaison only)}
+{pair|Name|"Price of Betrayal", "Witness Protection"}
+
+・Escort the target to the designated city to complete the request.
+・While in progress, there is a chance that a random raid will be replaced by an adventurer's raid.
+・The request fails if the person you are escorting dies, is sold off, or is abandoned.
+
+・Locations closer by are more likely to be selected compared to vanilla.
+・Return spell and teleporters are allowed.
+
+{topic|Risky Delivery (Fame 1500+, Liaison only)}
+{pair|Name|"Messenger Service", "Arms Supply"}
+
+・Deliver the item to the designated NPC in the specified city to complete the request.
+・While in progress, there is a chance that a random raid will be replaced by an adventurer's raid.
+・If you sell the distribution to <b>someone who wants it</b>, the request will fail.
+
+・Locations closer by are more likely to be selected compared to vanilla.
+・Return spell and teleporters are allowed.
+・The distribution often comes with <b>powerful enchantments</b>.
+
+$Options
+You can configure options via:
+BepInEx/config/byakko.elin.RandomQuest.cfg in the Elin installation folder.
+
+{topic|Plat rate for requests from citizens}
+・You can set the multiplier (%) for bonus plats earned from requests from citizens.
+・Setting this to 0 makes the number of bonus platinum coins match the vanilla behavior.
+
+{topic|Limit on the number of requests}
+・Set a limit on the number of requests that can be accepted simultaneously.
+
+{topic|Exclude Rune Vessels}
+・Gears generated through requests or the guilpo exchanger has a small chance of coming with a Rune Vessel.
+・If set to false, the Rune Vessel is excluded from the list of possible enchantments.
+
+{topic|Enable the strong doggo}
+・The level of the werewolf in the werewolf hunting request scales by fame, but it is capped at 2500.
+・If set to true, removes the cap, unleashing a terrifying doggo that will devastate the city at breakneck speed.
+
+$FAQ
+
+{Q|Where do I exchange guilpos?}
+{A|Guilpo exchangers are located at the following spots for each guild. They aren't human!}
+
+
+
+
+
+
+
+{image,exchangerplace}
+
+
+
+
+
+
+
+{Q|I saw the deadline for the request is set to "X+Y days", wdym?}
+{A|It has an actual deadline that differs from its listing period. The listing period is x days; accepting the request extends the deadline by Y days, resulting in an actual deadline of X+Y days.}
+
+{Q|I've come up with a way to abuse modded requests!}
+{A|Already anticipated, Go Ahead.}
+
+{Q|What are the criteria for balancing?}
+{A|For a totally solo MC; "Principal" is all Gold Medaled and no Legacy options, and *Permadeath*. Rewarding is more lenient compared to vanilla.}
+
+{Q|I found a bug! I have a suggestion!}
+{A|Please ping me in the Mod channel on the Elin Discord server(recommended!) or comment on the workshop. When reporting bugs, it is helpful to include your Player.log along with details on the steps to reproduce the issue.}
+
+{Q|How do I uninstall this mod?}
+{A|Simply unsubscribe. You can safely uninstall this at any time. After uninstalling, any active modded requests will turn into "Dummy Mokyu" quests, and gilpos will turn into ash; you can safely discard these.}
+
+{Q|How does this mod work? I want to know the exact internal processing!}
+{A|こ↑こ↓　This is just posted for public viewing, so updates may be delayed or sometimes overlooked. Look at this shitty code!}
+{link|Github repository|https://github.com/hanamegane-gif/RandomQuestExpantion}
+
+{Q|有译文吗？ Есть ли перевод?}
+{A|There. They arent my translation, so it may not be up to date with the current version.}
+{link|简体中文|https://steamcommunity.com/sharedfiles/filedetails/?id=3643407495}
+{link|русский|https://steamcommunity.com/sharedfiles/filedetails/?id=3697324968}
+
+{Q|I'd like to translate this mod, Can I?}
+{A|Feel free to create a translation in any language. Just keep in mind that I can only read Japanese, English, and Traditional Chinese(barely), so I won't be able to verify translations into other languages. Please make sure to check their accuracy yourself. I also won't be responsible for keeping those up to date.}
+
+{Q|Don't the content feel a bit dated?}
+{A|"Lunatic Dawn" and "Daggerfall" My beloved.}
+
+
+
+$Update History
+{topic|2.1.0}
+・ModHelp supported.
+・(EN)Fixed translation errors.
+・If a werewolf hunt request fails outside the city, the spawned werewolf will now automatically disappear.
+
+{topic|~2.0.X}
+・Records up to this point have been lost to the mists of history (as I hadn't properly kept a log).

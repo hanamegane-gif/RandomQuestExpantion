@@ -1,5 +1,4 @@
-﻿using RandomQuestExpantion.DayBreak;
-using RandomQuestExpantion.ModQuestEvent;
+﻿using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.ModQuestZoneInstance;
 
 namespace RandomQuestExpantion.ModQuests.Common
@@ -26,7 +25,7 @@ namespace RandomQuestExpantion.ModQuests.Common
         }
         public override void OnBeforeComplete()
         {
-            this.SetBonusMoney(this.GetBonusMoney() + bonus);
+            bonusMoney += bonus;
         }
 
         public override string GetTextProgress()

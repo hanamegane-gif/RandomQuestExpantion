@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RandomQuestExpantion.DayBreak;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestTask
@@ -24,7 +23,7 @@ namespace RandomQuestExpantion.ModQuestTask
             if (!IsComplete() && IsDoggo(c))
             {
                 numHunted++;
-                owner.SetBonusMoney(owner.GetBonusMoney() + CalcBonusMoney(c));
+                owner.bonusMoney += CalcBonusMoney(c);
             }
         }
 

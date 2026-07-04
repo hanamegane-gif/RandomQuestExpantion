@@ -1,5 +1,4 @@
-﻿using RandomQuestExpantion.DayBreak;
-using RandomQuestExpantion.ModQuestTask;
+﻿using RandomQuestExpantion.ModQuestTask;
 using RandomQuestExpantion.Patch;
 
 namespace RandomQuestExpantion.ModQuests.Common
@@ -30,7 +29,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override void OnDropReward()
         {
-            int num = (int)this.GetBonusMoney() * (55 + difficulty * 15) / 100;
+            int num = (int)bonusMoney * (55 + difficulty * 15) / 100;
             int num2 = rewardMoney + num;
             if (num2 > 0)
             {

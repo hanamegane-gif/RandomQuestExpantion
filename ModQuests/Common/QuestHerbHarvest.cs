@@ -25,7 +25,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public bool IsQuestItem(in Thing t)
         {
-            if (t.category.id == "herb" && !t.IsImportant)
+            if (t.category.id == "herb" && !(t.IsImportant || t.isCrafted || t.encLV > 0))
             {
                 return true;
             }

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RandomQuestExpantion.DayBreak;
 using RandomQuestExpantion.ModQuests.Common;
 using System;
 using UnityEngine;
@@ -25,7 +24,7 @@ namespace RandomQuestExpantion.ModQuestTask
                 return;
             }
 
-            owner.SetBonusMoney(owner.GetBonusMoney() + CalcBonusMoney(boss));
+            owner.bonusMoney += CalcBonusMoney(boss);
 
             var questInstance = this.owner as QuestDungeonRetrieve;
             string targetIdThing = questInstance.idThing;

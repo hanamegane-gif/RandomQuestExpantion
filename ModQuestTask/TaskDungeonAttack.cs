@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using RandomQuestExpantion.DayBreak;
 using UnityEngine;
 
 namespace RandomQuestExpantion.ModQuestTask
@@ -17,7 +16,7 @@ namespace RandomQuestExpantion.ModQuestTask
         public virtual void OnNefiaBeaten(Chara boss)
         {
             hasNefiaBossKilled = true;
-            owner.SetBonusMoney(owner.GetBonusMoney() + CalcBonusMoney(boss));
+            owner.bonusMoney += CalcBonusMoney(boss);
         }
 
         internal virtual int CalcBonusMoney(in Chara boss)
