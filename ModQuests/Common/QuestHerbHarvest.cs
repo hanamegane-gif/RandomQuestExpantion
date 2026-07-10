@@ -1,10 +1,13 @@
 ﻿using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.ModQuests.QuestAttribute;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
     public class QuestHerbHarvest : QuestHarvest, IHarvest
     {
+        public override string RefDrama2 => WeightText(destWeight);
+
         public override ZoneEventQuest CreateEvent()
         {
             return new ZoneEventHerbHarvest();
@@ -21,6 +24,11 @@ namespace RandomQuestExpantion.ModQuests.Common
         public override void OnBeforeComplete()
         {
             // 持ち込み対策がめんどくさいのでボーナスは出さない
+        }
+
+        public override string GetTextProgress()
+        {
+            return "progressHarvest".lang(WeightText(weightDelivered), WeightText(destWeight));
         }
 
         public bool IsQuestItem(in Thing t)

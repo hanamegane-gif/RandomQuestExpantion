@@ -313,7 +313,7 @@ $Requests from Mages Guild
 {pair|Name|"Organizing Collection", "Rampage of the Imps"}
 
 ・You will be transported to a quest map.
-・Pick up the old books and spellbooks scattered across the map and deliver them to complete the request.
+・Pick up ancient books and spellbooks scattered across the map and deliver them to complete the request.
 
 ・Won't get caught just skimming through it for a bit...
 ・You'll encounter imps and fairy brats, since there is no scaling.
@@ -467,6 +467,12 @@ $FAQ
 
 
 $Update History
+{topic|2.1.1}
+・Fixed an issue where requests issued by liaisons ignored reputation requirements.
+・Adjusted the display of Herbalism request quotas to show the second decimal place.
+・Fixed an issue where Book Organizing request did not confiscate ancient books.
+・Slightly increased the difficulty of Book Organizing request.
+
 {topic|2.1.0}
 ・ModHelp supported.
 ・(EN)Fixed translation errors.

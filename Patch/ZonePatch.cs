@@ -115,7 +115,7 @@ namespace RandomQuestExpantion.Patch
             void unko(Func<Chara, bool> liaisonCondi, string tag)
             {
                 var liaisons = __instance.map.charas.Where(liaisonCondi);                
-                var rows = EClass.sources.quests.rows.Where(sr => sr.group == "random_liaison" && sr.tags.Contains(tag) && sr.chance != 0).ToList();
+                var rows = EClass.sources.quests.rows.Where(sr => sr.group == "random_liaison" && sr.tags.Contains(tag) && sr.chance != 0 && EClass.player.fame >= sr.minFame).ToList();
 
                 foreach (var chara in liaisons)
                 {

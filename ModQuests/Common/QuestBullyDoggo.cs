@@ -46,7 +46,7 @@ namespace RandomQuestExpantion.ModQuests.Common
         internal Chara SpawnDoggo()
         {
             var doggoSource = EClass.sources.charas.rows.Where(r => r.id == "wolfguy").First();
-            int doggoLv = this.dangerLv * 5 / 4;
+            int doggoLv = this.dangerLv * 3 / 2;
 
             // 高速で街を壊滅させるのを野放しにするのは危険すぎたためオプション化
             if (!ModConfig.EnableDangerousDoggo && doggoLv > 2500)

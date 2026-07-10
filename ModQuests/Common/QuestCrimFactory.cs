@@ -1,11 +1,14 @@
 ﻿using RandomQuestExpantion.ModQuestEvent;
 using RandomQuestExpantion.ModQuests.QuestAttribute;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuests.Common
 {
     public class QuestCrimFactory : QuestHarvest, IHarvest
     {
         public override string IdZone => "instance_crim";
+
+        public override string RefDrama2 => WeightText(destWeight);
 
         public override ZoneEventQuest CreateEvent()
         {
@@ -22,7 +25,7 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override string GetTextProgress()
         {
-            return "byakko_mod_progress_crim_produce".lang(Lang._weight(weightDelivered), Lang._weight(destWeight));
+            return "byakko_mod_progress_crim_produce".lang(WeightText(weightDelivered), WeightText(destWeight));
         }
 
         public override void OnBeforeComplete()

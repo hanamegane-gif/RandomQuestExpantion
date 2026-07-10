@@ -1,12 +1,13 @@
 ﻿using RandomQuestExpantion.General;
 using System;
 using System.Collections.Generic;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventHerbHarvest : ZoneEventHarvest
     {
-        public override string TextWidgetDate => "eventHarvest".lang((TimeLimit - minElapsed <= 30) ? "end_soon".lang() : "", Lang._weight(questHarvest.weightDelivered), Lang._weight(questHarvest.destWeight)) + "byakko_mod_progress_timer".lang((TimeLimit - minElapsed).ToString());
+        public override string TextWidgetDate => "eventHarvest".lang((TimeLimit - minElapsed <= 30) ? "end_soon".lang() : "", WeightText(questHarvest.weightDelivered), WeightText(questHarvest.destWeight)) + "byakko_mod_progress_timer".lang((TimeLimit - minElapsed).ToString());
 
         public override void OnVisit()
         {

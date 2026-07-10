@@ -256,5 +256,11 @@ namespace RandomQuestExpantion.General
             string publication = (publicationHours < 24) ? "byakko_mod_hour_abbr".lang(publicationHours.ToString()) : (publicationHours / 24).ToString();
             return publication + "+" + Date.GetText(extraDays * 24);
         }
+
+        public static string WeightText(int a, int decimalpoint = 2, bool showUnit = true)
+        {
+            string dcString = (decimalpoint == 0) ? "#0" : "#0." + new string('0', decimalpoint);
+            return (0.001f * (float)a).ToString(dcString) + ((!showUnit) ? "" : "s");
+        }
     }
 }

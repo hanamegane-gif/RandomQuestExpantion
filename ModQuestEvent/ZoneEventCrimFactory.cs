@@ -1,12 +1,13 @@
 ﻿using RandomQuestExpantion.General;
 using System;
 using System.Collections.Generic;
+using static RandomQuestExpantion.General.General;
 
 namespace RandomQuestExpantion.ModQuestEvent
 {
     class ZoneEventCrimFactory : ZoneEventHarvest
     {
-        public override string TextWidgetDate => "byakko_mod_status_crim_produce".lang((TimeLimit - minElapsed <= 30) ? "end_soon".lang() : "", Lang._weight(questHarvest.weightDelivered), Lang._weight(questHarvest.destWeight)) + "byakko_mod_progress_timer".lang((TimeLimit - minElapsed).ToString());
+        public override string TextWidgetDate => "byakko_mod_status_crim_produce".lang((TimeLimit - minElapsed <= 30) ? "end_soon".lang() : "", WeightText(questHarvest.weightDelivered), WeightText(questHarvest.destWeight)) + "byakko_mod_progress_timer".lang((TimeLimit - minElapsed).ToString());
 
         // ならず者はすれ違いのスリが割とストレス要因になるため出禁
         internal virtual HashSet<string> SpawnCandidateList => new HashSet<string>

@@ -81,7 +81,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             {
                 member.things.Foreach(delegate (Thing t)
                 {
-                    if (t.GetBool(115) || EClass.rnd(2) != 0)
+                    if (!t.GetBool(115) || EClass.rnd(2) != 0)
                     {
                         return;
                     }
@@ -111,6 +111,11 @@ namespace RandomQuestExpantion.ModQuestEvent
             var createdChara = CharaGen.Create(SpawnCandidateList.RandomItem());
             createdChara.c_originalHostility = Hostility.Enemy;
             createdChara.hostility = Hostility.Enemy;
+
+            if (createdChara.LV < 6)
+            {
+                createdChara.SetLv(6);
+            }
 
             return createdChara;
         }
