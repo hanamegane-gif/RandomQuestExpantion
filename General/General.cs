@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using UnityEngine;
 
 namespace RandomQuestExpantion.General
@@ -26,6 +27,11 @@ namespace RandomQuestExpantion.General
         internal static bool IsGuild(in Zone zone)
         {
             return IsFighterGuild(zone) || IsThiefGuild(zone) || IsMageGuild(zone) || IsMerchantGuild(zone);
+        }
+
+        internal static bool IsMofuVillage(in Zone zone)
+        {
+            return zone.id == "foxtown" || zone.id == "foxtown_nefu";
         }
 
         internal static bool IsFighterGuild(in Zone zone)

@@ -89,7 +89,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\ModConfig.cs" />
-    <Compile Include="DayBreak\QuestPatchup.cs" />
     <Compile Include="General\Direction.cs" />
     <Compile Include="General\DramaWrapper.cs" />
     <Compile Include="General\General.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="ModQuestEvent\ZoneEventFGBullyDoggo.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGSubdueCave.cs" />
     <Compile Include="ModQuestEvent\ZoneEventOrganizingBook.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventRoadDefence.cs" />
     <Compile Include="ModQuestEvent\ZoneEventTGCrimFactory.cs" />
     <Compile Include="ModQuestEvent\ZoneEventCrimFactory.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGDefence.cs" />
@@ -123,6 +123,7 @@
     <Compile Include="ModQuestEvent\ZoneEventWGHerbHarvest.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGOrganizingBook.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGSubdueGhost.cs" />
+    <Compile Include="ModQuests\Common\QuestRoadDefence.cs" />
     <Compile Include="ModQuests\QuestAttribute\IExtendDeadline.cs" />
     <Compile Include="ModQuests\QuestAttribute\IHarvest.cs" />
     <Compile Include="ModQuests\QuestAttribute\IOverrideWildernessEncounter.cs" />
@@ -196,6 +197,7 @@
     <Compile Include="ModQuestTask\TaskTGSalesStolen.cs" />
     <Compile Include="ModQuestTask\TaskTGSlaver.cs" />
     <Compile Include="ModQuestTask\TaskWGDungeonRetrieve.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceRoadDef.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceSubdueGhost.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanDefence.cs" />
     <Compile Include="ModQuestZone\Zone_Arena_Cave_RQX.cs" />
@@ -210,6 +212,7 @@
     <Compile Include="Patch\CharaPatch.cs" />
     <Compile Include="Patch\DramaPatch.cs" />
     <Compile Include="Patch\DramaRambdaPatch.cs" />
+    <Compile Include="Patch\EloMapPatch.cs" />
     <Compile Include="Patch\InvOwnerDeliverPatch.cs" />
     <Compile Include="Patch\InvOwnerPatch.cs" />
     <Compile Include="Patch\ItemQuestPatch.cs" />
@@ -263,6 +266,8 @@
   <ItemGroup>
     <None Include=".editorconfig" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DayBreak\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

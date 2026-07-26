@@ -25,11 +25,11 @@ $Requests from citizens
 
 
 
-・After accepting, a random Nefia labeled "(Rescue Request)" will be spawned near the city.
-・WHen you conquer that Nefia labeled "(Rescue Request)", the rescue target will appear.
+・After accepting, a random Nefia labeled "(Rescue requested)" will be spawned near the city.
+・When you conquer that Nefia labeled "(Rescue requested)", the rescue target will appear.
 ・After that, Escort the rescue target to the city safely, then completes the request.
 
-・If you fail to conquer a Nefia labeled "(Rescue Request)", the request will also fail.
+・If you fail to conquer a Nefia labeled "(Rescue requested)", the request will also fail.
 ・If the rescue target dies, the request fails.
 
 {topic|Item Retrieve (Fame 2000+)}
@@ -70,6 +70,19 @@ $Requests from citizens
 
 ・The Palmian Suicide Squad are on your side. Please make good use of them in <b>various ways</b>.
 ・"Collateral damage" caused during combat doesn't affect the original map; Wowie.
+
+
+<size=24>War Type</size>
+<i>Requests that frequently appears in cities where war requests are common (like Teola or Willow).</i>
+{topic|Wall Defence (No fame requirement)}
+{pair|Name|"Guadians 6 or more, Siege", "Hold ranks!"}
+
+・You will be transported to a quest map.
+・Only certain races will appear during the quest.
+・Once you defeat a certain number of enemies that keep spawning frequently, you will begin to retreat automatically.
+・Turrets and five guards will appear as reinforcements. They will not follow your orders whatsoever, but they are powerful allies. Avoiding direct combat and supporting them from behind is also a viable strategy.
+・Characters that use Escape will not spawn.(like Metal)
+・Liches are BANNED. Why? Because having hordes of baka that forcibly delete your save files —including backups naturally— within thirteen turns, if youre playing permadeath. This is ridiculously stupid.
 
 
 <size=24>Harvesting Type</size>
@@ -467,6 +480,10 @@ $FAQ
 
 
 $Update History
+{topic|2.2.0}
+・Added a new Wall Defence request.
+・Fixed an issue where the target Nefia in the Rescue request in Mifu would appear on a tile that was impossible to reach.
+
 {topic|2.1.1}
 ・Fixed an issue where requests issued by liaisons ignored reputation requirements.
 ・Adjusted the display of Herbalism request quotas to show the second decimal place.

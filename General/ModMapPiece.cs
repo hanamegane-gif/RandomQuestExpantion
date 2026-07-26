@@ -48,6 +48,7 @@ namespace RandomQuestExpantion.General
             "crim_factory",
             "study",
             "study_room",
+            "road_defence",
         };
 
         internal class MapPieceSet

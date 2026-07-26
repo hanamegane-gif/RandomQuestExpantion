@@ -45,7 +45,6 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         internal Chara SpawnDoggo()
         {
-            var doggoSource = EClass.sources.charas.rows.Where(r => r.id == "wolfguy").First();
             int doggoLv = this.dangerLv * 3 / 2;
 
             // 高速で街を壊滅させるのを野放しにするのは危険すぎたためオプション化
@@ -61,7 +60,7 @@ namespace RandomQuestExpantion.ModQuests.Common
             };
             CardBlueprint.Set(cardBlueprint);
 
-            var spawnedDoggo = CharaGen.Create(doggoSource.id, doggoLv);
+            var spawnedDoggo = CharaGen.Create("wolfguy", doggoLv);
             spawnedDoggo.SetLv(doggoLv);
             spawnedDoggo.hostility = Hostility.Neutral;
 

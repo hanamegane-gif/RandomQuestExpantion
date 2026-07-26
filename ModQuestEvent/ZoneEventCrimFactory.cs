@@ -32,38 +32,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             EClass._zone.AddCard(ThingGen.Create("container_shipping_farm"), centerPos).Install().isNPCProperty = true;
             EClass._zone.AddCard(ThingGen.Create("376"), centerPos.GetRandomNeighbor()).Install().isNPCProperty = true;
 
-            var genBounds = GenBounds.Create(EClass._zone);
-            genBounds.marginPartial = 1;
-
-            // インスタンスマップにはチョコレートの床を敷き詰めた
-            genBounds.FuncCheckEmpty = (Cell cell) => cell.sourceFloor.id == 123;
-
-            Action<PartialMap, GenBounds> onCreate = delegate (PartialMap p, GenBounds b)
-            {
-                var list = b.ListEmptyPoint();
-                for (int i = 0; i < EClass.rndHalf(5); i++)
-                {
-                    if (list.Count == 0)
-                    {
-                        break;
-                    }
-                    var spawnPoint = list.RandomItem();
-                    var extraChara = CreateExtraChara();
-                    EClass._zone.AddCard(extraChara, spawnPoint);
-                    list.Remove(spawnPoint);
-                }
-            };
-
-            for (int i = 0; i < 50; i++)
-            {
-                string pieceType = EClass.rnd(4) == 0 ? "crim_factory" : "crim_crop";
-                ModMapPiece.TryAddMapPiece(genBounds, pieceType, onCreate);
-            }
-
-            foreach (var thing in EClass._map.things)
-            {
-                thing.isNPCProperty = true;
-            }
+            SetFieldPiece();
         }
 
         public override void OnLeaveZone()
@@ -100,6 +69,42 @@ namespace RandomQuestExpantion.ModQuestEvent
             foreach (var item in list)
             {
                 item.Destroy();
+            }
+        }
+
+        internal void SetFieldPiece()
+        {
+            var genBounds = GenBounds.Create(EClass._zone);
+            genBounds.marginPartial = 1;
+
+            // インスタンスマップにはチョコレートの床を敷き詰めた
+            genBounds.FuncCheckEmpty = (Cell cell) => cell.sourceFloor.id == 123;
+
+            Action<PartialMap, GenBounds> onCreate = delegate (PartialMap p, GenBounds b)
+            {
+                var list = b.ListEmptyPoint();
+                for (int i = 0; i < EClass.rndHalf(5); i++)
+                {
+                    if (list.Count == 0)
+                    {
+                        break;
+                    }
+                    var spawnPoint = list.RandomItem();
+                    var extraChara = CreateExtraChara();
+                    EClass._zone.AddCard(extraChara, spawnPoint);
+                    list.Remove(spawnPoint);
+                }
+            };
+
+            for (int i = 0; i < 50; i++)
+            {
+                string pieceType = EClass.rnd(4) == 0 ? "crim_factory" : "crim_crop";
+                ModMapPiece.TryAddMapPiece(genBounds, pieceType, onCreate);
+            }
+
+            foreach (var thing in EClass._map.things)
+            {
+                thing.isNPCProperty = true;
             }
         }
 
