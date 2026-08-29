@@ -28,8 +28,8 @@ namespace RandomQuestExpantion.ModQuests.MerchantGuild
             int guilpoNum = 3 + EClass.rnd(2) + EClass.rnd(2);
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_merchant").SetNum(guilpoNum);
             DropReward(guilpo);
-            MerchantGuildZone.ModInfluence(3);
-            ThiefGuildZone.ModInfluence(-1);
+            MerchantGuildZone?.ModInfluence(3);
+            ThiefGuildZone?.ModInfluence(-1);
         }
     }
 }

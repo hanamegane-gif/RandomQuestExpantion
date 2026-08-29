@@ -26,7 +26,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             int guilpoNum = 2 + EClass.rnd(2) + EClass.rnd(2);
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_thief").SetNum(guilpoNum);
             DropReward(guilpo);
-            ThiefGuildZone.ModInfluence(1);
+            ThiefGuildZone?.ModInfluence(1);
         }
 
         public override void OnFail()
@@ -34,7 +34,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             base.OnFail();
 
             // リロードがしやすい依頼のため、影響度でバランスを取ろうとする
-            ThiefGuildZone.ModInfluence(-2);
+            ThiefGuildZone?.ModInfluence(-2);
         }
 
         internal override Thing GenerateDistribution()

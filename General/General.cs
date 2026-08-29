@@ -9,10 +9,10 @@ namespace RandomQuestExpantion.General
 {
     class General
     {
-        internal static Zone FighterGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "kapul" && s.lv == -1).Cast<Zone>().First();
-        internal static Zone MerchantGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "guild_merchant").Cast<Zone>().First();
-        internal static Zone ThiefGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "derphy" && s.lv == -1).Cast<Zone>().First();
-        internal static Zone MageGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "lumiest" && s.lv == -1).Cast<Zone>().First();
+        internal static Zone FighterGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "kapul" && s.lv == -1).Cast<Zone>().FirstOrDefault();
+        internal static Zone MerchantGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "guild_merchant").Cast<Zone>().FirstOrDefault();
+        internal static Zone ThiefGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "derphy" && s.lv == -1).Cast<Zone>().FirstOrDefault();
+        internal static Zone MageGuildZone => EClass.game.spatials.map.Values.Where(s => s.id == "lumiest" && s.lv == -1).Cast<Zone>().FirstOrDefault();
 
         internal static bool IsInGuild()
         {

@@ -34,15 +34,12 @@ namespace RandomQuestExpantion.Patch
         [HarmonyPatch(typeof(EloMap), nameof(EloMap.CanBuildSite)), HarmonyPrefix]
         public static bool CanBuildSitePatch(ref bool __result, EloMap __instance, int gx, int gy, int radius, ElomapSiteType type)
         {
-            RandomQuestExpantion.Log($"CanBuildSitePatch: gx={gx}, gy={gy}, radius={radius}, type={type}");
-
             if (type == ElomapSiteType.Nefia)
             {
                 var point = new Point(gx, gy);
 
                 if (AccessDeniedZones.Contains(point))
                 {
-                    RandomQuestExpantion.Log($"false!");
                     __result = false;
                     return false;
                 }

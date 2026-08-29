@@ -25,7 +25,7 @@ namespace RandomQuestExpantion.ModQuests.ThiefGuild
             int guilpoNum = 1 + EClass.rnd(2);
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_thief").SetNum(guilpoNum);
             DropReward(guilpo);
-            ThiefGuildZone.ModInfluence(1);
+            ThiefGuildZone?.ModInfluence(1);
         }
     }
 }

@@ -39,7 +39,7 @@ namespace RandomQuestExpantion.ModQuests.FighterGuild
             int guilpoNum = 2 + EClass.rnd(2);
             var guilpo = ThingGen.Create("MOD_byakko_RQX_guilpo_fighter").SetNum(guilpoNum);
             DropReward(guilpo);
-            FighterGuildZone.ModInfluence(1);
+            FighterGuildZone?.ModInfluence(1);
         }
     }
 }
