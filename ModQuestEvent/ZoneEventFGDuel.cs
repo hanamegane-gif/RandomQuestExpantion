@@ -9,7 +9,7 @@ namespace RandomQuestExpantion.ModQuestEvent
             return 2 + base.quest.difficulty;
         }
 
-        internal override Chara CreateEnemy(int dangerLv)
+        internal override Chara CreateEnemy(int dangerLv, Specialty specialty = null)
         {
             int generateLv = Mathf.Max(dangerLv * 3 / 2, 5);
             int BPLv = Mathf.Max(dangerLv * 3 / 2, 5);

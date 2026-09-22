@@ -151,6 +151,12 @@ namespace RandomQuestExpantion.General
 
             gear.ChangeMaterial(originalMaterial);
 
+            // たいまつやランタンが通常品と混ざるのを防ぐため、ボーナスエンチャが付いたら奇跡品にする
+            if (gear.rarity < Rarity.Legendary)
+            {
+                gear.rarity = Rarity.Legendary;
+            }
+
             return gear;
         }
 

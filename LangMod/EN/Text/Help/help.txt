@@ -479,7 +479,16 @@ $FAQ
 
 
 
-$Update History
+$Changelog
+{topic|2.3.0}
+・Reworked the Duel with Adventurer quest. Now they gather their party before venturing forth.
+・Equipment that is only available in normal quality but has a bonus enchantment  (such as lanterns and torches)  should become legendary.
+・Fixed a bug where  plats earned from the Wall defense quests were not calculated correctly.
+
+{topic|2.2.1}
+・Fixed an error that occurred when completing a liaison quest while not a member of a guild. (Mod compatibility; liaison quest is not normally available to non-guild members.)
+・Removed unnecessary log output.
+
 {topic|2.2.0}
 ・Added a new Wall Defence request.
 ・Fixed an issue where the target Nefia in the Rescue request in Mifu would appear on a tile that was impossible to reach.
