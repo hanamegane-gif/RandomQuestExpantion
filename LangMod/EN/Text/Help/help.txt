@@ -480,6 +480,16 @@ $FAQ
 
 
 $Changelog
+{topic|2.3.2}
+・Rebarancing mat hammer's price. OMG
+　(Excluding truly junk like oak and sand etc) Prices have been raised significantly across the board, and prices are now calculated based on their performance, hardness, and weight.
+・Fixed a bug where the prices for Ether Antibodies, spelbooks, and rods were not being calculated correctly and were stuck at a fixed value of 1.
+・Fixed a bug where rare spellbooks did not have the【High Purity】 and 【Cryptic】 traits.
+・Fixed an issue where damage resistance for tank-class adventurers was lower than intended.
+
+{topic|2.3.1}
+・The selling price of genes generated through the Duel with Adventurer quest has been reduced to 20% of the normal price.
+
 {topic|2.3.0}
 ・Reworked the Duel with Adventurer quest. Now they gather their party before venturing forth.
 ・Equipment that is only available in normal quality but has a bonus enchantment  (such as lanterns and torches)  should become legendary.

@@ -127,6 +127,20 @@ class TraitGuilpoVender : TraitVendingMachine
             }
         }
 
+        // 特定の魔法の魔法書・杖・ポーションにはバニラと同じく高純度と難解をつける
+        if (createdThing.trait is TraitSpellbook)
+        {
+            TraitSpellbook.Create(createdThing, createdThing.refVal);
+        }
+        else if (createdThing.trait is TraitRod)
+        {
+            TraitRod.Create(createdThing, createdThing.refVal);
+        }
+        else if (createdThing.trait is TraitPotion)
+        {
+            TraitPotion.Create(createdThing, createdThing.refVal);            
+        }
+
         if (lv != -1)
         {
             createdThing.SetLv(lv);

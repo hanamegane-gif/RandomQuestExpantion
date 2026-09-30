@@ -108,7 +108,7 @@ namespace RandomQuestExpantion.ModQuestEvent
         {
             internal override void ApplyStrength(Chara c)
             {
-                c.elements.ModBase(SKILL.resDamage, 34);
+                c.elements.ModBase(SKILL.resDamage, 50);
                 c.elements.ModBase(SKILL.FPV, 10);
             }
             internal override void ApplyWeakness(Chara c)
@@ -585,7 +585,10 @@ namespace RandomQuestExpantion.ModQuestEvent
             createdChara.SetLv(charaLv);
 
             createdChara.RestockEquip(true);
-            createdChara.AddThing(createdChara.MakeGene((EClass.rnd(2) == 0) ? DNA.Type.Superior : DNA.Type.Default));
+
+            var gene = createdChara.MakeGene((EClass.rnd(2) == 0) ? DNA.Type.Superior : DNA.Type.Default);
+            gene.c_priceFix = -80;
+            createdChara.AddThing(gene);
 
             return createdChara;
         }

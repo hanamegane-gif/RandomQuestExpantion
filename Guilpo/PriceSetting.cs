@@ -34,8 +34,15 @@ namespace RandomQuestExpantion.Guilpo
             { typeof(TraitCurrencyMedal), t => GetMedalPrice(t) },
             { typeof(TraitCurrency), t => GetCurrencyPrice(t) },
             { typeof(TraitDrink), t => GetPotionPrice(t) },
+            { typeof(TraitPotion), t => GetPotionPrice(t) },
+            { typeof(TraitPotionRandom), t => GetPotionPrice(t) },
+            { typeof(TraitPotionLove), t => GetPotionPrice(t) },
+            { typeof(TraitPotionAlchemy), t => GetPotionPrice(t) },
             { typeof(TraitSpellbook), t => GetSpellBookPrice(t) },
+            { typeof(TraitSpellbookRandom), t => GetSpellBookPrice(t) },
             { typeof(TraitRod), t => GetRodPrice(t) },
+            { typeof(TraitRodRandom), t => GetRodPrice(t) },
+            { typeof(TraitScroll), t => GetScrollPrice(t) },
             { typeof(TraitScrollRandom), t => GetScrollPrice(t) }
         };
 
@@ -75,7 +82,52 @@ namespace RandomQuestExpantion.Guilpo
 
         internal static int GetHammerPrice(in Thing hammer)
         {
-            return 10;
+            int hammerTier = hammer.material.tier;
+            int hammerHardness = hammer.material.hardness;
+            int hammerWeightMtp = hammer.material.weight;
+            int hammerPerformance = hammer.material.atk + hammer.material.dmg + hammer.material.dv + hammer.material.pv;
+
+            int tierValue = hammerTier * 4;
+            int hardnessValue = (hammerHardness / 20) * 2;
+            int weightValue = (hammerWeightMtp < 50) ? (100 - hammerWeightMtp) / 5 :
+                              (hammerWeightMtp >= 150 && hammerWeightMtp < 300) ? (300 - hammerWeightMtp) / 30 :
+                              (hammerWeightMtp >= 300) ? (hammerWeightMtp - 300) / 20 : 0;
+            int performanceValue = (hammerPerformance) / 6;
+
+            int value = (tierValue + hardnessValue + weightValue + performanceValue + 5) / 2 * 2;
+
+            // 金は該当するオパ像があればなんでも交換可能なので45固定
+            if (hammer.material.alias == "gold")
+            {
+                return 45;
+            }
+            // 生ものは腐らせる用途があって特殊なので20固定
+            if (hammer.material.alias == "meat")
+            {
+                return 20;
+            }
+            // 麻はクラフト用のありふれ付与素材として特殊なので20固定
+            if (hammer.material.alias == "hemp")
+            {
+                return 20;
+            }
+            // シルクはクラフト用の回復力付与素材として特殊なので20固定
+            if (hammer.material.alias == "silk")
+            {
+                return 20;
+            }
+            // 藁はクラフト用の素材として特殊なので16固定
+            if (hammer.material.alias == "straw")
+            {
+                return 16;
+            }
+            // 綿はクラフト用の回復力付与素材として特殊なので16固定
+            if (hammer.material.alias == "cotton")
+            {
+                return 16;
+            }
+
+            return Math.Max(value, 10);
         }
 
         internal static int GetBillPrice(in Thing bill)
@@ -117,7 +169,7 @@ namespace RandomQuestExpantion.Guilpo
                 return 6;
             }
 
-            return 3;
+            return 4;
         }
 
         internal static int GetRodPrice(in Thing rod)
@@ -134,7 +186,7 @@ namespace RandomQuestExpantion.Guilpo
                 return 6;
             }
 
-            return 3;
+            return 4;
         }
 
         internal static int GetScrollPrice(in Thing scroll)
