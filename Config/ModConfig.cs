@@ -8,7 +8,7 @@ namespace RandomQuestExpantion.Config
     {
         const string __CONFIG_FILE_NAME__ = "byakko.elin.RandomQuest.cfg";
 
-        private static ConfigFile CustomConfig;
+        public static ConfigFile CustomConfig;
         private static ConfigEntry<int> _RewardPlatRate;
         private static ConfigEntry<int> _MaxQuestLimit;
         private static ConfigEntry<bool> _EnableRuneVesselFeature;

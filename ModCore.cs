@@ -1,11 +1,12 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using RandomQuestExpantion.Config;
+using RQXC = RandomQuestExpantion.Config;
 using RandomQuestExpantion.General;
 using RandomQuestExpantion.Patch;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using EModding;
 
 namespace RandomQuestExpantion
 {
@@ -17,7 +18,7 @@ namespace RandomQuestExpantion
     }
 
     [BepInPlugin(ModInfo.GUID, ModInfo.Name, ModInfo.Version)]
-    public class RandomQuestExpantion : BaseUnityPlugin
+    public class RandomQuestExpantion : BaseUnityPlugin, IModConfig
     {
         public static RandomQuestExpantion Instance { get; private set; }
         public static PluginInfo DLLInfo { get; private set; }
@@ -34,8 +35,13 @@ namespace RandomQuestExpantion
         public void OnStartCore()
         {
             DeployTypeFallback.DeployTypeFallbackSetting();
-            ModConfig.LoadConfig();
+            RQXC.ModConfig.LoadConfig();
             ModMapPieceManager.Init(Info);
+        }
+
+        public void OnBuildConfig(UINote note)
+        {
+            note.AddAll(RQXC.ModConfig.CustomConfig);
         }
 
         internal static void Log(object payload)

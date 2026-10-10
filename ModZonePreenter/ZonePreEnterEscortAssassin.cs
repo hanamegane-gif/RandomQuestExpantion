@@ -40,7 +40,27 @@ namespace RandomQuestExpantion.ModZonePreenter
             }
 
             var offerMoney = GenerateOfferMoney(leader);
-            var omakeGoods = GenerateOmakeGoods(leader);
+            var offerGoods = GenerateOfferGoods(leader);
+
+            string firstOfferName = "";
+            Thing firstOfferThing = null;
+            string secondOfferName = "";
+            Thing secondOfferThing = null;
+
+            if (EClass.rnd(2) == 0)
+            {
+                firstOfferName = Lang._currency(offerMoney.Num, showUnit: true, unitSize: 0);
+                firstOfferThing = offerMoney;
+                secondOfferName = offerGoods.GetName(NameStyle.Full);
+                secondOfferThing = offerGoods;
+            }
+            else
+            {
+                firstOfferName = offerGoods.GetName(NameStyle.Full);
+                firstOfferThing = offerGoods;
+                secondOfferName = Lang._currency(offerMoney.Num, showUnit: true, unitSize: 0);
+                secondOfferThing = offerMoney;
+            }
 
             var callbackAction = new Action(() =>
             {
@@ -51,7 +71,7 @@ namespace RandomQuestExpantion.ModZonePreenter
                     EClass.pc.PickOrDrop(EClass.pc.pos, offerMoney);
                     if (DramaWrapper.GetDramaResult<bool>("RQX_negoraise"))
                     {
-                        EClass.pc.PickOrDrop(EClass.pc.pos, omakeGoods);
+                        EClass.pc.PickOrDrop(EClass.pc.pos, offerGoods);
                     }
 
                     _Quest.Fail();
@@ -65,7 +85,7 @@ namespace RandomQuestExpantion.ModZonePreenter
 
             DramaWrapper.Lock();
             DramaWrapper.SetArgumentBoolean("RQX_canraise", CalcCanRaise(leader));
-            DramaWrapper.SetArgumentStrings(_Quest.EscortTargetName, Lang._currency(offerMoney.Num, showUnit: true), omakeGoods.GetName(NameStyle.Full));
+            DramaWrapper.SetArgumentStrings(_Quest.EscortTargetName, firstOfferName, secondOfferName);
             DramaWrapper.SetCallbackAction(callbackAction);
             DramaWrapper.PlayDrama(leader, DramaStartStepList.RandomItem());
         }
@@ -78,7 +98,7 @@ namespace RandomQuestExpantion.ModZonePreenter
             return ThingGen.Create("money").SetNum(num);
         }
 
-        internal virtual Thing GenerateOmakeGoods(Chara leader)
+        internal virtual Thing GenerateOfferGoods(Chara leader)
         {
             int filterRoll = EClass.rnd(100);
             int chanceSum = 0;
@@ -94,15 +114,17 @@ namespace RandomQuestExpantion.ModZonePreenter
             {
                 return ThingGen.Create("ecopo").SetNum(EClass.rndHalf((int)Mathf.Sqrt(leader.LV / 4) + 5));
             }
-            else if (filterRoll < (chanceSum += 15))
+            else if (filterRoll < (chanceSum += 10))
             {
                 return ThingGen.Create("map_treasure", lv: leader.LV * 2);
             }
-            else if (filterRoll < (chanceSum += 15))
+            else if (filterRoll < (chanceSum += 10))
             {
-                var thing = ThingGen.Create("book_skill");
-                thing.SetNum(3);
-                return thing;
+                return ThingGen.Create("money3").SetNum(5 + EClass.rnd(4));
+            }
+            else if (filterRoll < (chanceSum += 10))
+            {
+                return ThingGen.Create("book_skill").SetNum(3);
             }
             else if (filterRoll < (chanceSum += 5))
             {
@@ -115,7 +137,7 @@ namespace RandomQuestExpantion.ModZonePreenter
             else
             {
                 var thing = ThingGen.Create("rod_wish");
-                thing.SetCharge(0);
+                thing.SetCharge((EClass.rnd(100) == 0) ? 1 : 0);
                 return thing;
             }
         }

@@ -5,6 +5,7 @@ using System.Reflection.Emit;
 namespace RandomQuestExpantion.Patch
 {
     // QuestTaskに独自のイベントハンドラを実装する
+    // モンスターを演奏依頼中に限り聴衆になれるようにする
     [HarmonyPatch]
     class CharaPatch
     {
@@ -27,6 +28,18 @@ namespace RandomQuestExpantion.Patch
                 )
                 .InstructionEnumeration();
             return ci;
+        }
+
+        [HarmonyPatch(typeof(Chara), "get_CanWitness"), HarmonyPrefix]
+        internal static bool CanWitnessPatch(ref bool __result)
+        {
+            if (EClass._zone is Zone_Music)
+            {
+                __result = true;
+                return false;
+            }
+
+            return true;
         }
 
         internal static void HandleOnNefiaBeaten(Chara boss)

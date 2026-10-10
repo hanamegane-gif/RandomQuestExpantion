@@ -50,6 +50,10 @@
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Elin.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="ElinModdingKit">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Package\_ModdingKit\ElinModdingKit.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Elin\Elin_Data\Managed\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
@@ -104,6 +108,9 @@
     <Compile Include="ModQuestEvent\ZoneEventBullyDoggo.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGBullyDoggo.cs" />
     <Compile Include="ModQuestEvent\ZoneEventFGSubdueCave.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventMusicMonsterFilth.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventMusicMonsterNoble.cs" />
+    <Compile Include="ModQuestEvent\ZoneEventMusicMonster.cs" />
     <Compile Include="ModQuestEvent\ZoneEventOrganizingBook.cs" />
     <Compile Include="ModQuestEvent\ZoneEventRoadDefence.cs" />
     <Compile Include="ModQuestEvent\ZoneEventTGCrimFactory.cs" />
@@ -123,6 +130,9 @@
     <Compile Include="ModQuestEvent\ZoneEventWGHerbHarvest.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGOrganizingBook.cs" />
     <Compile Include="ModQuestEvent\ZoneEventWGSubdueGhost.cs" />
+    <Compile Include="ModQuests\Common\QuestMusicFilth.cs" />
+    <Compile Include="ModQuests\Common\QuestMusicMonster.cs" />
+    <Compile Include="ModQuests\Common\QuestMusicNoble.cs" />
     <Compile Include="ModQuests\Common\QuestRoadDefence.cs" />
     <Compile Include="ModQuests\QuestAttribute\IExtendDeadline.cs" />
     <Compile Include="ModQuests\QuestAttribute\IHarvest.cs" />
@@ -197,12 +207,15 @@
     <Compile Include="ModQuestTask\TaskTGSalesStolen.cs" />
     <Compile Include="ModQuestTask\TaskTGSlaver.cs" />
     <Compile Include="ModQuestTask\TaskWGDungeonRetrieve.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceMusicFilth.cs" />
+    <Compile Include="ModQuestZoneInstance\ZoneInstanceMusicNoble.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceRoadDef.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceSubdueGhost.cs" />
     <Compile Include="ModQuestZoneInstance\ZoneInstanceUrbanDefence.cs" />
     <Compile Include="ModQuestZone\Zone_Arena_Cave_RQX.cs" />
     <Compile Include="ModQuestZone\Zone_Harvest_RQX.cs" />
     <Compile Include="ModQuestZone\Zone_Arena_RQX.cs" />
+    <Compile Include="ModQuestZone\Zone_Music_RQX.cs" />
     <Compile Include="ModZonePreenter\ZonePreEnterDeliverBrigand.cs" />
     <Compile Include="ModZonePreenter\ZonePreEnterEscortAssassin.cs" />
     <Compile Include="ModZonePreenter\ZonePreEnterMGEscortAssassin.cs" />
@@ -227,6 +240,7 @@
     <Compile Include="Patch\TraitCharaPatch.cs" />
     <Compile Include="Patch\TraitNewZonePatch.cs" />
     <Compile Include="Patch\TraitPatch.cs" />
+    <Compile Include="Patch\Zone_UpdateQuestPatch.cs" />
     <Compile Include="Patch\ZonePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModQuestEvent\ZoneEventUrbanBoss.cs" />

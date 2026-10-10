@@ -10,6 +10,7 @@ namespace RandomQuestExpantion.Patch
 {
     // ギルドでクエストを受けられるようにする
     // ギルド専用クエストをギルドで受けられるように&ギルド専用クエストを他の場所で受けられないようにフィルタ
+    // クエスト生成の重み付けを種別倍率を優先するように
     // 「○○への影響度が～」の表記をギルドでも表示できるように
     [HarmonyPatch]
     class ZonePatch
@@ -186,19 +187,19 @@ namespace RandomQuestExpantion.Patch
             newArray.AddRange(new List<string> { "supply/0", "deliver/0", "food/0", "escort/0", "deliver/0", "monster/0", "war/0", "farm/0", "music/0" });
             if (Guild.Fighter.IsCurrentZone)
             {
-                newArray.AddRange(new List<string> { "fighter/999", "mage/0", "thief/0", "merchant/0" });
+                newArray.AddRange(new List<string> { "fighter/9999", "mage/0", "thief/0", "merchant/0" });
             }
             else if (Guild.Mage.IsCurrentZone)
             {
-                newArray.AddRange(new List<string> { "fighter/0", "mage/999", "thief/0", "merchant/0" });
+                newArray.AddRange(new List<string> { "fighter/0", "mage/9999", "thief/0", "merchant/0" });
             }
             else if (Guild.Thief.IsCurrentZone)
             {
-                newArray.AddRange(new List<string> { "fighter/0", "mage/0", "thief/999", "merchant/0" });
+                newArray.AddRange(new List<string> { "fighter/0", "mage/0", "thief/9999", "merchant/0" });
             }
             else if (Guild.Merchant.IsCurrentZone)
             {
-                newArray.AddRange(new List<string> { "fighter/0", "mage/0", "thief/0", "merchant/999" });
+                newArray.AddRange(new List<string> { "fighter/0", "mage/0", "thief/0", "merchant/9999" });
             }
 
             return newArray.ToArray();

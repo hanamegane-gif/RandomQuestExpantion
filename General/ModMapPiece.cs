@@ -49,6 +49,8 @@ namespace RandomQuestExpantion.General
             "study",
             "study_room",
             "road_defence",
+            "music_filth",
+            "music_noble",
         };
 
         internal class MapPieceSet

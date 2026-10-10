@@ -119,6 +119,26 @@ $Requests from citizens
 
 ・The quality bonus is heavily influenced by the furniture's base price and quality.
 
+
+<size=24>Performance Type</size>
+<i>Requests that frequently appears in cities where performance requests are common (like Palmia or Nefu).</i>
+{topic|Performance for Monsters (Fame 500+)}
+{pair|Name|"Cross-Cultural Exchange"、"Cultural Ambassador"}
+
+・You will be transported to a quest map.
+・Survive until the time limit to complete the request.
+・If you play well, the mood inproves. (If you play poorly, it worsens.)
+・If the mood worsens, enemies will attack.
+
+{topic|Performance for Horrors (Fame 1000+}
+{pair|Name|"Impromptu ad Mortem"、"Invitation from Death"}
+
+・You will be transported to a quest map.
+・Survive until the time limit to complete the request.
+・If you play well, the mood inproves. (If you play poorly, it worsens.)
+・If the mood worsens, enemies will attack.
+・Oh no liches are here.
+
 $Requests from Fighters Guild
 {topic|Hunting (No fame requirement)}
 {pair|Name|"Public safety activities", "Exercise"}
@@ -480,6 +500,14 @@ $FAQ
 
 
 $Changelog
+{topic|2.4.0}
+・Support for the stable version.
+・Support for ModConfig.
+・Implemented two types of performance requests.
+・Revamped the quest trends for each town, which had begun to fade due to the increased variety of quests.
+・Enemies encountered during Risky delivery and Risky escort requests will now offer items too.
+・(EN) Fixed a translation error where some quest descriptions lacked the requirements information.
+
 {topic|2.3.2}
 ・Rebarancing mat hammer's price. OMG
 　(Excluding truly junk like oak and sand etc) Prices have been raised significantly across the board, and prices are now calculated based on their performance, hardness, and weight.
