@@ -64,18 +64,17 @@ namespace RandomQuestExpantion.Patch
             }
 
             __result = ChanceRatioChache[a.id] * chanceMultiplier;
-
             return false;
         }
 
         internal static void CreateChanceSumCache()
         {
             // 最初のタグだけ取る(2番目はneedDestZoneとかの種別じゃないやつになる)
-            HashSet<string> tagList = EClass.sources.quests.rows.Where(r => r.tags.Any()).Select(r => r.tags[0]).ToHashSet();
+            HashSet<string> tagList = EClass.sources.quests.rows.Where(r => r.group == "random" && r.tags.Any()).Select(r => r.tags[0]).ToHashSet();
 
             foreach (var tag in tagList)
             {
-                int chanceSum = EClass.sources.quests.rows.Where(r => r.tags.Contains(tag)).Sum(r => r.chance);
+                int chanceSum = EClass.sources.quests.rows.Where(r => r.group == "random" && r.tags.Contains(tag)).Sum(r => r.chance);
                 ChanceSumChache.Add(tag, chanceSum);
             }
         }

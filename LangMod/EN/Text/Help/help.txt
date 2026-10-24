@@ -1,5 +1,5 @@
 $About this Mod
-Increasing the types of requests on the Request Board. (9 types total)
+Increasing the types of requests on the Request Board. (12 types total)
 
 Each guild will now generate guild-exclusive requests.
 (Merchants Guild: 10, Fighters Guild: 9, Mages Guild: 7, Thieves Guild: 8)
@@ -430,8 +430,8 @@ $Requests from Thieves Guild
 ・The distribution often comes with <b>powerful enchantments</b>.
 
 $Options
-You can configure options via:
-BepInEx/config/byakko.elin.RandomQuest.cfg in the Elin installation folder.
+You can configure the options from the in-game Mod Viewer.
+(Or, BepInEx/config/byakko.elin.RandomQuest.cfg in the Elin installation folder.)
 
 {topic|Plat rate for requests from citizens}
 ・You can set the multiplier (%) for bonus plats earned from requests from citizens.
@@ -500,6 +500,10 @@ $FAQ
 
 
 $Changelog
+{topic|2.4.1}
+・Changed the number of platinum coins required for additional mod performance requests so that it depends heavily on the amount of tips received.
+　(This is primarily intended for players who keep their music skill at 0, such as those playing permadeath.)
+
 {topic|2.4.0}
 ・Support for the stable version.
 ・Support for ModConfig.

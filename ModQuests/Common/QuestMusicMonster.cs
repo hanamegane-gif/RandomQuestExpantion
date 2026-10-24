@@ -41,9 +41,13 @@ namespace RandomQuestExpantion.ModQuests.Common
 
         public override int GetRewardPlat(int money)
         {
-            int bonusPlat = (ModConfig.RewardPlatRate > 0) ? EClass.curve(money / 400, 3, 10, 65) * ModConfig.RewardPlatRate / 100 : EClass.rndHalf((int)Mathf.Sqrt(money / 200));
+            int fourthRoot = (int)Mathf.Sqrt(Mathf.Sqrt(sumMoney / 200));
 
-            return (3 + difficulty + EClass.rnd(2)) + bonusPlat;
+            // (200 * tips) ^ (3 / 4)
+            int bonusPlat = (ModConfig.RewardPlatRate > 0) ? (fourthRoot * fourthRoot * fourthRoot) * ModConfig.RewardPlatRate / 100 : 
+                            EClass.rndHalf((int)Mathf.Sqrt(money / 200) / 2) + (DangerLv / 50 + 2) * difficulty / 4;            
+
+            return (2 + EClass.rnd(2)) + bonusPlat;
         }
 
         public override void OnInit()
